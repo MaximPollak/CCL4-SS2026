@@ -36,6 +36,7 @@
 
 # Visual Studio cache directory
 .vs/
+.vscode/
 
 # Gradle cache directory
 .gradle/
@@ -114,6 +115,7 @@ InitTestScene*.unity*
 # Wwise Ignore Rules
 .backup*
 .cache*
+*.dSYM/
 *.akd
 *.prof
 *.validationcache
