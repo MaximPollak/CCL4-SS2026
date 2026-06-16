@@ -93,6 +93,12 @@ InitTestScene*.unity*
 # /Assets/AddressableAssetsData/OSX/addressables_content_state.bin
 /[Aa]ssets/AddressableAssetsData/*/*.bin*
 
+# Packed Addressables
+# Kept via the broader Addressables rules above.
+
+# Temporary auto-generated Android Assets
+# Kept via /[Aa]ssets/StreamingAssets/aa* above.
+
 # Visual Scripting auto-generated files
 /[Aa]ssets/Unity.VisualScripting.Generated/VisualScripting.Flow/UnitOptions.db
 /[Aa]ssets/Unity.VisualScripting.Generated/VisualScripting.Flow/UnitOptions.db.meta
@@ -104,5 +110,17 @@ InitTestScene*.unity*
 
 # Auto-generated cache in Assets folder
 /[Aa]ssets/[Ss]ceneDependencyCache*
+
+# Wwise Ignore Rules
+.backup*
+.cache*
+*.akd
+*.prof
+*.validationcache
+*.wsettings
+AkWwiseProjectData.asset
+IncrementalSoundBankData.xml
+**/GeneratedSoundBanks/
+/[Aa]ssets/[Ss]treamingAssets/Audio/GeneratedSoundBanks.meta
 
 .DS_Store
