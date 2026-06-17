@@ -15,7 +15,9 @@
         "AK.Wwise.Unity.Addressables.Editor",
         "AK.Wwise.Unity.MonoBehaviour",
         "AK.Wwise.Unity.Utilities",
-        "AK.Wwise.Unity.Logging"
+        "AK.Wwise.Unity.Logging",
+        "Ak.Wwise.Api.WAAPI",
+        "AK.Wwise.Unity.API.Editor"
     ],
     "includePlatforms": [
         "Editor"

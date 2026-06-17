@@ -8,7 +8,10 @@
         "AK.Wwise.Unity.ProjectDatabase",
         "AK.Wwise.Unity.Addressables",
         "AK.Wwise.Unity.MonoBehaviour",
-        "AK.Wwise.Unity.Logging"
+        "AK.Wwise.Unity.Logging",
+        "Ak.Wwise.Api.WAAPI",
+        "AK.Wwise.Unity.API.Editor",
+        "AK.Wwise.Unity.Utilities"
     ],
     "includePlatforms": [
         "Editor"
