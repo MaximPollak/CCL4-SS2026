@@ -33,6 +33,7 @@ public class MonsterAI : MonoBehaviour
 
     [Header("Chase")]
     public float catchDistance = 1.1f;
+    public float loseSightDelay = 0.6f;
 
     [Header("Search")]
     public float searchDuration = 3f;
@@ -60,6 +61,7 @@ public class MonsterAI : MonoBehaviour
 
     private Vector3 lastKnownPlayerPosition;
     private bool hasLastKnownPlayerPosition;
+    private float lastTimePlayerSeen = Mathf.NegativeInfinity;
 
     private float normalViewAngle;
     private float normalViewDistance;
@@ -133,6 +135,7 @@ public class MonsterAI : MonoBehaviour
         {
             lastKnownPlayerPosition = seenPosition;
             hasLastKnownPlayerPosition = true;
+            lastTimePlayerSeen = Time.time;
 
             if (currentState != MonsterState.ChasingPlayer)
             {
@@ -143,6 +146,11 @@ public class MonsterAI : MonoBehaviour
         {
             if (currentState == MonsterState.ChasingPlayer)
             {
+                if (Time.time - lastTimePlayerSeen < loseSightDelay)
+                {
+                    return;
+                }
+
                 if (hasLastKnownPlayerPosition)
                 {
                     ChangeState(MonsterState.SearchingLastSeenPosition);

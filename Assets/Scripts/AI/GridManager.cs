@@ -9,6 +9,8 @@ public class GridManager : MonoBehaviour
 
     [Header("Obstacle Detection")]
     public LayerMask obstacleMask;
+    public float obstacleCheckHeight = 0.5f;
+    public float obstacleCheckRadiusMultiplier = 0.9f;
 
     [Header("Movement Rules")]
     public bool allowDiagonals = true;
@@ -55,9 +57,10 @@ public class GridManager : MonoBehaviour
                     + Vector3.forward * (y * nodeDiameter + nodeRadius);
 
                 bool blocked = Physics.CheckSphere(
-                    worldPoint,
-                    nodeRadius * 0.9f,
-                    obstacleMask
+                    GetObstacleCheckPosition(worldPoint),
+                    GetObstacleCheckRadius(),
+                    obstacleMask,
+                    QueryTriggerInteraction.Ignore
                 );
 
                 bool walkable = !blocked;
@@ -169,11 +172,51 @@ public class GridManager : MonoBehaviour
                     }
                 }
 
-                neighbours.Add(grid[checkX, checkY]);
+                GridNode neighbour = grid[checkX, checkY];
+
+                if (IsMovementBetweenNodesBlocked(node, neighbour))
+                {
+                    continue;
+                }
+
+                neighbours.Add(neighbour);
             }
         }
 
         return neighbours;
+    }
+
+    private bool IsMovementBetweenNodesBlocked(GridNode fromNode, GridNode toNode)
+    {
+        Vector3 start = GetObstacleCheckPosition(fromNode.worldPosition);
+        Vector3 end = GetObstacleCheckPosition(toNode.worldPosition);
+        Vector3 direction = end - start;
+        float distance = direction.magnitude;
+
+        if (distance <= Mathf.Epsilon)
+        {
+            return false;
+        }
+
+        return Physics.SphereCast(
+            start,
+            GetObstacleCheckRadius(),
+            direction.normalized,
+            out _,
+            distance,
+            obstacleMask,
+            QueryTriggerInteraction.Ignore
+        );
+    }
+
+    private Vector3 GetObstacleCheckPosition(Vector3 worldPosition)
+    {
+        return worldPosition + Vector3.up * obstacleCheckHeight;
+    }
+
+    private float GetObstacleCheckRadius()
+    {
+        return nodeRadius * obstacleCheckRadiusMultiplier;
     }
 
     public void ResetNodeCosts()

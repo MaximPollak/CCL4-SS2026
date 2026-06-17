@@ -7,8 +7,17 @@ public class InventoryTextUI : MonoBehaviour
     [SerializeField] private InventorySlot inventorySlot;
     [SerializeField] private TextMeshProUGUI inventoryText;
 
+    private string lastDisplayedItemId;
+
+    private void Awake()
+    {
+        ResolveMissingReferences();
+    }
+
     private void OnEnable()
     {
+        ResolveMissingReferences();
+
         if (inventorySlot != null)
         {
             inventorySlot.OnInventoryChanged += UpdateInventoryText;
@@ -25,6 +34,8 @@ public class InventoryTextUI : MonoBehaviour
 
     private void Start()
     {
+        ResolveMissingReferences();
+
         if (inventorySlot != null)
         {
             UpdateInventoryText(inventorySlot.CurrentItemId);
@@ -35,12 +46,53 @@ public class InventoryTextUI : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        ResolveMissingReferences();
+
+        if (inventorySlot == null)
+        {
+            UpdateInventoryText("");
+            return;
+        }
+
+        if (inventorySlot.CurrentItemId != lastDisplayedItemId)
+        {
+            UpdateInventoryText(inventorySlot.CurrentItemId);
+        }
+    }
+
+    private void ResolveMissingReferences()
+    {
+        if (inventoryText == null)
+        {
+            inventoryText = GetComponent<TextMeshProUGUI>();
+        }
+
+        if (inventoryText == null)
+        {
+            GameObject inventoryTextObject = GameObject.Find("InventoryText");
+
+            if (inventoryTextObject != null)
+            {
+                inventoryText = inventoryTextObject.GetComponent<TextMeshProUGUI>();
+            }
+        }
+
+        if (inventorySlot == null)
+        {
+            inventorySlot = FindFirstObjectByType<InventorySlot>();
+        }
+    }
+
     private void UpdateInventoryText(string itemId)
     {
         if (inventoryText == null)
         {
             return;
         }
+
+        lastDisplayedItemId = itemId;
 
         if (string.IsNullOrEmpty(itemId))
         {
