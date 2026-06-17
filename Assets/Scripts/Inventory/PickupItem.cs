@@ -20,16 +20,30 @@ public class PickupItem : MonoBehaviour, IInteractable
 
     public void DropTo(Vector3 position, Vector3 forwardDirection, float plopForce)
     {
-        gameObject.SetActive(true);
+        transform.SetParent(null);
 
         transform.position = position;
         transform.rotation = Quaternion.identity;
 
-        Rigidbody rigidbody = GetComponent<Rigidbody>();
+        Collider[] itemColliders = GetComponentsInChildren<Collider>();
 
-        if (rigidbody != null)
+        foreach (Collider itemCollider in itemColliders)
         {
-            rigidbody.AddForce((forwardDirection + Vector3.up) * plopForce, ForceMode.Impulse);
+            itemCollider.enabled = true;
+        }
+
+        Rigidbody itemRigidbody = GetComponent<Rigidbody>();
+
+        if (itemRigidbody != null)
+        {
+            itemRigidbody.isKinematic = false;
+            itemRigidbody.linearVelocity = Vector3.zero;
+            itemRigidbody.angularVelocity = Vector3.zero;
+
+            itemRigidbody.AddForce(
+                (forwardDirection + Vector3.up) * plopForce,
+                ForceMode.Impulse
+            );
         }
     }
 }
