@@ -1,5 +1,7 @@
 using UnityEngine;
 
+[RequireComponent(typeof(MonsterPathFollower))]
+[RequireComponent(typeof(MonsterVision))]
 public class MonsterAI : MonoBehaviour
 {
     public enum MonsterState
@@ -66,7 +68,35 @@ public class MonsterAI : MonoBehaviour
     private float normalViewAngle;
     private float normalViewDistance;
 
+    private void Reset()
+    {
+        AssignReferences(true);
+    }
+
+    private void OnValidate()
+    {
+        AssignReferences(false);
+
+        waitAtRoamPointTime = Mathf.Max(0f, waitAtRoamPointTime);
+        roamLookAroundTurnSpeed = Mathf.Max(0f, roamLookAroundTurnSpeed);
+        roamLookDirectionChangeInterval = Mathf.Max(0.05f, roamLookDirectionChangeInterval);
+        roamingSpeed = Mathf.Max(0f, roamingSpeed);
+        chasingSpeed = Mathf.Max(0f, chasingSpeed);
+        searchingSpeed = Mathf.Max(0f, searchingSpeed);
+        catchDistance = Mathf.Max(0f, catchDistance);
+        loseSightDelay = Mathf.Max(0f, loseSightDelay);
+        searchDuration = Mathf.Max(0f, searchDuration);
+        searchViewAngle = Mathf.Clamp(searchViewAngle, 0f, 360f);
+        searchViewDistance = Mathf.Max(0f, searchViewDistance);
+        searchLookAroundTurnSpeed = Mathf.Max(0f, searchLookAroundTurnSpeed);
+    }
+
     private void Awake()
+    {
+        AssignReferences(true);
+    }
+
+    private void AssignReferences(bool includeSceneSearch)
     {
         if (pathFollower == null)
         {
@@ -76,6 +106,16 @@ public class MonsterAI : MonoBehaviour
         if (vision == null)
         {
             vision = GetComponent<MonsterVision>();
+        }
+
+        if (player == null && includeSceneSearch)
+        {
+            PlayerInteraction playerInteraction = FindFirstObjectByType<PlayerInteraction>();
+
+            if (playerInteraction != null)
+            {
+                player = playerInteraction.transform;
+            }
         }
     }
 

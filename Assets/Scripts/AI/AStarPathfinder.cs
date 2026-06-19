@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(GridManager))]
 public class AStarPathfinder : MonoBehaviour
 {
     [Header("References")]
@@ -9,11 +10,31 @@ public class AStarPathfinder : MonoBehaviour
     [Header("Debug")]
     public bool showPathOnGrid = true;
 
+    private void Reset()
+    {
+        AssignReferences(true);
+    }
+
+    private void OnValidate()
+    {
+        AssignReferences(false);
+    }
+
     private void Awake()
+    {
+        AssignReferences(true);
+    }
+
+    private void AssignReferences(bool includeSceneSearch)
     {
         if (gridManager == null)
         {
-            gridManager = FindObjectOfType<GridManager>();
+            gridManager = GetComponent<GridManager>();
+        }
+
+        if (gridManager == null && includeSceneSearch)
+        {
+            gridManager = FindFirstObjectByType<GridManager>();
         }
     }
 

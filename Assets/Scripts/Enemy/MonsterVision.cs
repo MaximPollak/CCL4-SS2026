@@ -20,6 +20,50 @@ public class MonsterVision : MonoBehaviour
     [Header("Debug")]
     public bool drawGizmos = true;
 
+    private void Reset()
+    {
+        AssignDefaultReferencesAndSettings(true);
+    }
+
+    private void OnValidate()
+    {
+        AssignDefaultReferencesAndSettings(false);
+
+        viewDistance = Mathf.Max(0f, viewDistance);
+        viewAngle = Mathf.Clamp(viewAngle, 0f, 360f);
+        eyeHeight = Mathf.Max(0f, eyeHeight);
+        targetHeight = Mathf.Max(0f, targetHeight);
+        closeAwarenessDistance = Mathf.Max(0f, closeAwarenessDistance);
+    }
+
+    private void Awake()
+    {
+        AssignDefaultReferencesAndSettings(true);
+    }
+
+    private void AssignDefaultReferencesAndSettings(bool includeSceneSearch)
+    {
+        if (target == null && includeSceneSearch)
+        {
+            PlayerInteraction playerInteraction = FindFirstObjectByType<PlayerInteraction>();
+
+            if (playerInteraction != null)
+            {
+                target = playerInteraction.transform;
+            }
+        }
+
+        if (obstacleMask.value == 0)
+        {
+            int wallMask = LayerMask.GetMask("Wall");
+
+            if (wallMask != 0)
+            {
+                obstacleMask = wallMask;
+            }
+        }
+    }
+
     public bool CanSeeTarget(out Vector3 seenPosition)
     {
         seenPosition = Vector3.zero;
@@ -69,7 +113,8 @@ public class MonsterVision : MonoBehaviour
             from,
             direction,
             distance,
-            obstacleMask
+            obstacleMask,
+            QueryTriggerInteraction.Ignore
         );
 
         return !blocked;
