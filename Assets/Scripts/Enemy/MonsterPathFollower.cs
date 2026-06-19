@@ -33,14 +33,48 @@ public class MonsterPathFollower : MonoBehaviour
     private float nextRepathTime;
     private float verticalVelocity;
 
+    private void Reset()
+    {
+        AssignReferences(true);
+        ApplyCharacterControllerDefaults();
+    }
+
+    private void OnValidate()
+    {
+        AssignReferences(false);
+
+        currentMoveSpeed = Mathf.Max(0f, currentMoveSpeed);
+        turnSpeed = Mathf.Max(0f, turnSpeed);
+        waypointReachDistance = Mathf.Max(0.05f, waypointReachDistance);
+        repathInterval = Mathf.Max(0.05f, repathInterval);
+        targetMoveThreshold = Mathf.Max(0.05f, targetMoveThreshold);
+    }
+
     private void Awake()
+    {
+        AssignReferences(true);
+    }
+
+    private void AssignReferences(bool includeSceneSearch)
     {
         characterController = GetComponent<CharacterController>();
 
-        if (pathfinder == null)
+        if (pathfinder == null && includeSceneSearch)
         {
-            pathfinder = FindObjectOfType<AStarPathfinder>();
+            pathfinder = FindFirstObjectByType<AStarPathfinder>();
         }
+    }
+
+    private void ApplyCharacterControllerDefaults()
+    {
+        if (characterController == null)
+        {
+            return;
+        }
+
+        characterController.radius = 0.3f;
+        characterController.height = 1.8f;
+        characterController.center = new Vector3(0f, 0.9f, 0f);
     }
 
     private void Update()

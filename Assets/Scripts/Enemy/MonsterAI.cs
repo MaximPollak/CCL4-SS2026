@@ -1,5 +1,7 @@
 using UnityEngine;
 
+[RequireComponent(typeof(MonsterPathFollower))]
+[RequireComponent(typeof(MonsterVision))]
 public class MonsterAI : MonoBehaviour
 {
     public enum MonsterState
@@ -23,8 +25,8 @@ public class MonsterAI : MonoBehaviour
 
     [Header("Roam Look Around")]
     public bool lookAroundAtRoamPoint = true;
+    public float roamLookAroundAngle = 45f;
     public float roamLookAroundTurnSpeed = 45f;
-    public float roamLookDirectionChangeInterval = 0.8f;
 
     [Header("Movement Speeds")]
     public float roamingSpeed = 2f;
@@ -56,8 +58,9 @@ public class MonsterAI : MonoBehaviour
     private float waitTimer;
     private float searchTimer;
 
-    private float roamLookDirectionTimer;
-    private int roamLookDirection = 1;
+    private bool isWaitingAtRoamPoint;
+    private int roamLookPhase;
+    private Quaternion roamLookStartRotation;
 
     private Vector3 lastKnownPlayerPosition;
     private bool hasLastKnownPlayerPosition;
@@ -65,8 +68,37 @@ public class MonsterAI : MonoBehaviour
 
     private float normalViewAngle;
     private float normalViewDistance;
+    private PlayerHideState playerHideState;
+
+    private void Reset()
+    {
+        AssignReferences(true);
+    }
+
+    private void OnValidate()
+    {
+        AssignReferences(false);
+
+        waitAtRoamPointTime = Mathf.Max(0f, waitAtRoamPointTime);
+        roamLookAroundAngle = Mathf.Clamp(roamLookAroundAngle, 0f, 180f);
+        roamLookAroundTurnSpeed = Mathf.Max(0f, roamLookAroundTurnSpeed);
+        roamingSpeed = Mathf.Max(0f, roamingSpeed);
+        chasingSpeed = Mathf.Max(0f, chasingSpeed);
+        searchingSpeed = Mathf.Max(0f, searchingSpeed);
+        catchDistance = Mathf.Max(0f, catchDistance);
+        loseSightDelay = Mathf.Max(0f, loseSightDelay);
+        searchDuration = Mathf.Max(0f, searchDuration);
+        searchViewAngle = Mathf.Clamp(searchViewAngle, 0f, 360f);
+        searchViewDistance = Mathf.Max(0f, searchViewDistance);
+        searchLookAroundTurnSpeed = Mathf.Max(0f, searchLookAroundTurnSpeed);
+    }
 
     private void Awake()
+    {
+        AssignReferences(true);
+    }
+
+    private void AssignReferences(bool includeSceneSearch)
     {
         if (pathFollower == null)
         {
@@ -76,6 +108,21 @@ public class MonsterAI : MonoBehaviour
         if (vision == null)
         {
             vision = GetComponent<MonsterVision>();
+        }
+
+        if (player == null && includeSceneSearch)
+        {
+            PlayerInteraction playerInteraction = FindFirstObjectByType<PlayerInteraction>();
+
+            if (playerInteraction != null)
+            {
+                player = playerInteraction.transform;
+            }
+        }
+
+        if (player != null && (playerHideState == null || playerHideState.transform != player))
+        {
+            playerHideState = player.GetComponent<PlayerHideState>();
         }
     }
 
@@ -177,11 +224,16 @@ public class MonsterAI : MonoBehaviour
 
         if (!pathFollower.HasPath && pathFollower.HasReachedDestination)
         {
-            LookAroundAtRoamPoint();
+            if (!isWaitingAtRoamPoint)
+            {
+                StartRoamPointWait();
+            }
+
+            bool finishedLooking = LookAroundAtRoamPoint();
 
             waitTimer += Time.deltaTime;
 
-            if (waitTimer >= waitAtRoamPointTime)
+            if (waitTimer >= waitAtRoamPointTime && finishedLooking)
             {
                 GoToNextRoamPoint();
             }
@@ -196,6 +248,11 @@ public class MonsterAI : MonoBehaviour
         }
 
         float distanceToPlayer = Vector3.Distance(transform.position, player.position);
+
+        if (playerHideState != null && playerHideState.IsHidden)
+        {
+            return;
+        }
 
         if (distanceToPlayer <= catchDistance)
         {
@@ -267,6 +324,7 @@ public class MonsterAI : MonoBehaviour
 
         waitTimer = 0f;
         searchTimer = 0f;
+        isWaitingAtRoamPoint = false;
 
         GoToNextRoamPoint();
     }
@@ -317,9 +375,7 @@ public class MonsterAI : MonoBehaviour
         }
 
         waitTimer = 0f;
-
-        roamLookDirectionTimer = 0f;
-        roamLookDirection = Random.value > 0.5f ? 1 : -1;
+        isWaitingAtRoamPoint = false;
 
         if (chooseRandomRoamPoint)
         {
@@ -398,24 +454,55 @@ public class MonsterAI : MonoBehaviour
         );
     }
 
-    private void LookAroundAtRoamPoint()
+    private void StartRoamPointWait()
+    {
+        isWaitingAtRoamPoint = true;
+        waitTimer = 0f;
+        roamLookPhase = 0;
+        roamLookStartRotation = transform.rotation;
+    }
+
+    private bool LookAroundAtRoamPoint()
     {
         if (!lookAroundAtRoamPoint)
         {
-            return;
+            return true;
         }
 
-        roamLookDirectionTimer += Time.deltaTime;
-
-        if (roamLookDirectionTimer >= roamLookDirectionChangeInterval)
+        if (roamLookAroundAngle <= 0f || roamLookAroundTurnSpeed <= 0f)
         {
-            roamLookDirectionTimer = 0f;
-            roamLookDirection *= -1;
+            return true;
         }
 
-        transform.Rotate(
-            Vector3.up,
-            roamLookDirection * roamLookAroundTurnSpeed * Time.deltaTime
+        if (roamLookPhase >= 3)
+        {
+            return true;
+        }
+
+        float targetYaw = 0f;
+
+        if (roamLookPhase == 0)
+        {
+            targetYaw = -roamLookAroundAngle;
+        }
+        else if (roamLookPhase == 1)
+        {
+            targetYaw = roamLookAroundAngle;
+        }
+
+        Quaternion targetRotation = roamLookStartRotation * Quaternion.Euler(0f, targetYaw, 0f);
+
+        transform.rotation = Quaternion.RotateTowards(
+            transform.rotation,
+            targetRotation,
+            roamLookAroundTurnSpeed * Time.deltaTime
         );
+
+        if (Quaternion.Angle(transform.rotation, targetRotation) <= 1f)
+        {
+            roamLookPhase++;
+        }
+
+        return roamLookPhase >= 3;
     }
 }

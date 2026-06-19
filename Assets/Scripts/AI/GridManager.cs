@@ -5,12 +5,15 @@ public class GridManager : MonoBehaviour
 {
     [Header("Grid Settings")]
     public Vector2 gridWorldSize = new Vector2(20f, 20f);
+    [Min(0.05f)]
     public float nodeRadius = 0.5f;
 
     [Header("Obstacle Detection")]
     public LayerMask obstacleMask;
+    [Min(0f)]
     public float obstacleCheckHeight = 0.5f;
-    public float obstacleCheckRadiusMultiplier = 0.9f;
+    [Range(0.1f, 1f)]
+    public float obstacleCheckRadiusMultiplier = 0.6f;
 
     [Header("Movement Rules")]
     public bool allowDiagonals = true;
@@ -28,9 +31,42 @@ public class GridManager : MonoBehaviour
 
     private List<GridNode> currentPath;
 
+    private void Reset()
+    {
+        ApplyDefaultSettings();
+    }
+
+    private void OnValidate()
+    {
+        ApplyDefaultSettings();
+    }
+
     private void Awake()
     {
+        ApplyDefaultSettings();
         CreateGrid();
+    }
+
+    private void ApplyDefaultSettings()
+    {
+        if (gridWorldSize.x <= 0f || gridWorldSize.y <= 0f)
+        {
+            gridWorldSize = new Vector2(20f, 20f);
+        }
+
+        nodeRadius = Mathf.Max(0.05f, nodeRadius);
+        obstacleCheckHeight = Mathf.Max(0f, obstacleCheckHeight);
+        obstacleCheckRadiusMultiplier = Mathf.Clamp(obstacleCheckRadiusMultiplier, 0.1f, 1f);
+
+        if (obstacleMask.value == 0)
+        {
+            int wallMask = LayerMask.GetMask("Wall");
+
+            if (wallMask != 0)
+            {
+                obstacleMask = wallMask;
+            }
+        }
     }
 
     public void CreateGrid()

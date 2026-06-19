@@ -51,4 +51,42 @@ public class FirstPersonLook : MonoBehaviour
 
         cameraHolder.localRotation = Quaternion.Euler(verticalRotation, 0f, 0f);
     }
+
+    public void SnapLookTo(Quaternion worldRotation)
+    {
+        Vector3 eulerAngles = worldRotation.eulerAngles;
+
+        transform.rotation = Quaternion.Euler(0f, eulerAngles.y, 0f);
+
+        float pitch = NormalizeAngle(eulerAngles.x);
+        verticalRotation = Mathf.Clamp(pitch, minVerticalAngle, maxVerticalAngle);
+
+        if (cameraHolder != null)
+        {
+            cameraHolder.localRotation = Quaternion.Euler(verticalRotation, 0f, 0f);
+        }
+    }
+
+    public void SnapYawTo(Quaternion worldRotation, float pitch = 0f)
+    {
+        Vector3 eulerAngles = worldRotation.eulerAngles;
+
+        transform.rotation = Quaternion.Euler(0f, eulerAngles.y, 0f);
+        verticalRotation = Mathf.Clamp(pitch, minVerticalAngle, maxVerticalAngle);
+
+        if (cameraHolder != null)
+        {
+            cameraHolder.localRotation = Quaternion.Euler(verticalRotation, 0f, 0f);
+        }
+    }
+
+    private float NormalizeAngle(float angle)
+    {
+        if (angle > 180f)
+        {
+            return angle - 360f;
+        }
+
+        return angle;
+    }
 }
