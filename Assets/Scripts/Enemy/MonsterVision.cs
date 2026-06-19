@@ -20,6 +20,8 @@ public class MonsterVision : MonoBehaviour
     [Header("Debug")]
     public bool drawGizmos = true;
 
+    private PlayerHideState targetHideState;
+
     private void Reset()
     {
         AssignDefaultReferencesAndSettings(true);
@@ -73,6 +75,11 @@ public class MonsterVision : MonoBehaviour
             return false;
         }
 
+        if (IsTargetHidden())
+        {
+            return false;
+        }
+
         Vector3 eyePosition = GetEyePosition();
         Vector3 targetPosition = GetTargetLookPosition();
 
@@ -118,6 +125,22 @@ public class MonsterVision : MonoBehaviour
         );
 
         return !blocked;
+    }
+
+    private bool IsTargetHidden()
+    {
+        if (target == null)
+        {
+            targetHideState = null;
+            return false;
+        }
+
+        if (targetHideState == null || targetHideState.transform != target)
+        {
+            targetHideState = target.GetComponent<PlayerHideState>();
+        }
+
+        return targetHideState != null && targetHideState.IsHidden;
     }
 
     private Vector3 GetEyePosition()
