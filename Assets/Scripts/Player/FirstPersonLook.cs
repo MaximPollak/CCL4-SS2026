@@ -16,6 +16,8 @@ public class FirstPersonLook : MonoBehaviour
 
     private float verticalRotation;
 
+    public Transform CameraHolder => cameraHolder;
+
     private void OnEnable()
     {
         lookAction.action.Enable();
