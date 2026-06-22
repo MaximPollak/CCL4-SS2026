@@ -13,6 +13,11 @@ public class MonsterPathFollower : MonoBehaviour
     public float turnSpeed = 8f;
     public float waypointReachDistance = 0.2f;
 
+    [Header("Stuck Detection")]
+    public float stuckCheckInterval = 0.5f;
+    public float stuckDistanceThreshold = 0.08f;
+    public float stuckTimeBeforeGivingUp = 1.5f;
+
     [Header("Repathing")]
     public bool followTargetContinuously = false;
     public float repathInterval = 0.5f;
@@ -23,6 +28,8 @@ public class MonsterPathFollower : MonoBehaviour
 
     public bool HasReachedDestination { get; private set; }
     public bool HasPath { get; private set; }
+    public bool LastPathRequestFailed { get; private set; }
+    public bool IsStuck { get; private set; }
 
     private CharacterController characterController;
 
@@ -32,6 +39,9 @@ public class MonsterPathFollower : MonoBehaviour
     private Vector3 currentDestination;
     private float nextRepathTime;
     private float verticalVelocity;
+    private Vector3 lastStuckCheckPosition;
+    private float nextStuckCheckTime;
+    private float stuckTimer;
 
     private void Reset()
     {
@@ -46,6 +56,9 @@ public class MonsterPathFollower : MonoBehaviour
         currentMoveSpeed = Mathf.Max(0f, currentMoveSpeed);
         turnSpeed = Mathf.Max(0f, turnSpeed);
         waypointReachDistance = Mathf.Max(0.05f, waypointReachDistance);
+        stuckCheckInterval = Mathf.Max(0.05f, stuckCheckInterval);
+        stuckDistanceThreshold = Mathf.Max(0.01f, stuckDistanceThreshold);
+        stuckTimeBeforeGivingUp = Mathf.Max(0.1f, stuckTimeBeforeGivingUp);
         repathInterval = Mathf.Max(0.05f, repathInterval);
         targetMoveThreshold = Mathf.Max(0.05f, targetMoveThreshold);
     }
@@ -141,6 +154,8 @@ public class MonsterPathFollower : MonoBehaviour
 
         HasPath = false;
         HasReachedDestination = true;
+        LastPathRequestFailed = false;
+        ResetStuckTracking();
     }
 
     private void RequestPath(Vector3 worldDestination)
@@ -153,6 +168,8 @@ public class MonsterPathFollower : MonoBehaviour
 
         currentDestination = worldDestination;
         nextRepathTime = Time.time + repathInterval;
+        LastPathRequestFailed = false;
+        ResetStuckTracking();
 
         List<GridNode> nodePath = pathfinder.FindPath(transform.position, worldDestination);
 
@@ -168,6 +185,7 @@ public class MonsterPathFollower : MonoBehaviour
 
         float distanceToDestination = Vector3.Distance(transform.position, worldDestination);
         HasReachedDestination = !HasPath && distanceToDestination <= waypointReachDistance * 2f;
+        LastPathRequestFailed = !HasPath && !HasReachedDestination;
     }
 
     private void FollowPath()
@@ -176,6 +194,7 @@ public class MonsterPathFollower : MonoBehaviour
 
         if (!HasPath)
         {
+            ResetStuckTracking();
             Move(Vector3.zero);
             return;
         }
@@ -184,6 +203,7 @@ public class MonsterPathFollower : MonoBehaviour
         {
             HasPath = false;
             HasReachedDestination = true;
+            ResetStuckTracking();
             Move(Vector3.zero);
             return;
         }
@@ -209,6 +229,7 @@ public class MonsterPathFollower : MonoBehaviour
 
         RotateTowards(horizontalMovement);
         Move(horizontalMovement);
+        UpdateStuckTracking();
     }
 
     public void SetMoveSpeed(float newSpeed)
@@ -249,5 +270,43 @@ public class MonsterPathFollower : MonoBehaviour
             + Vector3.up * verticalVelocity;
 
         characterController.Move(finalMovement * Time.deltaTime);
+    }
+
+    private void UpdateStuckTracking()
+    {
+        if (Time.time < nextStuckCheckTime)
+        {
+            return;
+        }
+
+        Vector3 currentFlatPosition = new Vector3(transform.position.x, 0f, transform.position.z);
+        Vector3 lastFlatPosition = new Vector3(lastStuckCheckPosition.x, 0f, lastStuckCheckPosition.z);
+        float movedDistance = Vector3.Distance(currentFlatPosition, lastFlatPosition);
+
+        if (movedDistance <= stuckDistanceThreshold)
+        {
+            stuckTimer += stuckCheckInterval;
+        }
+        else
+        {
+            stuckTimer = 0f;
+            IsStuck = false;
+        }
+
+        if (stuckTimer >= stuckTimeBeforeGivingUp)
+        {
+            IsStuck = true;
+        }
+
+        lastStuckCheckPosition = transform.position;
+        nextStuckCheckTime = Time.time + stuckCheckInterval;
+    }
+
+    private void ResetStuckTracking()
+    {
+        IsStuck = false;
+        stuckTimer = 0f;
+        lastStuckCheckPosition = transform.position;
+        nextStuckCheckTime = Time.time + stuckCheckInterval;
     }
 }

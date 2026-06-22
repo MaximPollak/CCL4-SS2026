@@ -77,6 +77,7 @@ public class MonsterAI : MonoBehaviour
     private bool isSearchLookPausing;
     private bool hasStartedSearchLook;
     private bool hasCompletedSearchLookCycle;
+    private bool hasStartedSearchAtCurrentPosition;
 
     private float normalViewAngle;
     private float normalViewDistance;
@@ -282,6 +283,11 @@ public class MonsterAI : MonoBehaviour
             return;
         }
 
+        if (pathFollower.LastPathRequestFailed || pathFollower.IsStuck)
+        {
+            StartSearchAtCurrentPosition();
+        }
+
         if (!pathFollower.HasReachedDestination)
         {
             return;
@@ -370,6 +376,7 @@ public class MonsterAI : MonoBehaviour
 
         searchTimer = 0f;
         ResetSearchLook();
+        hasStartedSearchAtCurrentPosition = false;
 
         if (pathFollower == null)
         {
@@ -377,6 +384,11 @@ public class MonsterAI : MonoBehaviour
         }
 
         pathFollower.SetDestination(lastKnownPlayerPosition);
+
+        if (pathFollower.LastPathRequestFailed)
+        {
+            StartSearchAtCurrentPosition();
+        }
     }
 
     private void EnterCaughtPlayer()
@@ -614,5 +626,25 @@ public class MonsterAI : MonoBehaviour
         isSearchLookPausing = false;
         hasStartedSearchLook = false;
         hasCompletedSearchLookCycle = false;
+    }
+
+    private void StartSearchAtCurrentPosition()
+    {
+        if (hasStartedSearchAtCurrentPosition)
+        {
+            return;
+        }
+
+        hasStartedSearchAtCurrentPosition = true;
+
+        if (pathFollower != null)
+        {
+            pathFollower.StopMoving();
+        }
+
+        if (printDebugLogs)
+        {
+            Debug.Log("Monster could not reach search point, searching current position.");
+        }
     }
 }

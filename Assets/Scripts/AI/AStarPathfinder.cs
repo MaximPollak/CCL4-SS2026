@@ -67,6 +67,7 @@ public class AStarPathfinder : MonoBehaviour
         startNode.parentNode = null;
 
         openSet.Add(startNode);
+        GridNode closestReachableNode = startNode;
 
         while (openSet.Count > 0)
         {
@@ -87,6 +88,11 @@ public class AStarPathfinder : MonoBehaviour
 
             openSet.Remove(currentNode);
             closedSet.Add(currentNode);
+
+            if (IsCloserToTarget(currentNode, closestReachableNode))
+            {
+                closestReachableNode = currentNode;
+            }
 
             if (currentNode == targetNode)
             {
@@ -124,6 +130,19 @@ public class AStarPathfinder : MonoBehaviour
             }
         }
 
+        if (closestReachableNode != null && closestReachableNode != startNode)
+        {
+            List<GridNode> partialPath = RetracePath(startNode, closestReachableNode);
+
+            if (showPathOnGrid)
+            {
+                gridManager.SetCurrentPath(partialPath);
+            }
+
+            Debug.LogWarning("AStarPathfinder: No full path found, using closest reachable path.");
+            return partialPath;
+        }
+
         Debug.LogWarning("AStarPathfinder: No path found.");
 
         if (showPathOnGrid)
@@ -132,6 +151,22 @@ public class AStarPathfinder : MonoBehaviour
         }
 
         return emptyPath;
+    }
+
+    private bool IsCloserToTarget(GridNode candidateNode, GridNode currentClosestNode)
+    {
+        if (currentClosestNode == null)
+        {
+            return true;
+        }
+
+        if (candidateNode.hCost < currentClosestNode.hCost)
+        {
+            return true;
+        }
+
+        return candidateNode.hCost == currentClosestNode.hCost
+            && candidateNode.gCost < currentClosestNode.gCost;
     }
 
     private List<GridNode> RetracePath(GridNode startNode, GridNode endNode)
