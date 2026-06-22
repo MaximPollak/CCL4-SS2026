@@ -27,6 +27,7 @@ public class MonsterAI : MonoBehaviour
     public bool lookAroundAtRoamPoint = true;
     public float roamLookAroundAngle = 45f;
     public float roamLookAroundTurnSpeed = 45f;
+    public float roamLookDirectionPauseTime = 0.35f;
 
     [Header("Movement Speeds")]
     public float roamingSpeed = 2f;
@@ -47,7 +48,9 @@ public class MonsterAI : MonoBehaviour
 
     [Header("Search Look Around")]
     public bool lookAroundWhileSearching = true;
+    public float searchLookAroundAngle = 75f;
     public float searchLookAroundTurnSpeed = 80f;
+    public float searchLookDirectionPauseTime = 0.4f;
 
     [Header("Debug")]
     public MonsterState currentState = MonsterState.Idle;
@@ -60,11 +63,20 @@ public class MonsterAI : MonoBehaviour
 
     private bool isWaitingAtRoamPoint;
     private int roamLookPhase;
+    private float roamLookPauseTimer;
     private Quaternion roamLookStartRotation;
+    private bool isRoamLookPausing;
 
     private Vector3 lastKnownPlayerPosition;
     private bool hasLastKnownPlayerPosition;
     private float lastTimePlayerSeen = Mathf.NegativeInfinity;
+
+    private int searchLookPhase;
+    private float searchLookPauseTimer;
+    private Quaternion searchLookStartRotation;
+    private bool isSearchLookPausing;
+    private bool hasStartedSearchLook;
+    private bool hasCompletedSearchLookCycle;
 
     private float normalViewAngle;
     private float normalViewDistance;
@@ -82,6 +94,7 @@ public class MonsterAI : MonoBehaviour
         waitAtRoamPointTime = Mathf.Max(0f, waitAtRoamPointTime);
         roamLookAroundAngle = Mathf.Clamp(roamLookAroundAngle, 0f, 180f);
         roamLookAroundTurnSpeed = Mathf.Max(0f, roamLookAroundTurnSpeed);
+        roamLookDirectionPauseTime = Mathf.Max(0f, roamLookDirectionPauseTime);
         roamingSpeed = Mathf.Max(0f, roamingSpeed);
         chasingSpeed = Mathf.Max(0f, chasingSpeed);
         searchingSpeed = Mathf.Max(0f, searchingSpeed);
@@ -90,7 +103,9 @@ public class MonsterAI : MonoBehaviour
         searchDuration = Mathf.Max(0f, searchDuration);
         searchViewAngle = Mathf.Clamp(searchViewAngle, 0f, 360f);
         searchViewDistance = Mathf.Max(0f, searchViewDistance);
+        searchLookAroundAngle = Mathf.Clamp(searchLookAroundAngle, 0f, 180f);
         searchLookAroundTurnSpeed = Mathf.Max(0f, searchLookAroundTurnSpeed);
+        searchLookDirectionPauseTime = Mathf.Max(0f, searchLookDirectionPauseTime);
     }
 
     private void Awake()
@@ -276,7 +291,13 @@ public class MonsterAI : MonoBehaviour
 
         searchTimer += Time.deltaTime;
 
-        if (searchTimer >= searchDuration)
+        bool canFinishSearch =
+            !lookAroundWhileSearching
+            || searchLookAroundAngle <= 0f
+            || searchLookAroundTurnSpeed <= 0f
+            || hasCompletedSearchLookCycle;
+
+        if (searchTimer >= searchDuration && canFinishSearch)
         {
             hasLastKnownPlayerPosition = false;
             ChangeState(MonsterState.Roaming);
@@ -348,6 +369,7 @@ public class MonsterAI : MonoBehaviour
         SetMonsterSpeed(searchingSpeed);
 
         searchTimer = 0f;
+        ResetSearchLook();
 
         if (pathFollower == null)
         {
@@ -448,10 +470,35 @@ public class MonsterAI : MonoBehaviour
             return;
         }
 
-        transform.Rotate(
-            Vector3.up,
-            searchLookAroundTurnSpeed * Time.deltaTime
+        if (searchLookAroundAngle <= 0f || searchLookAroundTurnSpeed <= 0f)
+        {
+            return;
+        }
+
+        if (!hasStartedSearchLook)
+        {
+            hasStartedSearchLook = true;
+            searchLookStartRotation = transform.rotation;
+            searchLookPhase = 0;
+            searchLookPauseTimer = 0f;
+            isSearchLookPausing = false;
+        }
+
+        bool completedLookCycle = RunLookPattern(
+            ref searchLookPhase,
+            ref searchLookPauseTimer,
+            ref isSearchLookPausing,
+            searchLookStartRotation,
+            searchLookAroundAngle,
+            searchLookAroundTurnSpeed,
+            searchLookDirectionPauseTime,
+            true
         );
+
+        if (completedLookCycle)
+        {
+            hasCompletedSearchLookCycle = true;
+        }
     }
 
     private void StartRoamPointWait()
@@ -459,6 +506,8 @@ public class MonsterAI : MonoBehaviour
         isWaitingAtRoamPoint = true;
         waitTimer = 0f;
         roamLookPhase = 0;
+        roamLookPauseTimer = 0f;
+        isRoamLookPausing = false;
         roamLookStartRotation = transform.rotation;
     }
 
@@ -474,35 +523,96 @@ public class MonsterAI : MonoBehaviour
             return true;
         }
 
-        if (roamLookPhase >= 3)
+        return RunLookPattern(
+            ref roamLookPhase,
+            ref roamLookPauseTimer,
+            ref isRoamLookPausing,
+            roamLookStartRotation,
+            roamLookAroundAngle,
+            roamLookAroundTurnSpeed,
+            roamLookDirectionPauseTime,
+            false
+        );
+    }
+
+    private bool RunLookPattern(
+        ref int phase,
+        ref float pauseTimer,
+        ref bool isPausing,
+        Quaternion startRotation,
+        float lookAngle,
+        float turnSpeed,
+        float directionPauseTime,
+        bool loop
+    )
+    {
+        if (phase >= 3)
         {
-            return true;
+            if (!loop)
+            {
+                return true;
+            }
+
+            phase = 0;
+            pauseTimer = 0f;
+            isPausing = false;
         }
 
-        float targetYaw = 0f;
-
-        if (roamLookPhase == 0)
-        {
-            targetYaw = -roamLookAroundAngle;
-        }
-        else if (roamLookPhase == 1)
-        {
-            targetYaw = roamLookAroundAngle;
-        }
-
-        Quaternion targetRotation = roamLookStartRotation * Quaternion.Euler(0f, targetYaw, 0f);
+        float targetYaw = GetLookPatternYaw(phase, lookAngle);
+        Quaternion targetRotation = startRotation * Quaternion.Euler(0f, targetYaw, 0f);
 
         transform.rotation = Quaternion.RotateTowards(
             transform.rotation,
             targetRotation,
-            roamLookAroundTurnSpeed * Time.deltaTime
+            turnSpeed * Time.deltaTime
         );
 
-        if (Quaternion.Angle(transform.rotation, targetRotation) <= 1f)
+        if (Quaternion.Angle(transform.rotation, targetRotation) > 1f)
         {
-            roamLookPhase++;
+            return false;
         }
 
-        return roamLookPhase >= 3;
+        if (!isPausing)
+        {
+            isPausing = true;
+            pauseTimer = 0f;
+        }
+
+        pauseTimer += Time.deltaTime;
+
+        if (pauseTimer < directionPauseTime)
+        {
+            return false;
+        }
+
+        phase++;
+        pauseTimer = 0f;
+        isPausing = false;
+
+        return phase >= 3;
+    }
+
+    private float GetLookPatternYaw(int phase, float lookAngle)
+    {
+        if (phase == 0)
+        {
+            return -lookAngle;
+        }
+
+        if (phase == 1)
+        {
+            return lookAngle;
+        }
+
+        return 0f;
+    }
+
+    private void ResetSearchLook()
+    {
+        searchLookPhase = 0;
+        searchLookPauseTimer = 0f;
+        isSearchLookPausing = false;
+        hasStartedSearchLook = false;
+        hasCompletedSearchLookCycle = false;
     }
 }

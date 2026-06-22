@@ -14,6 +14,7 @@ public class GridManager : MonoBehaviour
     public float obstacleCheckHeight = 0.5f;
     [Range(0.1f, 1f)]
     public float obstacleCheckRadiusMultiplier = 0.6f;
+    public bool includeTriggerObstacles = true;
 
     [Header("Movement Rules")]
     public bool allowDiagonals = true;
@@ -96,7 +97,7 @@ public class GridManager : MonoBehaviour
                     GetObstacleCheckPosition(worldPoint),
                     GetObstacleCheckRadius(),
                     obstacleMask,
-                    QueryTriggerInteraction.Ignore
+                    GetObstacleTriggerInteraction()
                 );
 
                 bool walkable = !blocked;
@@ -241,8 +242,15 @@ public class GridManager : MonoBehaviour
             out _,
             distance,
             obstacleMask,
-            QueryTriggerInteraction.Ignore
+            GetObstacleTriggerInteraction()
         );
+    }
+
+    private QueryTriggerInteraction GetObstacleTriggerInteraction()
+    {
+        return includeTriggerObstacles
+            ? QueryTriggerInteraction.Collide
+            : QueryTriggerInteraction.Ignore;
     }
 
     private Vector3 GetObstacleCheckPosition(Vector3 worldPosition)

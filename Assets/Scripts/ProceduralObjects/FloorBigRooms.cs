@@ -20,6 +20,8 @@ public class ProceduralOctagonPlaneBig : MonoBehaviour
     private const int Sides = 8;
     private const string MeshName = "Procedural Octagon Plane";
 
+    private Mesh generatedMesh;
+
     private void OnEnable()
     {
         GenerateMesh();
@@ -39,18 +41,15 @@ public class ProceduralOctagonPlaneBig : MonoBehaviour
         if (meshFilter == null || meshCollider == null)
             return;
 
-        Mesh mesh = meshFilter.sharedMesh;
+        if (generatedMesh == null || meshFilter.sharedMesh != generatedMesh)
+        {
+            generatedMesh = new Mesh();
+            generatedMesh.name = MeshName + " " + GetInstanceID();
+            meshFilter.sharedMesh = generatedMesh;
+        }
 
-        if (mesh == null || mesh.name != MeshName)
-        {
-            mesh = new Mesh();
-            mesh.name = MeshName;
-            meshFilter.sharedMesh = mesh;
-        }
-        else
-        {
-            mesh.Clear();
-        }
+        Mesh mesh = generatedMesh;
+        mesh.Clear();
 
         float angleStep = Mathf.PI * 2f / Sides;
 

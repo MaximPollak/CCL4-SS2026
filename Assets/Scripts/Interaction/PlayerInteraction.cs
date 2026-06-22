@@ -11,6 +11,9 @@ public class PlayerInteraction : MonoBehaviour
     [SerializeField] private float interactionDistance = 3f;
     [SerializeField] private float blockedInteractableSearchRadius = 1.2f;
 
+    [Header("Debug")]
+    [SerializeField] private bool printInteractionDebugLogs = false;
+
     public InventorySlot Inventory { get; private set; }
     public PlayerHideState HideState { get; private set; }
     public Camera PlayerCamera => playerCamera;
@@ -56,6 +59,11 @@ public class PlayerInteraction : MonoBehaviour
 
     private void TryInteract()
     {
+        if (HideState != null && HideState.IsTransitioning)
+        {
+            return;
+        }
+
         if (HideState != null && HideState.IsHidden)
         {
             if (HideState.CurrentHidingSpot != null)
@@ -74,7 +82,13 @@ public class PlayerInteraction : MonoBehaviour
 
         Ray ray = new Ray(playerCamera.transform.position, playerCamera.transform.forward);
 
-        if (Physics.Raycast(ray, out RaycastHit hit, interactionDistance))
+        if (Physics.Raycast(
+            ray,
+            out RaycastHit hit,
+            interactionDistance,
+            Physics.DefaultRaycastLayers,
+            QueryTriggerInteraction.Collide
+        ))
         {
             IInteractable interactable = GetInteractableFromHit(hit.collider);
 
@@ -84,7 +98,7 @@ public class PlayerInteraction : MonoBehaviour
             }
             else
             {
-                interactable = GetNearbyInteractable(hit.point);
+                interactable = GetNearbyInteractable(hit.point, ray);
 
                 if (interactable != null)
                 {
@@ -92,13 +106,15 @@ public class PlayerInteraction : MonoBehaviour
                 }
                 else
                 {
-                    Debug.Log("Looked at object, but it is not interactable: " + hit.collider.name);
+                    LogInteractionDebug(
+                        "Looked at object, but it is not interactable: " + hit.collider.name
+                    );
                 }
             }
         }
         else
         {
-            Debug.Log("Nothing in interaction range.");
+            LogInteractionDebug("Nothing in interaction range.");
         }
     }
 
@@ -117,7 +133,7 @@ public class PlayerInteraction : MonoBehaviour
         return hitCollider.GetComponentInParent<IInteractable>();
     }
 
-    private IInteractable GetNearbyInteractable(Vector3 searchPosition)
+    private IInteractable GetNearbyInteractable(Vector3 searchPosition, Ray lookRay)
     {
         if (blockedInteractableSearchRadius <= 0f)
         {
@@ -131,30 +147,49 @@ public class PlayerInteraction : MonoBehaviour
             QueryTriggerInteraction.Collide
         );
 
-        IInteractable closestInteractable = null;
-        float closestDistance = Mathf.Infinity;
+        IInteractable bestInteractable = null;
+        float bestLookDistance = Mathf.Infinity;
+        float bestHitDistance = Mathf.Infinity;
 
         foreach (Collider nearbyCollider in nearbyColliders)
         {
             IInteractable interactable = GetInteractableFromHit(nearbyCollider);
 
-            if (interactable == null || !(interactable is Component interactableComponent))
+            if (interactable == null)
             {
                 continue;
             }
 
-            float distance = Vector3.SqrMagnitude(
-                interactableComponent.transform.position - searchPosition
-            );
+            Vector3 candidatePosition = nearbyCollider.bounds.center;
+            Vector3 toCandidate = candidatePosition - lookRay.origin;
+            float distanceAlongLook = Vector3.Dot(toCandidate, lookRay.direction);
 
-            if (distance < closestDistance)
+            if (distanceAlongLook < 0f || distanceAlongLook > interactionDistance)
             {
-                closestDistance = distance;
-                closestInteractable = interactable;
+                continue;
+            }
+
+            Vector3 closestPointOnLook = lookRay.origin + lookRay.direction * distanceAlongLook;
+            float lookDistance = Vector3.SqrMagnitude(candidatePosition - closestPointOnLook);
+            float hitDistance = Vector3.SqrMagnitude(candidatePosition - searchPosition);
+
+            if (lookDistance > blockedInteractableSearchRadius * blockedInteractableSearchRadius)
+            {
+                continue;
+            }
+
+            if (
+                lookDistance < bestLookDistance
+                || (Mathf.Approximately(lookDistance, bestLookDistance) && hitDistance < bestHitDistance)
+            )
+            {
+                bestLookDistance = lookDistance;
+                bestHitDistance = hitDistance;
+                bestInteractable = interactable;
             }
         }
 
-        return closestInteractable;
+        return bestInteractable;
     }
 
     private void TryDropHeldItem()
@@ -171,5 +206,15 @@ public class PlayerInteraction : MonoBehaviour
         }
 
         Inventory.DropHeldItem(playerCamera.transform);
+    }
+
+    private void LogInteractionDebug(string message)
+    {
+        if (!printInteractionDebugLogs)
+        {
+            return;
+        }
+
+        Debug.Log(message);
     }
 }
