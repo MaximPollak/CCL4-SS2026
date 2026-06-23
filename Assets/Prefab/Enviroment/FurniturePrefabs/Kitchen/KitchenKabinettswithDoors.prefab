@@ -56,22 +56,34 @@ PrefabInstance:
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 1ba3ab2c9ead7d94ebba8f54d991f530, type: 3}
+    - targetCorrespondingSourceObject: {fileID: -4864833620444741553, guid: 1ba3ab2c9ead7d94ebba8f54d991f530, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 8319024207295781108}
+      addedObject: {fileID: 3428375971210230715}
+    - targetCorrespondingSourceObject: {fileID: -3250741175455586629, guid: 1ba3ab2c9ead7d94ebba8f54d991f530, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6701650781292496930}
+    - targetCorrespondingSourceObject: {fileID: -3250741175455586629, guid: 1ba3ab2c9ead7d94ebba8f54d991f530, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7299118818861134869}
+    - targetCorrespondingSourceObject: {fileID: 5385675515949273585, guid: 1ba3ab2c9ead7d94ebba8f54d991f530, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6083307329719534075}
+    - targetCorrespondingSourceObject: {fileID: 5385675515949273585, guid: 1ba3ab2c9ead7d94ebba8f54d991f530, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6722577723717891893}
   m_SourcePrefab: {fileID: 100100000, guid: 1ba3ab2c9ead7d94ebba8f54d991f530, type: 3}
---- !u!1 &1901468899174357669 stripped
+--- !u!1 &3089070954630031291 stripped
 GameObject:
-  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 1ba3ab2c9ead7d94ebba8f54d991f530, type: 3}
+  m_CorrespondingSourceObject: {fileID: -4864833620444741553, guid: 1ba3ab2c9ead7d94ebba8f54d991f530, type: 3}
   m_PrefabInstance: {fileID: 1630925604690896884}
   m_PrefabAsset: {fileID: 0}
---- !u!65 &8319024207295781108
+--- !u!65 &3428375971210230715
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1901468899174357669}
+  m_GameObject: {fileID: 3089070954630031291}
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -84,5 +96,91 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.6808319, y: 1.1057601, z: 1.2155895}
-  m_Center: {x: 12.61224, y: 0.546841, z: 5.4590006}
+  m_Size: {x: 0.025999997, y: 0.020000055, z: 0.25496292}
+  m_Center: {x: -0.002503314, y: -0.00000003213063, z: 0.11748146}
+--- !u!1 &4918276235404722511 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -3250741175455586629, guid: 1ba3ab2c9ead7d94ebba8f54d991f530, type: 3}
+  m_PrefabInstance: {fileID: 1630925604690896884}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &6701650781292496930
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4918276235404722511}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.027507681, y: 0.22799987, z: 0.292}
+  m_Center: {x: -0.013754737, y: 0.113999665, z: 0.14599997}
+--- !u!114 &7299118818861134869
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4918276235404722511}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7182d260aa54bf3bdb28324ba2d8613, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HingedDoor
+  openRotation: {x: 0, y: 0, z: 90}
+  rotationSpeed: 180
+  startsOpen: 0
+  enableKeyboardTestToggle: 0
+  printDebugLogs: 0
+--- !u!1 &6638294214219953669 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5385675515949273585, guid: 1ba3ab2c9ead7d94ebba8f54d991f530, type: 3}
+  m_PrefabInstance: {fileID: 1630925604690896884}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &6083307329719534075
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6638294214219953669}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.027507681, y: 0.22799988, z: 0.292}
+  m_Center: {x: -0.013754737, y: -0.11400024, z: 0.14599997}
+--- !u!114 &6722577723717891893
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6638294214219953669}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7182d260aa54bf3bdb28324ba2d8613, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HingedDoor
+  openRotation: {x: 0, y: 0, z: -90}
+  rotationSpeed: 180
+  startsOpen: 0
+  enableKeyboardTestToggle: 0
+  printDebugLogs: 0

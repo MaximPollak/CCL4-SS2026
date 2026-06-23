@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 [DisallowMultipleComponent]
 public class HingedDoor : MonoBehaviour, IInteractable
@@ -11,6 +12,10 @@ public class HingedDoor : MonoBehaviour, IInteractable
     [SerializeField] private float rotationSpeed = 180f;
 
     [SerializeField] private bool startsOpen = false;
+
+    [Header("Debug")]
+    [SerializeField] private bool enableKeyboardTestToggle = false;
+    [SerializeField] private bool printDebugLogs = false;
 
     private Quaternion closedLocalRotation;
     private Quaternion openLocalRotation;
@@ -26,39 +31,43 @@ public class HingedDoor : MonoBehaviour, IInteractable
         transform.localRotation = GetTargetRotation();
     }
 
-private void Update()
-{
-    if (Input.GetKeyDown(KeyCode.O))
+    private void Update()
     {
-        Toggle();
-        Debug.Log("Door toggled!");
-    }
+        if (enableKeyboardTestToggle
+            && Keyboard.current != null
+            && Keyboard.current.oKey.wasPressedThisFrame)
+        {
+            Toggle();
+        }
 
-    transform.localRotation = Quaternion.RotateTowards(
-        transform.localRotation,
-        GetTargetRotation(),
-        rotationSpeed * Time.deltaTime
-    );
-}
+        transform.localRotation = Quaternion.RotateTowards(
+            transform.localRotation,
+            GetTargetRotation(),
+            rotationSpeed * Time.deltaTime
+        );
+    }
 
     public void Interact(PlayerInteraction player)
     {
-        isOpen = !isOpen;
+        Toggle();
     }
 
     public void Open()
     {
         isOpen = true;
+        LogStateChange();
     }
 
     public void Close()
     {
         isOpen = false;
+        LogStateChange();
     }
 
     public void Toggle()
     {
         isOpen = !isOpen;
+        LogStateChange();
     }
 
     private Quaternion GetTargetRotation()
@@ -66,5 +75,13 @@ private void Update()
         return isOpen ? openLocalRotation : closedLocalRotation;
     }
 
-    
+    private void LogStateChange()
+    {
+        if (!printDebugLogs)
+        {
+            return;
+        }
+
+        Debug.Log($"{name} door {(isOpen ? "opened" : "closed")}.", this);
+    }
 }

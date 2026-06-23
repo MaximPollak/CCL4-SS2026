@@ -59,7 +59,62 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 3585206e4f5241c4695f98d5855bb3bd, type: 3}
       insertIndex: -1
       addedObject: {fileID: 7503926106157815992}
+    - targetCorrespondingSourceObject: {fileID: -1018664272722485354, guid: 3585206e4f5241c4695f98d5855bb3bd, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 852159000329944809}
+    - targetCorrespondingSourceObject: {fileID: -1018664272722485354, guid: 3585206e4f5241c4695f98d5855bb3bd, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5857934678690366512}
+    - targetCorrespondingSourceObject: {fileID: 4424396828587804706, guid: 3585206e4f5241c4695f98d5855bb3bd, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 646857590491588364}
+    - targetCorrespondingSourceObject: {fileID: 4424396828587804706, guid: 3585206e4f5241c4695f98d5855bb3bd, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3575249441623372839}
   m_SourcePrefab: {fileID: 100100000, guid: 3585206e4f5241c4695f98d5855bb3bd, type: 3}
+--- !u!1 &732489177181681731 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4424396828587804706, guid: 3585206e4f5241c4695f98d5855bb3bd, type: 3}
+  m_PrefabInstance: {fileID: 3984786819314888801}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &646857590491588364
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 732489177181681731}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.027507072, y: 0.22799988, z: 0.292}
+  m_Center: {x: -0.013754393, y: -0.11400012, z: 0.146}
+--- !u!114 &3575249441623372839
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 732489177181681731}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7182d260aa54bf3bdb28324ba2d8613, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HingedDoor
+  openRotation: {x: 0, y: 0, z: -90}
+  rotationSpeed: 180
+  startsOpen: 0
+  enableKeyboardTestToggle: 0
+  printDebugLogs: 0
 --- !u!1 &4291270386036837680 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 3585206e4f5241c4695f98d5855bb3bd, type: 3}
@@ -86,3 +141,46 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.56741714, y: 0.8507308, z: 1.2030611}
   m_Center: {x: 17.535013, y: 0.49827057, z: 10.108849}
+--- !u!1 &5084621438448742391 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -1018664272722485354, guid: 3585206e4f5241c4695f98d5855bb3bd, type: 3}
+  m_PrefabInstance: {fileID: 3984786819314888801}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &852159000329944809
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5084621438448742391}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.027507072, y: 0.22799987, z: 0.292}
+  m_Center: {x: -0.013754393, y: 0.11399987, z: 0.146}
+--- !u!114 &5857934678690366512
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5084621438448742391}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7182d260aa54bf3bdb28324ba2d8613, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HingedDoor
+  openRotation: {x: 0, y: 0, z: 90}
+  rotationSpeed: 180
+  startsOpen: 0
+  enableKeyboardTestToggle: 0
+  printDebugLogs: 0
