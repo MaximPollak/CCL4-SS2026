@@ -15,9 +15,7 @@ public class InventorySlot : MonoBehaviour
     [SerializeField] private float heldScaleMultiplier = 0.35f;
 
     [Header("Drop Settings")]
-    [SerializeField] private float dropDistance = 1.5f;
-    [SerializeField] private float dropHeightOffset = -0.3f;
-    [SerializeField] private float plopForce = 2f;
+    [SerializeField] private float plopForce = 1.7f;
 
     private Vector3 originalItemScale;
 
@@ -125,9 +123,20 @@ public class InventorySlot : MonoBehaviour
 
         currentItem.transform.SetParent(holdPoint);
 
-        currentItem.transform.localPosition = heldLocalPosition;
-        currentItem.transform.localRotation = Quaternion.Euler(heldLocalRotation);
-        currentItem.transform.localScale = originalItemScale * heldScaleMultiplier;
+        Vector3 finalHeldLocalPosition = currentItem.OverrideHeldPosition
+            ? currentItem.HeldLocalPosition
+            : heldLocalPosition;
+
+        Vector3 finalHeldLocalRotation = currentItem.OverrideHeldRotation
+            ? currentItem.HeldLocalRotation
+            : heldLocalRotation;
+
+        currentItem.transform.localPosition = finalHeldLocalPosition;
+        currentItem.transform.localRotation = Quaternion.Euler(finalHeldLocalRotation);
+        currentItem.transform.localScale =
+            originalItemScale
+            * heldScaleMultiplier
+            * currentItem.HeldScaleMultiplier;
     }
 
     private void DropCurrentItem(Transform playerCameraTransform, bool notifyInventoryChanged = true)
@@ -143,15 +152,9 @@ public class InventorySlot : MonoBehaviour
             return;
         }
 
-        Vector3 dropPosition =
-            playerCameraTransform.position +
-            playerCameraTransform.forward * dropDistance +
-            Vector3.up * dropHeightOffset;
-
         PickupItem itemToDrop = currentItem;
 
-        itemToDrop.DropTo(dropPosition, playerCameraTransform.forward, plopForce);
-        itemToDrop.transform.localScale = originalItemScale;
+        itemToDrop.DropFromHand(playerCameraTransform.forward, originalItemScale, plopForce);
 
         Debug.Log("Dropped item: " + itemToDrop.ItemId);
 
