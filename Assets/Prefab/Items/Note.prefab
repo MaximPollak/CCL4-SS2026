@@ -1,5 +1,58 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5428806360720948132
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2358033075368993785}
+  - component: {fileID: 8010683029142307836}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2358033075368993785
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5428806360720948132}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 1.495, y: 0.335, z: -1.326}
+  m_LocalScale: {x: 0.31, y: 0.21, z: 0.03}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4778833439684094109}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &8010683029142307836
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5428806360720948132}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &5033734436472852342
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -54,6 +107,43 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 23f5114c1d8344d4f8445f60da774257, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2358033075368993785}
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 23f5114c1d8344d4f8445f60da774257, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -8409000000000000001}
   m_SourcePrefab: {fileID: 100100000, guid: 23f5114c1d8344d4f8445f60da774257, type: 3}
+--- !u!1 &8409000000000000002 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 23f5114c1d8344d4f8445f60da774257, type: 3}
+  m_PrefabInstance: {fileID: 5033734436472852342}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &-8409000000000000001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8409000000000000002}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5dfd163c6ce16451a9e6186031d26c98, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::PickupItem
+  itemId: Note
+  overrideHeldPosition: 0
+  overrideHeldRotation: 0
+  heldLocalPosition: {x: 0.45, y: -0.35, z: 0.75}
+  heldLocalRotation: {x: 15, y: -25, z: 10}
+  heldScaleMultiplier: 2
+  addRigidbodyIfMissing: 1
+  upwardDropForce: 0.6
+  spinForce: 0
+--- !u!4 &4778833439684094109 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 23f5114c1d8344d4f8445f60da774257, type: 3}
+  m_PrefabInstance: {fileID: 5033734436472852342}
+  m_PrefabAsset: {fileID: 0}

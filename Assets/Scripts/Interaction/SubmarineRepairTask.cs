@@ -1,0 +1,19 @@
+public enum SubmarineRepairTask
+{
+    OxygenTankLeft,
+    OxygenTankRight,
+    PressureValve,
+    OilTank,
+    CodeBox,
+    VentilatorLeft,
+    VentilatorRight,
+    VentScrews,
+    SteeringWheel,
+    AccessCard,
+    Battery,
+    PressureValveTurned,
+    VentCoverLeft,
+    VentCoverRight,
+    VentSecuredLeft,
+    VentSecuredRight
+}
