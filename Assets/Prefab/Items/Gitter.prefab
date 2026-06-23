@@ -111,8 +111,37 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 0a8d803d0b176da4a8bc2386d6908ccf, type: 3}
       insertIndex: -1
       addedObject: {fileID: 7768497491144020191}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 0a8d803d0b176da4a8bc2386d6908ccf, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -8407000000000000001}
   m_SourcePrefab: {fileID: 100100000, guid: 0a8d803d0b176da4a8bc2386d6908ccf, type: 3}
+--- !u!1 &8407000000000000002 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 0a8d803d0b176da4a8bc2386d6908ccf, type: 3}
+  m_PrefabInstance: {fileID: 8371997610615711609}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &-8407000000000000001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8407000000000000002}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5dfd163c6ce16451a9e6186031d26c98, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::PickupItem
+  itemId: Gitter
+  overrideHeldPosition: 1
+  overrideHeldRotation: 1
+  heldLocalPosition: {x: 0.69, y: 0.55, z: 0.75}
+  heldLocalRotation: {x: 15, y: -25, z: 10}
+  heldScaleMultiplier: 2
+  addRigidbodyIfMissing: 1
+  upwardDropForce: 0.6
+  spinForce: 0
 --- !u!4 &8333337187518398610 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 0a8d803d0b176da4a8bc2386d6908ccf, type: 3}
