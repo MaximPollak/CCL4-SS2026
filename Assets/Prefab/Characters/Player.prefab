@@ -187,7 +187,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
-  m_Name: 
+  m_Name:
   m_EditorClassIdentifier: 
   m_RenderShadows: 1
   m_RequiresDepthTextureOption: 2
@@ -231,7 +231,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e005f984f901948ecaa1ba738455db50, type: 3}
-  m_Name: 
+  m_Name:
   m_EditorClassIdentifier: AK.Wwise.Unity.MonoBehaviour::AkGameObj
   m_listeners:
     initialListenerList: []
@@ -275,6 +275,8 @@ GameObject:
   - component: {fileID: 5466025002349786282}
   - component: {fileID: 7805505142927009444}
   - component: {fileID: 5363703141041132231}
+  - component: {fileID: 6903252882186044182}
+  - component: {fileID: 799654198065253317}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -337,8 +339,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FirstPersonMovement
   moveAction: {fileID: -1680190386980627800, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  crouchAction: {fileID: 0}
   movementSpeed: 4
   gravity: -20
+  allowCrouch: 1
+  holdToCrouch: 0
+  crouchHeight: 1.05
+  crouchSpeed: 2
+  crouchCameraHeight: 1.1
+  crouchTransitionSpeed: 10
+  standUpObstacleMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
 --- !u!114 &5466025002349786282
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -369,7 +381,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerInteraction
   playerCamera: {fileID: 6675077558800139784}
-  interactionDistance: 3
+  interactionDistance: 8
+  blockedInteractableSearchRadius: 2
+  printInteractionDebugLogs: 0
 --- !u!114 &5363703141041132231
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -387,9 +401,52 @@ MonoBehaviour:
   heldLocalPosition: {x: 0.45, y: -0.35, z: 0.75}
   heldLocalRotation: {x: 15, y: -25, z: 10}
   heldScaleMultiplier: 0.35
-  dropDistance: 1.5
-  dropHeightOffset: -0.3
   plopForce: 2
+--- !u!114 &6903252882186044182
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4090973248547143273}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0aaf2df049746b9ac7c4f9b99ed6404, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::InventoryHudBootstrap
+  inventorySlot: {fileID: 5363703141041132231}
+  anchoredPosition: {x: 170, y: 20}
+  size: {x: 300, y: 50}
+  fontSize: 24
+  createCrosshair: 1
+  crosshairText: +
+  crosshairFontSize: 36
+  crosshairSize: {x: 50, y: 50}
+--- !u!114 &799654198065253317
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4090973248547143273}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4eddfcde31a74cb1bffab7ed8eae105f, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerHideState
+  movement: {fileID: 3019846882845027158}
+  look: {fileID: 5466025002349786282}
+  characterController: {fileID: 4080675400870374819}
+  cameraTransform: {fileID: 2670405114151107870}
+  disableMovementWhileHidden: 1
+  disableLookWhileHidden: 1
+  snapViewToHidingPoint: 1
+  useHidePointAsCameraView: 1
+  enterTransitionDuration: 0.35
+  exitTransitionDuration: 0.2
+  hiddenOverlay: {fileID: 0}
+  hiddenOverlayColor: {r: 0, g: 0, b: 0, a: 0.55}
+  overlayFadeSpeed: 8
 --- !u!1 &5092611013973542942
 GameObject:
   m_ObjectHideFlags: 0
