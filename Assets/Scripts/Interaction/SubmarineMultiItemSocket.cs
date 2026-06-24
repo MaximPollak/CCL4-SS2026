@@ -21,6 +21,11 @@ public class SubmarineMultiItemSocket : MonoBehaviour, IInteractable
 
     private int currentItemCount;
 
+    private void Start()
+    {
+        RestoreStateFromGameState();
+    }
+
     public void Interact(PlayerInteraction player)
     {
         if (repairManager != null && repairManager.IsTaskComplete(repairTask))
@@ -41,20 +46,12 @@ public class SubmarineMultiItemSocket : MonoBehaviour, IInteractable
             return;
         }
 
+        GameState.Instance.MarkItemConsumed(requiredItemId);
         player.Inventory.ClearItem();
         currentItemCount++;
+        SaveProgress();
 
-        int visualIndex = currentItemCount - 1;
-
-        if (objectsToEnablePerItem != null && visualIndex < objectsToEnablePerItem.Length)
-        {
-            GameObject progressObject = objectsToEnablePerItem[visualIndex];
-
-            if (progressObject != null)
-            {
-                progressObject.SetActive(true);
-            }
-        }
+        ApplyProgressVisuals();
 
         Debug.Log(progressMessage + " " + currentItemCount + "/" + requiredItemCount);
 
@@ -74,5 +71,54 @@ public class SubmarineMultiItemSocket : MonoBehaviour, IInteractable
         }
 
         Debug.Log(completedMessage);
+    }
+
+    private void RestoreStateFromGameState()
+    {
+        if (repairManager == null)
+        {
+            return;
+        }
+
+        currentItemCount = repairManager.GetTaskProgress(repairTask);
+
+        if (repairManager.IsTaskComplete(repairTask))
+        {
+            currentItemCount = Mathf.Max(currentItemCount, requiredItemCount);
+        }
+
+        currentItemCount = Mathf.Clamp(currentItemCount, 0, requiredItemCount);
+        ApplyProgressVisuals();
+    }
+
+    private void SaveProgress()
+    {
+        if (repairManager == null)
+        {
+            return;
+        }
+
+        repairManager.SetTaskProgress(repairTask, currentItemCount);
+    }
+
+    private void ApplyProgressVisuals()
+    {
+        if (objectsToEnablePerItem != null)
+        {
+            for (int i = 0; i < objectsToEnablePerItem.Length; i++)
+            {
+                GameObject progressObject = objectsToEnablePerItem[i];
+
+                if (progressObject != null)
+                {
+                    progressObject.SetActive(i < currentItemCount);
+                }
+            }
+        }
+
+        if (objectToEnableWhenComplete != null)
+        {
+            objectToEnableWhenComplete.SetActive(currentItemCount >= requiredItemCount);
+        }
     }
 }

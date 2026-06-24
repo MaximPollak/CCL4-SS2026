@@ -127,6 +127,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -8407000000000000001, guid: 91afaa0b052fb8e449ba8e4f814bd3b7, type: 3}
+      propertyPath: itemId
+      value: Gitter
+      objectReference: {fileID: 0}
     - target: {fileID: 8333337187518398610, guid: 91afaa0b052fb8e449ba8e4f814bd3b7, type: 3}
       propertyPath: m_LocalPosition.x
       value: -52.894
@@ -166,6 +170,14 @@ PrefabInstance:
     - target: {fileID: 8333337187518398610, guid: 91afaa0b052fb8e449ba8e4f814bd3b7, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 8407000000000000002, guid: 91afaa0b052fb8e449ba8e4f814bd3b7, type: 3}
+      propertyPath: m_Name
+      value: Gitter2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8407000000000000002, guid: 91afaa0b052fb8e449ba8e4f814bd3b7, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8713944839473207848, guid: 91afaa0b052fb8e449ba8e4f814bd3b7, type: 3}
       propertyPath: m_Name
@@ -746,6 +758,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PressureVaule
       objectReference: {fileID: 0}
+    - target: {fileID: 8406000000000000003, guid: 59833a822b9c1e0429fcd263a17d739c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -802,6 +818,10 @@ PrefabInstance:
     - target: {fileID: 3433255223631770162, guid: af8781a92f5aad441b57ce65fce81a68, type: 3}
       propertyPath: m_Name
       value: Battery
+      objectReference: {fileID: 0}
+    - target: {fileID: 8405000000000000003, guid: af8781a92f5aad441b57ce65fce81a68, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -950,6 +970,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: OilCanister (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 2198954059458216470, guid: 7e5d7a7c30a31984ba410171129c0bdc, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8403000000000000003, guid: 7e5d7a7c30a31984ba410171129c0bdc, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -1009,6 +1033,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6366541592957569254, guid: f172ac1c530138247bf0ec87d7f67182, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8402000000000000003, guid: f172ac1c530138247bf0ec87d7f67182, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -1454,6 +1482,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: OilCanister (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 2198954059458216470, guid: 7e5d7a7c30a31984ba410171129c0bdc, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8403000000000000003, guid: 7e5d7a7c30a31984ba410171129c0bdc, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -1526,7 +1558,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8401000000000000003, guid: 84b853110a3cd804c8302206ba69bf1e, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2125,6 +2157,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7801000000000000003, guid: 1ef106aad0105004484e14c41e09afc1, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2381,7 +2417,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7544614096756240786, guid: bcc2559aeba274a4f95f4a3c729cc57e, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8337050200881287239, guid: bcc2559aeba274a4f95f4a3c729cc57e, type: 3}
       propertyPath: m_Enabled
@@ -2923,6 +2959,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: OilCanister
       objectReference: {fileID: 0}
+    - target: {fileID: 2198954059458216470, guid: 7e5d7a7c30a31984ba410171129c0bdc, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8403000000000000003, guid: 7e5d7a7c30a31984ba410171129c0bdc, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -3050,7 +3090,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8409000000000000002, guid: e37454f6677cda940953d4cab992a77d, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3251,6 +3291,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: FireTool
       objectReference: {fileID: 0}
+    - target: {fileID: 8404000000000000003, guid: 0206c8b073f1d6845810bb705f0e36e7, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3319,7 +3363,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8401000000000000003, guid: 84b853110a3cd804c8302206ba69bf1e, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3376,7 +3420,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8407000000000000002, guid: 91afaa0b052fb8e449ba8e4f814bd3b7, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8713944839473207848, guid: 91afaa0b052fb8e449ba8e4f814bd3b7, type: 3}
       propertyPath: m_Name

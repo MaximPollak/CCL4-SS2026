@@ -1,5 +1,7 @@
 using System;
+using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class InventorySlot : MonoBehaviour
 {
@@ -40,6 +42,11 @@ public class InventorySlot : MonoBehaviour
 
             return currentItem.ItemId;
         }
+    }
+
+    private void Start()
+    {
+        RestoreHeldItemFromGameState();
     }
 
     public bool IsEmpty()
@@ -83,6 +90,7 @@ public class InventorySlot : MonoBehaviour
 
         Debug.Log("Picked up item: " + currentItem.ItemId);
 
+        GameState.Instance.SetHeldItem(currentItem.ItemId);
         OnInventoryChanged?.Invoke(CurrentItemId);
     }
 
@@ -93,6 +101,11 @@ public class InventorySlot : MonoBehaviour
 
     public void ClearItem()
     {
+        ClearItem(true);
+    }
+
+    public void ClearItem(bool saveToGameState)
+    {
         if (currentItem == null)
         {
             return;
@@ -102,6 +115,34 @@ public class InventorySlot : MonoBehaviour
 
         Destroy(currentItem.gameObject);
         currentItem = null;
+
+        if (saveToGameState)
+        {
+            GameState.Instance.ClearHeldItem();
+        }
+
+        OnInventoryChanged?.Invoke(CurrentItemId);
+    }
+
+    public void ClearHeldItemForDeath()
+    {
+        if (currentItem != null)
+        {
+            Destroy(currentItem.gameObject);
+            currentItem = null;
+        }
+
+        string lostItemId = GameState.Instance.ConsumeHeldItemForDeath();
+
+        if (!string.IsNullOrWhiteSpace(lostItemId))
+        {
+            RandomItemSpawner randomItemSpawner = FindFirstObjectByType<RandomItemSpawner>();
+
+            if (randomItemSpawner != null)
+            {
+                randomItemSpawner.SpawnSpecificItem(lostItemId);
+            }
+        }
 
         OnInventoryChanged?.Invoke(CurrentItemId);
     }
@@ -175,9 +216,12 @@ public class InventorySlot : MonoBehaviour
             printDropDebugLogs
         );
 
+        StartCoroutine(SaveDroppedItemAfterAnimation(itemToDrop));
+
         Debug.Log("Dropped item: " + itemToDrop.ItemId);
 
         currentItem = null;
+        GameState.Instance.ClearHeldItem();
 
         if (notifyInventoryChanged)
         {
@@ -244,5 +288,80 @@ public class InventorySlot : MonoBehaviour
         }
 
         return dropPosition;
+    }
+
+    private IEnumerator SaveDroppedItemAfterAnimation(PickupItem droppedItem)
+    {
+        if (droppedItem == null)
+        {
+            yield break;
+        }
+
+        yield return new WaitForSeconds(0.35f);
+
+        if (
+            droppedItem == null
+            || !droppedItem.gameObject.activeInHierarchy
+            || droppedItem.transform.parent != null
+        )
+        {
+            yield break;
+        }
+
+        GameState.Instance.AddDroppedWorldItem(
+            SceneManager.GetActiveScene().name,
+            droppedItem.ItemId,
+            droppedItem.transform.position,
+            droppedItem.transform.rotation,
+            droppedItem.transform.localScale
+        );
+    }
+
+    private void RestoreHeldItemFromGameState()
+    {
+        if (currentItem != null)
+        {
+            return;
+        }
+
+        string heldItemId = GameState.Instance.HeldItemId;
+
+        if (string.IsNullOrWhiteSpace(heldItemId))
+        {
+            return;
+        }
+
+        if (holdPoint == null)
+        {
+            Debug.LogWarning("Cannot restore held item because InventorySlot has no HoldPoint assigned.");
+            return;
+        }
+
+        if (!GameState.Instance.TryGetItemPrefab(heldItemId, out GameObject itemPrefab))
+        {
+            Debug.LogWarning("Cannot restore held item because no prefab is registered for: " + heldItemId);
+            return;
+        }
+
+        GameObject restoredItemObject = Instantiate(
+            itemPrefab,
+            holdPoint.position,
+            holdPoint.rotation
+        );
+
+        PickupItem restoredItem = restoredItemObject.GetComponentInChildren<PickupItem>(true);
+
+        if (restoredItem == null)
+        {
+            Debug.LogWarning("Cannot restore held item because prefab has no PickupItem: " + heldItemId);
+            Destroy(restoredItemObject);
+            return;
+        }
+
+        currentItem = restoredItem;
+        originalItemScale = currentItem.transform.localScale;
+        CarryCurrentItem();
+
+        OnInventoryChanged?.Invoke(CurrentItemId);
     }
 }

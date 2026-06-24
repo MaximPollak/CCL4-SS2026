@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PickupItem : MonoBehaviour, IInteractable
 {
@@ -18,6 +19,13 @@ public class PickupItem : MonoBehaviour, IInteractable
     [SerializeField] private bool addRigidbodyIfMissing = true;
     [SerializeField] private float upwardDropForce = 0.6f;
     [SerializeField] private float spinForce = 0f;
+
+    [Header("World Pickup Physics")]
+    [SerializeField] private bool makeWorldCollidersTriggers = true;
+    [SerializeField] private bool keepWorldRigidbodyKinematic = true;
+
+    [Header("Scene Persistence")]
+    [SerializeField] private bool persistScenePickupState = true;
 
     [Header("Safe Drop Animation")]
     [SerializeField] private bool animateSafeDrop = true;
@@ -40,12 +48,54 @@ public class PickupItem : MonoBehaviour, IInteractable
     public Vector3 HeldLocalRotation => heldLocalRotation;
     public float HeldScaleMultiplier => heldScaleMultiplier;
 
+    private void Awake()
+    {
+        if (!persistScenePickupState)
+        {
+            return;
+        }
+
+        string scenePickupKey = GetScenePickupKey();
+
+        if (GameState.Instance.IsScenePickupConsumed(scenePickupKey))
+        {
+            gameObject.SetActive(false);
+        }
+    }
+
+    public void PrepareForWorldSpawn(bool printDebugLogs = false)
+    {
+        ApplyWorldPickupPhysicsState(printDebugLogs);
+    }
+
+    public void DisableScenePickupPersistence()
+    {
+        persistScenePickupState = false;
+    }
+
     public void Interact(PlayerInteraction player)
     {
         if (player.Inventory == null)
         {
             Debug.LogWarning("Player has no inventory.");
             return;
+        }
+
+        GameState.Instance.RemoveDroppedWorldItem(
+            SceneManager.GetActiveScene().name,
+            itemId,
+            transform.position
+        );
+
+        RuntimeSpawnedItem runtimeSpawnedItem = GetComponentInParent<RuntimeSpawnedItem>();
+
+        if (runtimeSpawnedItem != null)
+        {
+            runtimeSpawnedItem.MarkPickedUp();
+        }
+        else if (persistScenePickupState)
+        {
+            GameState.Instance.MarkScenePickupConsumed(GetScenePickupKey());
         }
 
         player.Inventory.PickUpItem(this, player.PlayerCamera.transform);
@@ -109,6 +159,8 @@ public class PickupItem : MonoBehaviour, IInteractable
         {
             itemCollider.enabled = true;
         }
+
+        ApplyWorldPickupPhysicsState(shouldPrintDebug);
 
         IgnorePlayerCollisions(
             itemColliders,
@@ -222,6 +274,8 @@ public class PickupItem : MonoBehaviour, IInteractable
         {
             itemCollider.enabled = true;
         }
+
+        ApplyWorldPickupPhysicsState(shouldPrintDebug);
 
         IgnorePlayerCollisions(itemColliders, playerColliders, true, 0f, shouldPrintDebug);
 
@@ -457,5 +511,75 @@ public class PickupItem : MonoBehaviour, IInteractable
         }
 
         return false;
+    }
+
+    private void ApplyWorldPickupPhysicsState(bool printDebugLogs)
+    {
+        Rigidbody itemRigidbody = GetComponent<Rigidbody>();
+
+        if (itemRigidbody != null && keepWorldRigidbodyKinematic && !usePhysicsOnDrop)
+        {
+            itemRigidbody.isKinematic = true;
+            itemRigidbody.useGravity = false;
+            itemRigidbody.linearVelocity = Vector3.zero;
+            itemRigidbody.angularVelocity = Vector3.zero;
+            itemRigidbody.Sleep();
+        }
+
+        Collider[] itemColliders = GetComponentsInChildren<Collider>();
+
+        foreach (Collider itemCollider in itemColliders)
+        {
+            if (itemCollider == null)
+            {
+                continue;
+            }
+
+            itemCollider.enabled = true;
+
+            if (makeWorldCollidersTriggers && !usePhysicsOnDrop)
+            {
+                itemCollider.isTrigger = true;
+            }
+        }
+
+        if (printDebugLogs)
+        {
+            Debug.Log(
+                "PickupItem world physics | item: " + itemId
+                + " | trigger colliders: " + (makeWorldCollidersTriggers && !usePhysicsOnDrop)
+                + " | kinematic rb: " + (itemRigidbody != null && itemRigidbody.isKinematic)
+                + " | colliders: " + itemColliders.Length,
+                this
+            );
+        }
+    }
+
+    private string GetScenePickupKey()
+    {
+        string sceneName = gameObject.scene.IsValid()
+            ? gameObject.scene.name
+            : SceneManager.GetActiveScene().name;
+
+        return sceneName + "/" + GetHierarchyPath(transform);
+    }
+
+    private string GetHierarchyPath(Transform itemTransform)
+    {
+        if (itemTransform == null)
+        {
+            return "";
+        }
+
+        string path = itemTransform.name;
+        Transform parent = itemTransform.parent;
+
+        while (parent != null)
+        {
+            path = parent.name + "/" + path;
+            parent = parent.parent;
+        }
+
+        return path;
     }
 }

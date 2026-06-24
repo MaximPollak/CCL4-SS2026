@@ -4,7 +4,7 @@ using UnityEngine;
 public class MonsterPathBlocker : MonoBehaviour
 {
     [Header("Setup")]
-    [SerializeField] private bool autoSetWallLayer = false;
+    [SerializeField] private bool autoSetWallLayer = true;
     [SerializeField] private string wallLayerName = "Wall";
     [SerializeField] private bool autoSetColliderAsTrigger = false;
     [SerializeField] private BoxCollider blockerCollider;
@@ -43,7 +43,7 @@ public class MonsterPathBlocker : MonoBehaviour
             boxCollider.isTrigger = true;
         }
 
-        if (!autoSetWallLayer)
+        if (!autoSetWallLayer && gameObject.layer != 0)
         {
             return;
         }
@@ -53,6 +53,10 @@ public class MonsterPathBlocker : MonoBehaviour
         if (wallLayer >= 0)
         {
             gameObject.layer = wallLayer;
+        }
+        else
+        {
+            Debug.LogWarning("MonsterPathBlocker could not find layer: " + wallLayerName, this);
         }
     }
 

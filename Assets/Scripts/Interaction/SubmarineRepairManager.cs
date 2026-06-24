@@ -35,6 +35,11 @@ public class SubmarineRepairManager : MonoBehaviour
     private readonly HashSet<SubmarineRepairTask> completedTasks = new HashSet<SubmarineRepairTask>();
     private bool escapeStarted;
 
+    private void Awake()
+    {
+        RestoreCompletedTasksFromGameState();
+    }
+
     public bool IsEscapeReady
     {
         get
@@ -58,6 +63,8 @@ public class SubmarineRepairManager : MonoBehaviour
 
     public void CompleteTask(SubmarineRepairTask task)
     {
+        GameState.Instance.CompleteSubmarineTask(task);
+
         if (!completedTasks.Add(task))
         {
             return;
@@ -101,6 +108,8 @@ public class SubmarineRepairManager : MonoBehaviour
 
     public void ClearTask(SubmarineRepairTask task)
     {
+        GameState.Instance.ClearSubmarineTask(task);
+
         if (!completedTasks.Remove(task))
         {
             return;
@@ -109,6 +118,29 @@ public class SubmarineRepairManager : MonoBehaviour
         if (printDebugLogs)
         {
             Debug.Log("Submarine task cleared: " + task);
+        }
+    }
+
+    public int GetTaskProgress(SubmarineRepairTask task)
+    {
+        return GameState.Instance.GetSubmarineTaskProgress(task);
+    }
+
+    public void SetTaskProgress(SubmarineRepairTask task, int progress)
+    {
+        GameState.Instance.SetSubmarineTaskProgress(task, progress);
+    }
+
+    private void RestoreCompletedTasksFromGameState()
+    {
+        completedTasks.Clear();
+
+        foreach (SubmarineRepairTask requiredTask in requiredTasks)
+        {
+            if (GameState.Instance.IsSubmarineTaskComplete(requiredTask))
+            {
+                completedTasks.Add(requiredTask);
+            }
         }
     }
 }

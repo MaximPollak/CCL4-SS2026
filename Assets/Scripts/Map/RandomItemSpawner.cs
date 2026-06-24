@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class RandomItemSpawner : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class RandomItemSpawner : MonoBehaviour
     [SerializeField] private int amountToSpawn = 3;
 
     [Header("Settings")]
+    [SerializeField] private bool spawnAllConfiguredItems = true;
     [SerializeField] private bool useEachItemOnlyOnce = true;
     [SerializeField] private bool matchSpawnPointRotation = false;
     [SerializeField] private bool parentItemsToSpawner = true;
@@ -22,7 +24,16 @@ public class RandomItemSpawner : MonoBehaviour
     [SerializeField] private float groundOffset = 0.02f;
     [SerializeField] private float extraRaiseOffset = 0f;
 
+    [Header("Debug")]
+    [SerializeField] private bool printSpawnDebugLogs = false;
+    [SerializeField] private bool ignoreRuntimeUnavailableFilter = false;
+
     private readonly List<GameObject> spawnedItems = new List<GameObject>();
+
+    private void Awake()
+    {
+        RegisterItemPrefabs();
+    }
 
     private void Start()
     {
@@ -37,7 +48,28 @@ public class RandomItemSpawner : MonoBehaviour
         ClearSpawnedItems();
 
         List<Transform> availableSpawnPoints = GetSpawnPoints();
+
+        if (RestoreSavedSpawnPlan(availableSpawnPoints))
+        {
+            return;
+        }
+
         List<GameObject> availableItems = new List<GameObject>(itemPrefabs);
+        int itemCountBeforeFilter = availableItems.Count;
+
+        if (ignoreRuntimeUnavailableFilter)
+        {
+            RemoveNullItems(availableItems);
+
+            if (printSpawnDebugLogs)
+            {
+                Debug.Log("RandomItemSpawner: Runtime unavailable filter ignored for debugging.");
+            }
+        }
+        else
+        {
+            RemoveUnavailableItems(availableItems);
+        }
 
         if (availableSpawnPoints.Count == 0)
         {
@@ -51,20 +83,41 @@ public class RandomItemSpawner : MonoBehaviour
             return;
         }
 
-        int spawnCount = Mathf.Min(amountToSpawn, availableSpawnPoints.Count);
+        int requestedSpawnCount = spawnAllConfiguredItems
+            ? availableItems.Count
+            : amountToSpawn;
+
+        int spawnCount = Mathf.Min(requestedSpawnCount, availableSpawnPoints.Count);
 
         if (useEachItemOnlyOnce)
         {
             spawnCount = Mathf.Min(spawnCount, availableItems.Count);
         }
 
-        Shuffle(availableSpawnPoints);
+        if (printSpawnDebugLogs)
+        {
+            Debug.Log(
+                "RandomItemSpawner: points=" + availableSpawnPoints.Count +
+                " | item prefabs before filter=" + itemCountBeforeFilter +
+                " | after filter=" + availableItems.Count +
+                " | amountToSpawn=" + amountToSpawn +
+                " | spawnAllConfiguredItems=" + spawnAllConfiguredItems +
+                " | final spawn count=" + spawnCount +
+                " | unique items=" + useEachItemOnlyOnce
+            );
+        }
+
+        List<Transform> shuffledSpawnPoints = new List<Transform>(availableSpawnPoints);
+
+        Shuffle(shuffledSpawnPoints);
         Shuffle(availableItems);
+
+        List<GameState.RandomSpawnState> generatedSpawnStates = new List<GameState.RandomSpawnState>();
 
         for (int i = 0; i < spawnCount; i++)
         {
-            Transform spawnPoint = availableSpawnPoints[i];
-
+            Transform spawnPoint = shuffledSpawnPoints[i];
+            int spawnPointIndex = GetSpawnPointIndex(spawnPoint, availableSpawnPoints);
             GameObject itemPrefab;
 
             if (useEachItemOnlyOnce)
@@ -77,31 +130,69 @@ public class RandomItemSpawner : MonoBehaviour
                 itemPrefab = availableItems[randomItemIndex];
             }
 
-            Quaternion rotation = matchSpawnPointRotation
-                ? spawnPoint.rotation
-                : itemPrefab.transform.rotation;
-
-            Transform parent = parentItemsToSpawner ? transform : null;
-
-            GameObject spawnedItem = Instantiate(
+            SpawnItemPrefab(
                 itemPrefab,
-                spawnPoint.position,
-                rotation,
-                parent
+                spawnPoint,
+                SceneManager.GetActiveScene().name,
+                spawnPointIndex
             );
 
-            if (autoFixGroundHeight)
-            {
-                FixGroundHeight(spawnedItem, spawnPoint.position.y);
-            }
+            PickupItem pickupItem = itemPrefab.GetComponentInChildren<PickupItem>(true);
 
-            if (extraRaiseOffset != 0f)
+            if (pickupItem != null)
             {
-                spawnedItem.transform.position += Vector3.up * extraRaiseOffset;
+                generatedSpawnStates.Add(new GameState.RandomSpawnState
+                {
+                    itemId = pickupItem.ItemId,
+                    spawnPointIndex = spawnPointIndex,
+                    isAvailable = true
+                });
             }
-
-            spawnedItems.Add(spawnedItem);
         }
+
+        GameState.Instance.SaveRandomSpawnStates(
+            SceneManager.GetActiveScene().name,
+            generatedSpawnStates
+        );
+    }
+
+    [ContextMenu("Reset Runtime Game State And Respawn Items")]
+    public void ResetRuntimeGameStateAndRespawnItems()
+    {
+        GameState.ResetRun();
+        SpawnItems();
+    }
+
+    [ContextMenu("Respawn Items")]
+    public void RespawnItems()
+    {
+        SpawnItems();
+    }
+
+    public bool SpawnSpecificItem(string itemId)
+    {
+        if (string.IsNullOrWhiteSpace(itemId))
+        {
+            return false;
+        }
+
+        if (!GameState.Instance.TryGetItemPrefab(itemId, out GameObject itemPrefab))
+        {
+            Debug.LogWarning("No item prefab registered for item id: " + itemId);
+            return false;
+        }
+
+        List<Transform> availableSpawnPoints = GetSpawnPoints();
+
+        if (availableSpawnPoints.Count == 0)
+        {
+            Debug.LogWarning("No spawn points assigned.");
+            return false;
+        }
+
+        Transform spawnPoint = availableSpawnPoints[Random.Range(0, availableSpawnPoints.Count)];
+        SpawnItemPrefab(itemPrefab, spawnPoint);
+        return true;
     }
 
     public void ClearSpawnedItems()
@@ -135,6 +226,233 @@ public class RandomItemSpawner : MonoBehaviour
         }
 
         return points;
+    }
+
+    private void RegisterItemPrefabs()
+    {
+        foreach (GameObject itemPrefab in itemPrefabs)
+        {
+            GameState.Instance.RegisterItemPrefab(itemPrefab);
+        }
+    }
+
+    private bool RestoreSavedSpawnPlan(List<Transform> availableSpawnPoints)
+    {
+        string sceneName = SceneManager.GetActiveScene().name;
+
+        if (!GameState.Instance.TryGetRandomSpawnStates(
+            sceneName,
+            out List<GameState.RandomSpawnState> spawnStates
+        ))
+        {
+            return false;
+        }
+
+        foreach (GameState.RandomSpawnState spawnState in spawnStates)
+        {
+            if (
+                spawnState == null
+                || !spawnState.isAvailable
+                || spawnState.spawnPointIndex < 0
+                || spawnState.spawnPointIndex >= availableSpawnPoints.Count
+                || !GameState.Instance.TryGetItemPrefab(spawnState.itemId, out GameObject itemPrefab)
+            )
+            {
+                continue;
+            }
+
+            if (GameState.Instance.GetUnavailableItemCount(spawnState.itemId) > 0)
+            {
+                continue;
+            }
+
+            SpawnItemPrefab(
+                itemPrefab,
+                availableSpawnPoints[spawnState.spawnPointIndex],
+                sceneName,
+                spawnState.spawnPointIndex
+            );
+        }
+
+        if (printSpawnDebugLogs)
+        {
+            Debug.Log(
+                "RandomItemSpawner: Restored saved spawn plan for " +
+                sceneName +
+                " with " +
+                spawnStates.Count +
+                " saved slots."
+            );
+        }
+
+        return true;
+    }
+
+    private void RemoveUnavailableItems(List<GameObject> availableItems)
+    {
+        Dictionary<string, int> removedCounts = new Dictionary<string, int>();
+
+        for (int i = availableItems.Count - 1; i >= 0; i--)
+        {
+            GameObject itemPrefab = availableItems[i];
+
+            if (itemPrefab == null)
+            {
+                if (printSpawnDebugLogs)
+                {
+                    Debug.LogWarning("RandomItemSpawner: Skipping null item prefab.");
+                }
+
+                availableItems.RemoveAt(i);
+                continue;
+            }
+
+            PickupItem pickupItem = itemPrefab.GetComponentInChildren<PickupItem>(true);
+
+            if (pickupItem == null)
+            {
+                if (printSpawnDebugLogs)
+                {
+                    Debug.LogWarning("RandomItemSpawner: " + itemPrefab.name + " has no PickupItem.");
+                }
+
+                continue;
+            }
+
+            int unavailableCount = GameState.Instance.GetUnavailableItemCount(pickupItem.ItemId);
+            removedCounts.TryGetValue(pickupItem.ItemId, out int removedCount);
+
+            if (removedCount >= unavailableCount)
+            {
+                continue;
+            }
+
+            if (printSpawnDebugLogs)
+            {
+                Debug.Log(
+                    "RandomItemSpawner: Filtering unavailable item " +
+                    pickupItem.ItemId +
+                    " (" + itemPrefab.name + "), unavailable count=" +
+                    unavailableCount
+                );
+            }
+
+            availableItems.RemoveAt(i);
+            removedCounts[pickupItem.ItemId] = removedCount + 1;
+        }
+    }
+
+    private void RemoveNullItems(List<GameObject> availableItems)
+    {
+        for (int i = availableItems.Count - 1; i >= 0; i--)
+        {
+            if (availableItems[i] != null)
+            {
+                continue;
+            }
+
+            if (printSpawnDebugLogs)
+            {
+                Debug.LogWarning("RandomItemSpawner: Skipping null item prefab.");
+            }
+
+            availableItems.RemoveAt(i);
+        }
+    }
+
+    private GameObject SpawnItemPrefab(
+        GameObject itemPrefab,
+        Transform spawnPoint,
+        string originSceneName = "",
+        int originSpawnPointIndex = -1
+    )
+    {
+        Quaternion rotation = matchSpawnPointRotation
+            ? spawnPoint.rotation
+            : itemPrefab.transform.rotation;
+
+        Transform parent = parentItemsToSpawner ? transform : null;
+
+        GameObject spawnedItem = Instantiate(
+            itemPrefab,
+            spawnPoint.position,
+            rotation,
+            parent
+        );
+
+        PickupItem spawnedPickupItem = spawnedItem.GetComponentInChildren<PickupItem>(true);
+
+        if (spawnedPickupItem != null)
+        {
+            spawnedPickupItem.PrepareForWorldSpawn(printSpawnDebugLogs);
+        }
+
+        if (!string.IsNullOrWhiteSpace(originSceneName) && originSpawnPointIndex >= 0)
+        {
+            RuntimeSpawnedItem runtimeSpawnedItem = spawnedItem.GetComponent<RuntimeSpawnedItem>();
+
+            if (runtimeSpawnedItem == null)
+            {
+                runtimeSpawnedItem = spawnedItem.AddComponent<RuntimeSpawnedItem>();
+            }
+
+            runtimeSpawnedItem.Initialize(originSceneName, originSpawnPointIndex);
+        }
+
+        if (autoFixGroundHeight)
+        {
+            FixGroundHeight(spawnedItem, spawnPoint.position.y);
+        }
+
+        if (extraRaiseOffset != 0f)
+        {
+            spawnedItem.transform.position += Vector3.up * extraRaiseOffset;
+        }
+
+        if (printSpawnDebugLogs)
+        {
+            Debug.Log(
+                "RandomItemSpawner: Spawned " +
+                GetItemDebugName(itemPrefab) +
+                " at " +
+                spawnPoint.name +
+                " | position=" +
+                spawnedItem.transform.position
+            );
+        }
+
+        spawnedItems.Add(spawnedItem);
+        return spawnedItem;
+    }
+
+    private int GetSpawnPointIndex(Transform spawnPoint, List<Transform> spawnPointList)
+    {
+        for (int i = 0; i < spawnPointList.Count; i++)
+        {
+            if (spawnPointList[i] == spawnPoint)
+            {
+                return i;
+            }
+        }
+
+        return -1;
+    }
+
+    private string GetItemDebugName(GameObject itemPrefab)
+    {
+        if (itemPrefab == null)
+        {
+            return "null";
+        }
+
+        PickupItem pickupItem = itemPrefab.GetComponentInChildren<PickupItem>(true);
+
+        if (pickupItem == null)
+        {
+            return itemPrefab.name;
+        }
+
+        return pickupItem.ItemId + " (" + itemPrefab.name + ")";
     }
 
     private void FixGroundHeight(GameObject item, float groundY)

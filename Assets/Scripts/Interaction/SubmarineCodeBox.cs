@@ -22,6 +22,11 @@ public class SubmarineCodeBox : MonoBehaviour, IInteractable
     private string enteredCode = "";
     private bool isEnteringCode;
 
+    private void Start()
+    {
+        RestoreStateFromGameState();
+    }
+
     private void Update()
     {
         if (!isEnteringCode || !useKeyboardNumberInput)
@@ -110,5 +115,23 @@ public class SubmarineCodeBox : MonoBehaviour, IInteractable
         }
 
         Debug.Log(completedMessage);
+    }
+
+    private void RestoreStateFromGameState()
+    {
+        if (repairManager == null || !repairManager.IsTaskComplete(repairTask))
+        {
+            return;
+        }
+
+        if (objectToDisableAfterUnlock != null)
+        {
+            objectToDisableAfterUnlock.SetActive(false);
+        }
+
+        if (objectToEnableAfterUnlock != null)
+        {
+            objectToEnableAfterUnlock.SetActive(true);
+        }
     }
 }
