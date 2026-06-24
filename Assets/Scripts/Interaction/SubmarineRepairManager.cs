@@ -14,15 +14,11 @@ public class SubmarineRepairManager : MonoBehaviour
         SubmarineRepairTask.CodeBox,
         SubmarineRepairTask.VentilatorLeft,
         SubmarineRepairTask.VentilatorRight,
-        SubmarineRepairTask.VentScrews,
         SubmarineRepairTask.SteeringWheel,
         SubmarineRepairTask.AccessCard,
         SubmarineRepairTask.Battery,
         SubmarineRepairTask.PressureValveTurned,
         SubmarineRepairTask.VentCoverLeft,
-        SubmarineRepairTask.VentCoverRight,
-        SubmarineRepairTask.VentSecuredLeft,
-        SubmarineRepairTask.VentSecuredRight
     };
 
     [Header("Escape Result")]
