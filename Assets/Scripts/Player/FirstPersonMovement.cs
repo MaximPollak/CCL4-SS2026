@@ -34,6 +34,11 @@ public class FirstPersonMovement : MonoBehaviour
 
     public bool IsCrouching { get; private set; }
 
+    public void ResetVerticalVelocity()
+    {
+        verticalVelocity = Vector3.zero;
+    }
+
     private void Awake()
     {
         characterController = GetComponent<CharacterController>();
