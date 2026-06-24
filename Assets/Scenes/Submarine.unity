@@ -232,11 +232,24 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8401000000000000003, guid: 84b853110a3cd804c8302206ba69bf1e, type: 3}
+      propertyPath: m_Name
+      value: OxygenTankPlacedL
+      objectReference: {fileID: 0}
+    - target: {fileID: 8401000000000000003, guid: 84b853110a3cd804c8302206ba69bf1e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 84b853110a3cd804c8302206ba69bf1e, type: 3}
+--- !u!1 &144660776 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8401000000000000003, guid: 84b853110a3cd804c8302206ba69bf1e, type: 3}
+  m_PrefabInstance: {fileID: 144660775}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &195771758
 GameObject:
   m_ObjectHideFlags: 0
@@ -559,59 +572,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &421491710
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 421491712}
-  - component: {fileID: 421491711}
-  m_Layer: 0
-  m_Name: SceneSpawnPoint
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &421491711
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 421491710}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 387f51cce54b450cbb55e9ecda2c8138, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SceneSpawnPoint
-  spawnPointId: SubmarineEntrance
-  snapPlayerToGround: 1
-  groundLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  groundCheckHeight: 3
-  groundCheckDistance: 8
-  groundOffset: 0.41
-  printDebugLogs: 1
---- !u!4 &421491712
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 421491710}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -52.546, y: 1.793, z: -0.519}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &440898634
 GameObject:
   m_ObjectHideFlags: 0
@@ -721,6 +681,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PressureValve
       objectReference: {fileID: 0}
+    - target: {fileID: 8406000000000000003, guid: 59833a822b9c1e0429fcd263a17d739c, type: 3}
+      propertyPath: m_Name
+      value: PressureValve
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -822,7 +786,7 @@ MonoBehaviour:
   requiredItemId: Gitter
   removeItemFromInventory: 1
   objectToDisableAfterUse: {fileID: 0}
-  objectToEnableAfterUse: {fileID: 0}
+  objectToEnableAfterUse: {fileID: 1218939876}
   canTakeItemBack: 0
   itemToReturnPrefab: {fileID: 0}
   takeBackMessage: Part removed.
@@ -921,10 +885,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: OilCanister (1)
       objectReference: {fileID: 0}
-    - target: {fileID: 8403000000000000003, guid: 7e5d7a7c30a31984ba410171129c0bdc, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -987,6 +947,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f172ac1c530138247bf0ec87d7f67182, type: 3}
+--- !u!1 &649237868 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8405000000000000003, guid: af8781a92f5aad441b57ce65fce81a68, type: 3}
+  m_PrefabInstance: {fileID: 1066797783}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &693514796
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1039,6 +1004,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8407000000000000002, guid: 91afaa0b052fb8e449ba8e4f814bd3b7, type: 3}
+      propertyPath: m_Name
+      value: GitterLPlaced
+      objectReference: {fileID: 0}
+    - target: {fileID: 8407000000000000002, guid: 91afaa0b052fb8e449ba8e4f814bd3b7, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8713944839473207848, guid: 91afaa0b052fb8e449ba8e4f814bd3b7, type: 3}
       propertyPath: m_Name
       value: GitterPlacedL
@@ -1052,87 +1025,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 91afaa0b052fb8e449ba8e4f814bd3b7, type: 3}
---- !u!1 &897843461
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 897843464}
-  - component: {fileID: 897843463}
-  - component: {fileID: 897843462}
-  m_Layer: 0
-  m_Name: VentWrenchSocket
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &897843462
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 897843461}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c6e7f1b093a340f08d193436e8dcd02c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SubmarineRepeatedToolSocket
-  repairManager: {fileID: 348194432}
-  repairTask: 7
-  requireCompletedTaskFirst: 1
-  prerequisiteTask: 12
-  requireSecondCompletedTask: 1
-  secondPrerequisiteTask: 13
-  hideUntilPrerequisiteComplete: 1
-  prerequisiteMissingMessage: Another repair step must be completed first.
-  requiredItemId: Wrench
-  requiredUseCount: 4
-  objectsToEnablePerUse: []
-  objectToEnableWhenComplete: {fileID: 0}
-  missingItemMessage: Missing required tool.
-  progressMessage: Tool used.
-  completedMessage: Tool task completed.
---- !u!65 &897843463
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 897843461}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!4 &897843464
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 897843461}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -53.55276, y: 0.4746, z: -2.09062}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &947588514 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 00af45e689a92464585dcb7eb215cdc3, type: 3}
@@ -1196,7 +1088,7 @@ MeshCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 5
   m_Convex: 0
   m_CookingOptions: 30
@@ -1329,11 +1221,24 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8406000000000000003, guid: 59833a822b9c1e0429fcd263a17d739c, type: 3}
+      propertyPath: m_Name
+      value: PressureValvePlaced
+      objectReference: {fileID: 0}
+    - target: {fileID: 8406000000000000003, guid: 59833a822b9c1e0429fcd263a17d739c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 59833a822b9c1e0429fcd263a17d739c, type: 3}
+--- !u!1 &963930082 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8406000000000000003, guid: 59833a822b9c1e0429fcd263a17d739c, type: 3}
+  m_PrefabInstance: {fileID: 963930081}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &973453115
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1391,6 +1296,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8401000000000000003, guid: 84b853110a3cd804c8302206ba69bf1e, type: 3}
+      propertyPath: m_Name
+      value: OxygenTankPlacedR
+      objectReference: {fileID: 0}
+    - target: {fileID: 8401000000000000003, guid: 84b853110a3cd804c8302206ba69bf1e, type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
@@ -1399,6 +1308,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 84b853110a3cd804c8302206ba69bf1e, type: 3}
+--- !u!1 &973453116 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8401000000000000003, guid: 84b853110a3cd804c8302206ba69bf1e, type: 3}
+  m_PrefabInstance: {fileID: 973453115}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1017306169
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1450,10 +1364,6 @@ PrefabInstance:
     - target: {fileID: 2198954059458216470, guid: 7e5d7a7c30a31984ba410171129c0bdc, type: 3}
       propertyPath: m_Name
       value: OilCanister (2)
-      objectReference: {fileID: 0}
-    - target: {fileID: 8403000000000000003, guid: 7e5d7a7c30a31984ba410171129c0bdc, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1514,10 +1424,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 690910938843060474, guid: 84b853110a3cd804c8302206ba69bf1e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8401000000000000003, guid: 84b853110a3cd804c8302206ba69bf1e, type: 3}
-      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -1581,11 +1487,96 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8405000000000000003, guid: af8781a92f5aad441b57ce65fce81a68, type: 3}
+      propertyPath: m_Name
+      value: BatteryPlaced
+      objectReference: {fileID: 0}
+    - target: {fileID: 8405000000000000003, guid: af8781a92f5aad441b57ce65fce81a68, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: af8781a92f5aad441b57ce65fce81a68, type: 3}
+--- !u!1001 &1086121690
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4778833439684094109, guid: e37454f6677cda940953d4cab992a77d, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.52138
+      objectReference: {fileID: 0}
+    - target: {fileID: 4778833439684094109, guid: e37454f6677cda940953d4cab992a77d, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.43087432
+      objectReference: {fileID: 0}
+    - target: {fileID: 4778833439684094109, guid: e37454f6677cda940953d4cab992a77d, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -52.728
+      objectReference: {fileID: 0}
+    - target: {fileID: 4778833439684094109, guid: e37454f6677cda940953d4cab992a77d, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.453
+      objectReference: {fileID: 0}
+    - target: {fileID: 4778833439684094109, guid: e37454f6677cda940953d4cab992a77d, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -1.222
+      objectReference: {fileID: 0}
+    - target: {fileID: 4778833439684094109, guid: e37454f6677cda940953d4cab992a77d, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 4778833439684094109, guid: e37454f6677cda940953d4cab992a77d, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4778833439684094109, guid: e37454f6677cda940953d4cab992a77d, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 4778833439684094109, guid: e37454f6677cda940953d4cab992a77d, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4778833439684094109, guid: e37454f6677cda940953d4cab992a77d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4778833439684094109, guid: e37454f6677cda940953d4cab992a77d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 4778833439684094109, guid: e37454f6677cda940953d4cab992a77d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5267526138184380967, guid: e37454f6677cda940953d4cab992a77d, type: 3}
+      propertyPath: m_Name
+      value: NotePlaced
+      objectReference: {fileID: 0}
+    - target: {fileID: 5267526138184380967, guid: e37454f6677cda940953d4cab992a77d, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8409000000000000002, guid: e37454f6677cda940953d4cab992a77d, type: 3}
+      propertyPath: m_Name
+      value: NotePlaced
+      objectReference: {fileID: 0}
+    - target: {fileID: 8409000000000000002, guid: e37454f6677cda940953d4cab992a77d, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: e37454f6677cda940953d4cab992a77d, type: 3}
 --- !u!1 &1114373607
 GameObject:
   m_ObjectHideFlags: 0
@@ -1767,7 +1758,7 @@ MonoBehaviour:
   requiredItemId: Gitter
   removeItemFromInventory: 1
   objectToDisableAfterUse: {fileID: 0}
-  objectToEnableAfterUse: {fileID: 0}
+  objectToEnableAfterUse: {fileID: 1411976415}
   canTakeItemBack: 0
   itemToReturnPrefab: {fileID: 0}
   takeBackMessage: Part removed.
@@ -1819,7 +1810,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1178899937}
   - component: {fileID: 1178899936}
-  - component: {fileID: 1178899935}
+  - component: {fileID: 1178899938}
   m_Layer: 0
   m_Name: CodeBlockSocket
   m_TagString: Untagged
@@ -1827,27 +1818,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1178899935
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1178899934}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 25d7909b022d478cae62c12fd65a483d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SubmarineCodeBox
-  repairManager: {fileID: 0}
-  repairTask: 4
-  correctCode: 2478
-  useKeyboardNumberInput: 1
-  objectToDisableAfterUnlock: {fileID: 0}
-  objectToEnableAfterUnlock: {fileID: 0}
-  promptMessage: Enter code with number keys.
-  wrongCodeMessage: Wrong code.
-  completedMessage: Code accepted.
 --- !u!65 &1178899936
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1884,6 +1854,33 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1178899938
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1178899934}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7f39ca7eb134db19a9eea4deafd3817, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SubmarineItemSocket
+  repairManager: {fileID: 348194432}
+  repairTask: 4
+  requireCompletedTaskFirst: 0
+  prerequisiteTask: 0
+  hideUntilPrerequisiteComplete: 0
+  prerequisiteMissingMessage: Another repair step must be completed first.
+  requiredItemId: Note
+  removeItemFromInventory: 1
+  objectToDisableAfterUse: {fileID: 0}
+  objectToEnableAfterUse: {fileID: 1822835555}
+  canTakeItemBack: 0
+  itemToReturnPrefab: {fileID: 0}
+  takeBackMessage: Part removed.
+  missingItemMessage: Missing required item.
+  completedMessage: Part installed.
 --- !u!1001 &1201729849
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1936,6 +1933,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -0.003
       objectReference: {fileID: 0}
+    - target: {fileID: 8407000000000000002, guid: 91afaa0b052fb8e449ba8e4f814bd3b7, type: 3}
+      propertyPath: m_Name
+      value: GitterRPlaced
+      objectReference: {fileID: 0}
+    - target: {fileID: 8407000000000000002, guid: 91afaa0b052fb8e449ba8e4f814bd3b7, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8713944839473207848, guid: 91afaa0b052fb8e449ba8e4f814bd3b7, type: 3}
       propertyPath: m_Name
       value: GitterPlacedR
@@ -1949,6 +1954,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 91afaa0b052fb8e449ba8e4f814bd3b7, type: 3}
+--- !u!1 &1218939876 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8407000000000000002, guid: 91afaa0b052fb8e449ba8e4f814bd3b7, type: 3}
+  m_PrefabInstance: {fileID: 693514796}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1282775387
 GameObject:
   m_ObjectHideFlags: 0
@@ -1988,7 +1998,7 @@ MonoBehaviour:
   requiredItemId: Fan
   removeItemFromInventory: 1
   objectToDisableAfterUse: {fileID: 0}
-  objectToEnableAfterUse: {fileID: 0}
+  objectToEnableAfterUse: {fileID: 1384407416}
   canTakeItemBack: 0
   itemToReturnPrefab: {fileID: 0}
   takeBackMessage: Part removed.
@@ -2174,7 +2184,7 @@ GameObject:
   - component: {fileID: 1358663447}
   - component: {fileID: 1358663446}
   - component: {fileID: 1358663445}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Floor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2275,6 +2285,16 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1384407416 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8402000000000000003, guid: f172ac1c530138247bf0ec87d7f67182, type: 3}
+  m_PrefabInstance: {fileID: 1847070212}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1411976415 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8407000000000000002, guid: 91afaa0b052fb8e449ba8e4f814bd3b7, type: 3}
+  m_PrefabInstance: {fileID: 1201729849}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1435066810
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2383,7 +2403,7 @@ MonoBehaviour:
   requiredItemId: OxygenTank
   removeItemFromInventory: 1
   objectToDisableAfterUse: {fileID: 0}
-  objectToEnableAfterUse: {fileID: 0}
+  objectToEnableAfterUse: {fileID: 144660776}
   canTakeItemBack: 0
   itemToReturnPrefab: {fileID: 0}
   takeBackMessage: Part removed.
@@ -2464,7 +2484,7 @@ MonoBehaviour:
   requiredItemId: OxygenTank
   removeItemFromInventory: 1
   objectToDisableAfterUse: {fileID: 0}
-  objectToEnableAfterUse: {fileID: 0}
+  objectToEnableAfterUse: {fileID: 973453116}
   canTakeItemBack: 0
   itemToReturnPrefab: {fileID: 0}
   takeBackMessage: Part removed.
@@ -2581,7 +2601,7 @@ MonoBehaviour:
   requiredItemId: Battery
   removeItemFromInventory: 1
   objectToDisableAfterUse: {fileID: 0}
-  objectToEnableAfterUse: {fileID: 0}
+  objectToEnableAfterUse: {fileID: 649237868}
   canTakeItemBack: 0
   itemToReturnPrefab: {fileID: 0}
   takeBackMessage: Part removed.
@@ -2668,6 +2688,63 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1685483907
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4778833439684094109, guid: e37454f6677cda940953d4cab992a77d, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -53.825
+      objectReference: {fileID: 0}
+    - target: {fileID: 4778833439684094109, guid: e37454f6677cda940953d4cab992a77d, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.38231418
+      objectReference: {fileID: 0}
+    - target: {fileID: 4778833439684094109, guid: e37454f6677cda940953d4cab992a77d, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.202
+      objectReference: {fileID: 0}
+    - target: {fileID: 4778833439684094109, guid: e37454f6677cda940953d4cab992a77d, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4778833439684094109, guid: e37454f6677cda940953d4cab992a77d, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4778833439684094109, guid: e37454f6677cda940953d4cab992a77d, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4778833439684094109, guid: e37454f6677cda940953d4cab992a77d, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4778833439684094109, guid: e37454f6677cda940953d4cab992a77d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4778833439684094109, guid: e37454f6677cda940953d4cab992a77d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4778833439684094109, guid: e37454f6677cda940953d4cab992a77d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5267526138184380967, guid: e37454f6677cda940953d4cab992a77d, type: 3}
+      propertyPath: m_Name
+      value: Note
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: e37454f6677cda940953d4cab992a77d, type: 3}
 --- !u!1 &1692970358
 GameObject:
   m_ObjectHideFlags: 0
@@ -2707,7 +2784,7 @@ MonoBehaviour:
   requiredItemId: PressureValve
   removeItemFromInventory: 1
   objectToDisableAfterUse: {fileID: 0}
-  objectToEnableAfterUse: {fileID: 0}
+  objectToEnableAfterUse: {fileID: 963930082}
   canTakeItemBack: 0
   itemToReturnPrefab: {fileID: 0}
   takeBackMessage: Part removed.
@@ -2871,10 +2948,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: OilCanister
       objectReference: {fileID: 0}
-    - target: {fileID: 8403000000000000003, guid: 7e5d7a7c30a31984ba410171129c0bdc, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2912,63 +2985,11 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -1165073596168651963, guid: 00af45e689a92464585dcb7eb215cdc3, type: 3}
---- !u!1001 &1782333191
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 4778833439684094109, guid: e37454f6677cda940953d4cab992a77d, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -49.124
-      objectReference: {fileID: 0}
-    - target: {fileID: 4778833439684094109, guid: e37454f6677cda940953d4cab992a77d, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.38231435
-      objectReference: {fileID: 0}
-    - target: {fileID: 4778833439684094109, guid: e37454f6677cda940953d4cab992a77d, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -1.0419033
-      objectReference: {fileID: 0}
-    - target: {fileID: 4778833439684094109, guid: e37454f6677cda940953d4cab992a77d, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4778833439684094109, guid: e37454f6677cda940953d4cab992a77d, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4778833439684094109, guid: e37454f6677cda940953d4cab992a77d, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4778833439684094109, guid: e37454f6677cda940953d4cab992a77d, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4778833439684094109, guid: e37454f6677cda940953d4cab992a77d, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4778833439684094109, guid: e37454f6677cda940953d4cab992a77d, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4778833439684094109, guid: e37454f6677cda940953d4cab992a77d, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5267526138184380967, guid: e37454f6677cda940953d4cab992a77d, type: 3}
-      propertyPath: m_Name
-      value: Note
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: e37454f6677cda940953d4cab992a77d, type: 3}
+--- !u!1 &1822835555 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8409000000000000002, guid: e37454f6677cda940953d4cab992a77d, type: 3}
+  m_PrefabInstance: {fileID: 1086121690}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1847070212
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3024,6 +3045,14 @@ PrefabInstance:
     - target: {fileID: 6366541592957569254, guid: f172ac1c530138247bf0ec87d7f67182, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 180
+      objectReference: {fileID: 0}
+    - target: {fileID: 8402000000000000003, guid: f172ac1c530138247bf0ec87d7f67182, type: 3}
+      propertyPath: m_Name
+      value: FanLPlaced
+      objectReference: {fileID: 0}
+    - target: {fileID: 8402000000000000003, guid: f172ac1c530138247bf0ec87d7f67182, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3082,7 +3111,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: -8402000000000000001, guid: f172ac1c530138247bf0ec87d7f67182, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -3097,7 +3127,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 6154771894322823575, guid: 0206c8b073f1d6845810bb705f0e36e7, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -51.748
+      value: -52.1
       objectReference: {fileID: 0}
     - target: {fileID: 6154771894322823575, guid: 0206c8b073f1d6845810bb705f0e36e7, type: 3}
       propertyPath: m_LocalPosition.y
@@ -3105,7 +3135,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6154771894322823575, guid: 0206c8b073f1d6845810bb705f0e36e7, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.434
+      value: -0.27
       objectReference: {fileID: 0}
     - target: {fileID: 6154771894322823575, guid: 0206c8b073f1d6845810bb705f0e36e7, type: 3}
       propertyPath: m_LocalRotation.w
@@ -3200,10 +3230,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8401000000000000003, guid: 84b853110a3cd804c8302206ba69bf1e, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3255,10 +3281,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8333337187518398610, guid: 91afaa0b052fb8e449ba8e4f814bd3b7, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8407000000000000002, guid: 91afaa0b052fb8e449ba8e4f814bd3b7, type: 3}
-      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8713944839473207848, guid: 91afaa0b052fb8e449ba8e4f814bd3b7, type: 3}
@@ -3332,54 +3354,7 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -5012882058489478073, guid: 00af45e689a92464585dcb7eb215cdc3, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1771923709}
-    - targetCorrespondingSourceObject: {fileID: -5679941666241095196, guid: 00af45e689a92464585dcb7eb215cdc3, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2133628573}
-    - targetCorrespondingSourceObject: {fileID: -5679941666241095196, guid: 00af45e689a92464585dcb7eb215cdc3, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2133628574}
   m_SourcePrefab: {fileID: 100100000, guid: 00af45e689a92464585dcb7eb215cdc3, type: 3}
---- !u!1 &2133628572 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: -5679941666241095196, guid: 00af45e689a92464585dcb7eb215cdc3, type: 3}
-  m_PrefabInstance: {fileID: 2133628571}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &2133628573
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2133628572}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b50d28102a4c4f4bbfaf743ef5719c97, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SceneTransitionDoor
-  targetSceneName: Map
-  targetSpawnPointId: MapSubmarineEntrance
-  printDebugLogs: 1
---- !u!135 &2133628574
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2133628572}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.011094513
-  m_Center: {x: -0.000000006088344, y: 0.000000005116426, z: -0.0007388084}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -3402,7 +3377,7 @@ SceneRoots:
   - {fileID: 1710030358}
   - {fileID: 569559041}
   - {fileID: 1017306169}
-  - {fileID: 1782333191}
+  - {fileID: 1086121690}
   - {fileID: 2063813270}
   - {fileID: 693514796}
   - {fileID: 1201729849}
@@ -3415,6 +3390,7 @@ SceneRoots:
   - {fileID: 1066797783}
   - {fileID: 1303858739}
   - {fileID: 1705123993}
+  - {fileID: 1685483907}
   - {fileID: 1629639749}
   - {fileID: 195771761}
   - {fileID: 1441976619}
@@ -3424,8 +3400,6 @@ SceneRoots:
   - {fileID: 1568805063}
   - {fileID: 1337366974}
   - {fileID: 1178899937}
-  - {fileID: 897843464}
   - {fileID: 1282775390}
   - {fileID: 508158188}
   - {fileID: 1128057541}
-  - {fileID: 421491712}
