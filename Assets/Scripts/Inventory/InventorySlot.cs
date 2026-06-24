@@ -16,6 +16,14 @@ public class InventorySlot : MonoBehaviour
 
     [Header("Drop Settings")]
     [SerializeField] private float plopForce = 1.7f;
+    [SerializeField] private float dropDistance = 1.1f;
+    [SerializeField] private float dropHeightOffset = -0.25f;
+    [SerializeField] private float dropGroundClearance = 0.2f;
+    [SerializeField] private float ignorePlayerCollisionDuration = 0f;
+    [SerializeField] private float wallDropClearance = 0.35f;
+
+    [Header("Debug")]
+    [SerializeField] private bool printDropDebugLogs = false;
 
     private Vector3 originalItemScale;
 
@@ -154,7 +162,18 @@ public class InventorySlot : MonoBehaviour
 
         PickupItem itemToDrop = currentItem;
 
-        itemToDrop.DropFromHand(playerCameraTransform.forward, originalItemScale, plopForce);
+        Vector3 dropPosition = GetDropPosition(playerCameraTransform);
+        Collider[] playerColliders = GetComponentsInChildren<Collider>();
+
+        itemToDrop.DropFromHand(
+            dropPosition,
+            playerCameraTransform.forward,
+            originalItemScale,
+            plopForce,
+            playerColliders,
+            ignorePlayerCollisionDuration,
+            printDropDebugLogs
+        );
 
         Debug.Log("Dropped item: " + itemToDrop.ItemId);
 
@@ -164,5 +183,66 @@ public class InventorySlot : MonoBehaviour
         {
             OnInventoryChanged?.Invoke(CurrentItemId);
         }
+    }
+
+    private Vector3 GetDropPosition(Transform playerCameraTransform)
+    {
+        float finalDropDistance = dropDistance;
+        Ray forwardRay = new Ray(playerCameraTransform.position, playerCameraTransform.forward);
+
+        if (Physics.Raycast(
+            forwardRay,
+            out RaycastHit forwardHit,
+            dropDistance + wallDropClearance,
+            Physics.DefaultRaycastLayers,
+            QueryTriggerInteraction.Ignore
+        ))
+        {
+            finalDropDistance = Mathf.Max(0.45f, forwardHit.distance - wallDropClearance);
+
+            if (printDropDebugLogs)
+            {
+                Debug.Log(
+                    "Drop debug | forward ray hit: " + forwardHit.collider.name
+                    + " | hit distance: " + forwardHit.distance.ToString("0.00")
+                    + " | using drop distance: " + finalDropDistance.ToString("0.00")
+                );
+            }
+        }
+
+        Vector3 dropPosition =
+            playerCameraTransform.position
+            + playerCameraTransform.forward * finalDropDistance
+            + Vector3.up * dropHeightOffset;
+
+        Vector3 floorCheckStart = dropPosition + Vector3.up * 0.7f;
+
+        if (Physics.Raycast(
+            floorCheckStart,
+            Vector3.down,
+            out RaycastHit floorHit,
+            2f,
+            Physics.DefaultRaycastLayers,
+            QueryTriggerInteraction.Ignore
+        ))
+        {
+            float minimumHeight = floorHit.point.y + dropGroundClearance;
+            dropPosition.y = Mathf.Max(dropPosition.y, minimumHeight);
+
+            if (printDropDebugLogs)
+            {
+                Debug.Log(
+                    "Drop debug | floor ray hit: " + floorHit.collider.name
+                    + " | floor y: " + floorHit.point.y.ToString("0.00")
+                    + " | final drop position: " + dropPosition
+                );
+            }
+        }
+        else if (printDropDebugLogs)
+        {
+            Debug.Log("Drop debug | no floor found below calculated drop position: " + dropPosition);
+        }
+
+        return dropPosition;
     }
 }
