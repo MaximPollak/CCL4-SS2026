@@ -20,7 +20,20 @@ public class MonsterVision : MonoBehaviour
     [Header("Debug")]
     public bool drawGizmos = true;
 
+    private float viewYawOffset;
     private PlayerHideState targetHideState;
+
+    public float ViewYawOffset => viewYawOffset;
+
+    public void SetViewYawOffset(float yawOffset)
+    {
+        viewYawOffset = yawOffset;
+    }
+
+    public void ResetViewYawOffset()
+    {
+        viewYawOffset = 0f;
+    }
 
     private void Reset()
     {
@@ -95,7 +108,7 @@ public class MonsterVision : MonoBehaviour
 
         if (!isVeryClose)
         {
-            float angleToTarget = Vector3.Angle(transform.forward, directionToTarget);
+            float angleToTarget = Vector3.Angle(GetViewForward(), directionToTarget);
 
             if (angleToTarget > viewAngle / 2f)
             {
@@ -165,8 +178,9 @@ public class MonsterVision : MonoBehaviour
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(eyePosition, viewDistance);
 
-        Vector3 leftDirection = Quaternion.Euler(0f, -viewAngle / 2f, 0f) * transform.forward;
-        Vector3 rightDirection = Quaternion.Euler(0f, viewAngle / 2f, 0f) * transform.forward;
+        Vector3 viewForward = GetViewForward();
+        Vector3 leftDirection = Quaternion.Euler(0f, -viewAngle / 2f, 0f) * viewForward;
+        Vector3 rightDirection = Quaternion.Euler(0f, viewAngle / 2f, 0f) * viewForward;
 
         Gizmos.color = Color.blue;
         Gizmos.DrawLine(eyePosition, eyePosition + leftDirection * viewDistance);
@@ -182,5 +196,10 @@ public class MonsterVision : MonoBehaviour
             Gizmos.color = Color.green;
             Gizmos.DrawLine(eyePosition, targetPosition);
         }
+    }
+
+    private Vector3 GetViewForward()
+    {
+        return Quaternion.Euler(0f, viewYawOffset, 0f) * transform.forward;
     }
 }

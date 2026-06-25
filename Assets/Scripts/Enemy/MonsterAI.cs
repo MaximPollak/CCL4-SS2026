@@ -22,6 +22,7 @@ public class MonsterAI : MonoBehaviour
     [Header("Roaming")]
     public Transform[] roamPoints;
     public float waitAtRoamPointTime = 1.5f;
+    public float searchAtRoamPointTime = 2.5f;
     public bool chooseRandomRoamPoint = false;
 
     [Header("Roam Look Around")]
@@ -57,12 +58,19 @@ public class MonsterAI : MonoBehaviour
     public MonsterState currentState = MonsterState.Idle;
     public bool printDebugLogs = true;
 
+    public bool IsWaitingAtRoamPoint => isWaitingAtRoamPoint;
+    public bool IsSearchingAtRoamPoint => isSearchingAtRoamPoint;
+    public string CurrentRoamPhase => currentRoamPhase;
+
     private int currentRoamIndex = -1;
 
     private float waitTimer;
     private float searchTimer;
+    private float roamSearchTimer;
 
     private bool isWaitingAtRoamPoint;
+    private bool isSearchingAtRoamPoint;
+    private string currentRoamPhase = "walking";
     private int roamLookPhase;
     private float roamLookPauseTimer;
     private Quaternion roamLookStartRotation;
@@ -95,6 +103,7 @@ public class MonsterAI : MonoBehaviour
         AssignReferences(false);
 
         waitAtRoamPointTime = Mathf.Max(0f, waitAtRoamPointTime);
+        searchAtRoamPointTime = Mathf.Max(0f, searchAtRoamPointTime);
         roamLookAroundAngle = Mathf.Clamp(roamLookAroundAngle, 0f, 180f);
         roamLookAroundTurnSpeed = Mathf.Max(0f, roamLookAroundTurnSpeed);
         roamLookDirectionPauseTime = Mathf.Max(0f, roamLookDirectionPauseTime);
@@ -274,15 +283,32 @@ public class MonsterAI : MonoBehaviour
                 StartRoamPointWait();
             }
 
-            bool finishedLooking = LookAroundAtRoamPoint();
+            if (!isSearchingAtRoamPoint)
+            {
+                currentRoamPhase = "idle wait";
+                waitTimer += Time.deltaTime;
 
-            waitTimer += Time.deltaTime;
+                if (waitTimer < waitAtRoamPointTime)
+                {
+                    return;
+                }
 
-            if (waitTimer >= waitAtRoamPointTime && finishedLooking)
+                StartRoamPointSearch();
+            }
+
+            currentRoamPhase = "searching wait";
+            roamSearchTimer += Time.deltaTime;
+            LookAroundAtRoamPoint();
+
+            if (roamSearchTimer >= searchAtRoamPointTime)
             {
                 GoToNextRoamPoint();
             }
+
+            return;
         }
+
+        currentRoamPhase = "walking";
     }
 
     private void HandleChasingPlayer()
@@ -380,7 +406,10 @@ public class MonsterAI : MonoBehaviour
 
         waitTimer = 0f;
         searchTimer = 0f;
+        roamSearchTimer = 0f;
         isWaitingAtRoamPoint = false;
+        isSearchingAtRoamPoint = false;
+        currentRoamPhase = "walking";
 
         GoToNextRoamPoint();
     }
@@ -388,6 +417,7 @@ public class MonsterAI : MonoBehaviour
     private void EnterChasingPlayer()
     {
         ApplyNormalVision();
+        ResetVisionLookOffset();
         SetMonsterSpeed(chasingSpeed);
 
         if (pathFollower == null || player == null)
@@ -449,7 +479,10 @@ public class MonsterAI : MonoBehaviour
         lastTimePlayerSeen = Mathf.NegativeInfinity;
         waitTimer = 0f;
         searchTimer = 0f;
+        roamSearchTimer = 0f;
         isWaitingAtRoamPoint = false;
+        isSearchingAtRoamPoint = false;
+        currentRoamPhase = "walking";
         ResetSearchLook();
 
         currentState = MonsterState.Idle;
@@ -517,13 +550,18 @@ public class MonsterAI : MonoBehaviour
 
     private void GoToNextRoamPoint()
     {
+        ResetVisionLookOffset();
+
         if (roamPoints == null || roamPoints.Length == 0)
         {
             return;
         }
 
         waitTimer = 0f;
+        roamSearchTimer = 0f;
         isWaitingAtRoamPoint = false;
+        isSearchingAtRoamPoint = false;
+        currentRoamPhase = "walking";
 
         if (chooseRandomRoamPoint)
         {
@@ -571,6 +609,14 @@ public class MonsterAI : MonoBehaviour
 
         vision.viewAngle = normalViewAngle;
         vision.viewDistance = normalViewDistance;
+    }
+
+    private void ResetVisionLookOffset()
+    {
+        if (vision != null)
+        {
+            vision.ResetViewYawOffset();
+        }
     }
 
     private void ApplySearchVisionBoost()
@@ -630,11 +676,22 @@ public class MonsterAI : MonoBehaviour
     private void StartRoamPointWait()
     {
         isWaitingAtRoamPoint = true;
+        isSearchingAtRoamPoint = false;
         waitTimer = 0f;
+        roamSearchTimer = 0f;
+        currentRoamPhase = "idle wait";
+    }
+
+    private void StartRoamPointSearch()
+    {
+        // Roam arrival pauses in Idle first, then enables the Searching animation briefly.
+        isSearchingAtRoamPoint = true;
+        roamSearchTimer = 0f;
         roamLookPhase = 0;
         roamLookPauseTimer = 0f;
         isRoamLookPausing = false;
         roamLookStartRotation = transform.rotation;
+        currentRoamPhase = "searching wait";
     }
 
     private bool LookAroundAtRoamPoint()
@@ -685,15 +742,20 @@ public class MonsterAI : MonoBehaviour
         }
 
         float targetYaw = GetLookPatternYaw(phase, lookAngle);
-        Quaternion targetRotation = startRotation * Quaternion.Euler(0f, targetYaw, 0f);
-
-        transform.rotation = Quaternion.RotateTowards(
-            transform.rotation,
-            targetRotation,
+        float currentYaw = vision != null ? vision.ViewYawOffset : 0f;
+        float nextYaw = Mathf.MoveTowards(
+            currentYaw,
+            targetYaw,
             turnSpeed * Time.deltaTime
         );
 
-        if (Quaternion.Angle(transform.rotation, targetRotation) > 1f)
+        // Look-around should move only the FOV/head direction, not rotate the monster body.
+        if (vision != null)
+        {
+            vision.SetViewYawOffset(nextYaw);
+        }
+
+        if (Mathf.Abs(Mathf.DeltaAngle(nextYaw, targetYaw)) > 1f)
         {
             return false;
         }
