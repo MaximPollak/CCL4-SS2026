@@ -83,16 +83,15 @@ MonoBehaviour:
   itemId: OxygenTank
   itemSize: 2
   dropSoundEvent: Play_droppeing_wobbely_theroms
-
   overrideHeldPosition: 1
   overrideHeldRotation: 1
-  heldLocalPosition: {x: 0.4, y: -0.05, z: 0.65}
-  heldLocalRotation: {x: -67, y: -15, z: 10}
+  heldLocalPosition: {x: 0.53, y: -0.26, z: 0.75}
+  heldLocalRotation: {x: -57.17, y: -26, z: 10}
   heldScaleMultiplier: 2.5
   usePhysicsOnDrop: 0
   addRigidbodyIfMissing: 1
   upwardDropForce: 0.6
-  spinForce: 3
+  spinForce: 0
   makeWorldCollidersTriggers: 1
   keepWorldRigidbodyKinematic: 1
   persistScenePickupState: 1

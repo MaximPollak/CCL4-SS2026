@@ -83,12 +83,11 @@ MonoBehaviour:
   itemId: AccessCard
   itemSize: 0
   dropSoundEvent: Play_dropping_something_small_01
-
-  overrideHeldPosition: 0
+  overrideHeldPosition: 1
   overrideHeldRotation: 1
-  heldLocalPosition: {x: 0.45, y: -0.35, z: 0.75}
-  heldLocalRotation: {x: -165, y: 50, z: -34}
-  heldScaleMultiplier: 2
+  heldLocalPosition: {x: 0.57, y: -0.35, z: 0.75}
+  heldLocalRotation: {x: -23.7, y: 228.7, z: 81.2}
+  heldScaleMultiplier: 3
   usePhysicsOnDrop: 0
   addRigidbodyIfMissing: 1
   upwardDropForce: 0.6

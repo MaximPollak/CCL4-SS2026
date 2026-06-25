@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 5586941456360188948}
   serializedVersion: 2
   m_LocalRotation: {x: -0.00000008940697, y: -0, z: -0.39643675, w: 0.91806203}
-  m_LocalPosition: {x: -0.02909, y: -0.03608, z: 0.01667}
+  m_LocalPosition: {x: -0.02845, y: -0.03565, z: 0.01667}
   m_LocalScale: {x: 0.01, y: -0.05, z: 0.035}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -141,12 +141,11 @@ MonoBehaviour:
   itemId: Gitter
   itemSize: 2
   dropSoundEvent: Play_dropping_kettle
-
   overrideHeldPosition: 1
   overrideHeldRotation: 1
-  heldLocalPosition: {x: 0.69, y: 0.55, z: 0.75}
+  heldLocalPosition: {x: 0.45, y: -0.35, z: 0.75}
   heldLocalRotation: {x: 15, y: -25, z: 10}
-  heldScaleMultiplier: 2
+  heldScaleMultiplier: 3
   usePhysicsOnDrop: 0
   addRigidbodyIfMissing: 1
   upwardDropForce: 0.6

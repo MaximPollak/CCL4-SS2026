@@ -83,12 +83,11 @@ MonoBehaviour:
   itemId: FireTool
   itemSize: 0
   dropSoundEvent: Play_droppeing_wobbely_theroms
-
   overrideHeldPosition: 1
   overrideHeldRotation: 1
-  heldLocalPosition: {x: 0.45, y: -0.35, z: 0.75}
-  heldLocalRotation: {x: -100, y: -25, z: 10}
-  heldScaleMultiplier: 6
+  heldLocalPosition: {x: 0.57, y: -0.41, z: 0.75}
+  heldLocalRotation: {x: -64.6, y: -25, z: 10}
+  heldScaleMultiplier: 4
   usePhysicsOnDrop: 0
   addRigidbodyIfMissing: 1
   upwardDropForce: 0.6

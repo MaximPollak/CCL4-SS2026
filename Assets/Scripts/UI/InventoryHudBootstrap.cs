@@ -4,6 +4,10 @@ using UnityEngine.UI;
 
 public class InventoryHudBootstrap : MonoBehaviour
 {
+    private const string HudCanvasName = "HUDCanvas";
+    private const string InventoryTextName = "InventoryText";
+    private const string CrosshairName = "Crosshair";
+
     [Header("References")]
     [SerializeField] private InventorySlot inventorySlot;
 
@@ -25,7 +29,7 @@ public class InventoryHudBootstrap : MonoBehaviour
             inventorySlot = GetComponent<InventorySlot>();
         }
 
-        Canvas canvas = FindFirstObjectByType<Canvas>();
+        Canvas canvas = FindHudCanvas();
 
         if (canvas == null)
         {
@@ -37,17 +41,24 @@ public class InventoryHudBootstrap : MonoBehaviour
             CreateInventoryText(canvas.transform);
         }
 
-        if (createCrosshair && GameObject.Find("Crosshair") == null)
+        if (createCrosshair && GameObject.Find(CrosshairName) == null)
         {
             CreateCrosshair(canvas.transform);
         }
     }
 
+    private Canvas FindHudCanvas()
+    {
+        GameObject hudCanvasObject = GameObject.Find(HudCanvasName);
+        return hudCanvasObject != null ? hudCanvasObject.GetComponent<Canvas>() : null;
+    }
+
     private Canvas CreateHudCanvas()
     {
-        GameObject canvasObject = new GameObject("HUDCanvas");
+        GameObject canvasObject = new GameObject(HudCanvasName);
         Canvas canvas = canvasObject.AddComponent<Canvas>();
         canvas.renderMode = RenderMode.ScreenSpaceOverlay;
+        canvas.sortingOrder = 100;
 
         canvasObject.AddComponent<CanvasScaler>();
         canvasObject.AddComponent<GraphicRaycaster>();
@@ -57,7 +68,7 @@ public class InventoryHudBootstrap : MonoBehaviour
 
     private void CreateInventoryText(Transform canvasTransform)
     {
-        GameObject textObject = new GameObject("InventoryText");
+        GameObject textObject = new GameObject(InventoryTextName);
         textObject.transform.SetParent(canvasTransform, false);
 
         TextMeshProUGUI inventoryText = textObject.AddComponent<TextMeshProUGUI>();
@@ -88,7 +99,7 @@ public class InventoryHudBootstrap : MonoBehaviour
 
     private void CreateCrosshair(Transform canvasTransform)
     {
-        GameObject crosshairObject = new GameObject("Crosshair");
+        GameObject crosshairObject = new GameObject(CrosshairName);
         crosshairObject.transform.SetParent(canvasTransform, false);
 
         TextMeshProUGUI crosshair = crosshairObject.AddComponent<TextMeshProUGUI>();

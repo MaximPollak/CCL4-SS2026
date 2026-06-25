@@ -141,12 +141,11 @@ MonoBehaviour:
   itemId: OilCanister
   itemSize: 2
   dropSoundEvent: Play_dropped_metal_thing_2
-
   overrideHeldPosition: 0
   overrideHeldRotation: 0
   heldLocalPosition: {x: 0.45, y: -0.35, z: 0.75}
   heldLocalRotation: {x: 15, y: -25, z: 10}
-  heldScaleMultiplier: 3.5
+  heldScaleMultiplier: 3
   usePhysicsOnDrop: 0
   addRigidbodyIfMissing: 1
   upwardDropForce: 0.6

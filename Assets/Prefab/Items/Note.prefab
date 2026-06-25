@@ -262,11 +262,11 @@ MonoBehaviour:
   itemId: Note
   itemSize: 0
   dropSoundEvent: Play_dropping_something_small
-  overrideHeldPosition: 0
-  overrideHeldRotation: 0
-  heldLocalPosition: {x: 0.45, y: -0.35, z: 0.75}
-  heldLocalRotation: {x: 15, y: -25, z: 10}
-  heldScaleMultiplier: 2
+  overrideHeldPosition: 1
+  overrideHeldRotation: 1
+  heldLocalPosition: {x: 0.57, y: -0.35, z: 0.75}
+  heldLocalRotation: {x: -23.7, y: 228.7, z: 81.2}
+  heldScaleMultiplier: 3
   usePhysicsOnDrop: 0
   addRigidbodyIfMissing: 1
   upwardDropForce: 0.6

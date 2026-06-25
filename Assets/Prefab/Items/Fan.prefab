@@ -81,10 +81,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PickupItem
   itemId: Fan
+  itemSize: 1
   dropSoundEvent: Play_dropping_kettle
   overrideHeldPosition: 0
   overrideHeldRotation: 0
-  heldLocalPosition: {x: 0.45, y: -0.35, z: 0.75}
+  heldLocalPosition: {x: 0.56, y: -0.35, z: 0.75}
   heldLocalRotation: {x: 15, y: -25, z: 10}
   heldScaleMultiplier: 2
   usePhysicsOnDrop: 0

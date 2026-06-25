@@ -83,16 +83,15 @@ MonoBehaviour:
   itemId: PressureValve
   itemSize: 2
   dropSoundEvent: Play_dropping_something_heavy
-
-  overrideHeldPosition: 0
-  overrideHeldRotation: 0
-  heldLocalPosition: {x: 0.45, y: -0.35, z: 0.75}
+  overrideHeldPosition: 1
+  overrideHeldRotation: 1
+  heldLocalPosition: {x: 0.5, y: -0.35, z: 0.75}
   heldLocalRotation: {x: 15, y: -25, z: 10}
   heldScaleMultiplier: 2.5
   usePhysicsOnDrop: 0
   addRigidbodyIfMissing: 1
   upwardDropForce: 0.6
-  spinForce: 3
+  spinForce: 0
   makeWorldCollidersTriggers: 1
   keepWorldRigidbodyKinematic: 1
   persistScenePickupState: 1
