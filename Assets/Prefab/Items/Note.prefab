@@ -260,6 +260,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PickupItem
   itemId: Note
+  itemSize: 0
   overrideHeldPosition: 0
   overrideHeldRotation: 0
   heldLocalPosition: {x: 0.45, y: -0.35, z: 0.75}

@@ -112,28 +112,59 @@ public class RandomItemSpawner : MonoBehaviour
             );
         }
 
-        List<Transform> shuffledSpawnPoints = new List<Transform>(availableSpawnPoints);
+        List<Transform> unusedSpawnPoints = new List<Transform>(availableSpawnPoints);
 
-        Shuffle(shuffledSpawnPoints);
         Shuffle(availableItems);
 
         List<GameState.RandomSpawnState> generatedSpawnStates = new List<GameState.RandomSpawnState>();
+        int spawnedCount = 0;
+        int spawnAttempts = 0;
+        int maxSpawnAttempts = useEachItemOnlyOnce
+            ? availableItems.Count
+            : spawnCount * Mathf.Max(availableItems.Count, 1);
 
-        for (int i = 0; i < spawnCount; i++)
+        while (spawnedCount < spawnCount && spawnAttempts < maxSpawnAttempts)
         {
-            Transform spawnPoint = shuffledSpawnPoints[i];
-            int spawnPointIndex = GetSpawnPointIndex(spawnPoint, availableSpawnPoints);
             GameObject itemPrefab;
 
             if (useEachItemOnlyOnce)
             {
-                itemPrefab = availableItems[i];
+                itemPrefab = availableItems[spawnAttempts];
             }
             else
             {
                 int randomItemIndex = Random.Range(0, availableItems.Count);
                 itemPrefab = availableItems[randomItemIndex];
             }
+
+            spawnAttempts++;
+
+            PickupItem pickupItem = itemPrefab.GetComponentInChildren<PickupItem>(true);
+
+            if (pickupItem == null)
+            {
+                Debug.LogWarning("RandomItemSpawner: " + itemPrefab.name + " has no PickupItem.");
+                continue;
+            }
+
+            Transform spawnPoint = PickCompatibleSpawnPoint(
+                pickupItem,
+                unusedSpawnPoints
+            );
+
+            if (spawnPoint == null)
+            {
+                Debug.LogWarning(
+                    "RandomItemSpawner: No compatible spawn point for " +
+                    GetItemDebugName(itemPrefab) +
+                    " with size " +
+                    pickupItem.Size +
+                    ". Item was not spawned."
+                );
+                continue;
+            }
+
+            int spawnPointIndex = GetSpawnPointIndex(spawnPoint, availableSpawnPoints);
 
             GameObject spawnedItem = SpawnItemPrefab(
                 itemPrefab,
@@ -142,7 +173,8 @@ public class RandomItemSpawner : MonoBehaviour
                 spawnPointIndex
             );
 
-            PickupItem pickupItem = itemPrefab.GetComponentInChildren<PickupItem>(true);
+            unusedSpawnPoints.Remove(spawnPoint);
+            spawnedCount++;
 
             if (pickupItem != null)
             {
@@ -412,6 +444,53 @@ public class RandomItemSpawner : MonoBehaviour
                 spawnedItem.transform.localScale
             );
         }
+    }
+
+    private Transform PickCompatibleSpawnPoint(
+        PickupItem pickupItem,
+        List<Transform> unusedSpawnPoints
+    )
+    {
+        if (pickupItem == null || unusedSpawnPoints == null || unusedSpawnPoints.Count == 0)
+        {
+            return null;
+        }
+
+        List<Transform> compatibleSpawnPoints = new List<Transform>();
+
+        foreach (Transform spawnPoint in unusedSpawnPoints)
+        {
+            if (spawnPoint == null)
+            {
+                continue;
+            }
+
+            if (AllowsItemSize(spawnPoint, pickupItem.Size))
+            {
+                compatibleSpawnPoints.Add(spawnPoint);
+            }
+        }
+
+        if (compatibleSpawnPoints.Count == 0)
+        {
+            return null;
+        }
+
+        return compatibleSpawnPoints[Random.Range(0, compatibleSpawnPoints.Count)];
+    }
+
+    private bool AllowsItemSize(Transform spawnPoint, ItemSize itemSize)
+    {
+        ItemSpawnPoint itemSpawnPoint = spawnPoint.GetComponent<ItemSpawnPoint>();
+
+        if (itemSpawnPoint == null)
+        {
+            // Existing scenes without ItemSpawnPoint components keep their previous all-sizes behavior.
+            return true;
+        }
+
+        // Size compatibility is only used while generating the initial random spawn plan.
+        return itemSpawnPoint.Allows(itemSize);
     }
 
     private GameObject SpawnItemPrefab(

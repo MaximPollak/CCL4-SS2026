@@ -16,6 +16,7 @@ public class MonsterAI : MonoBehaviour
     [Header("References")]
     public MonsterPathFollower pathFollower;
     public MonsterVision vision;
+    public MonsterCatchHandler catchHandler;
     public Transform player;
 
     [Header("Roaming")]
@@ -78,6 +79,7 @@ public class MonsterAI : MonoBehaviour
     private bool hasStartedSearchLook;
     private bool hasCompletedSearchLookCycle;
     private bool hasStartedSearchAtCurrentPosition;
+    private bool skipSaveOnDisable;
 
     private float normalViewAngle;
     private float normalViewDistance;
@@ -126,6 +128,16 @@ public class MonsterAI : MonoBehaviour
             vision = GetComponent<MonsterVision>();
         }
 
+        if (catchHandler == null)
+        {
+            catchHandler = GetComponent<MonsterCatchHandler>();
+        }
+
+        if (catchHandler == null && includeSceneSearch)
+        {
+            catchHandler = gameObject.AddComponent<MonsterCatchHandler>();
+        }
+
         if (player == null && includeSceneSearch)
         {
             PlayerInteraction playerInteraction = FindFirstObjectByType<PlayerInteraction>();
@@ -142,6 +154,11 @@ public class MonsterAI : MonoBehaviour
         }
     }
 
+    private void OnDisable()
+    {
+        SaveCurrentEnemyState();
+    }
+
     private void Start()
     {
         currentState = MonsterState.Idle;
@@ -155,6 +172,18 @@ public class MonsterAI : MonoBehaviour
         {
             normalViewAngle = vision.viewAngle;
             normalViewDistance = vision.viewDistance;
+        }
+
+        if (GameState.Instance.HasEnemyStateInDifferentScene(gameObject.scene.name))
+        {
+            skipSaveOnDisable = true;
+            gameObject.SetActive(false);
+            return;
+        }
+
+        if (RestoreFromSavedEnemyState())
+        {
+            return;
         }
 
         ChangeState(MonsterState.Roaming);
@@ -399,6 +428,91 @@ public class MonsterAI : MonoBehaviour
         }
 
         Debug.Log("Player caught!");
+
+        if (catchHandler != null)
+        {
+            catchHandler.HandlePlayerCaught(this);
+        }
+    }
+
+    public void ResetAfterCatchRespawn()
+    {
+        ApplyNormalVision();
+
+        if (pathFollower != null)
+        {
+            pathFollower.StopMoving();
+        }
+
+        lastKnownPlayerPosition = Vector3.zero;
+        hasLastKnownPlayerPosition = false;
+        lastTimePlayerSeen = Mathf.NegativeInfinity;
+        waitTimer = 0f;
+        searchTimer = 0f;
+        isWaitingAtRoamPoint = false;
+        ResetSearchLook();
+
+        currentState = MonsterState.Idle;
+        ChangeState(MonsterState.Roaming);
+    }
+
+    private bool RestoreFromSavedEnemyState()
+    {
+        if (!GameState.Instance.TryGetEnemyStateForScene(
+            gameObject.scene.name,
+            out GameState.EnemyState savedEnemyState
+        ))
+        {
+            return false;
+        }
+
+        CharacterController characterController = GetComponent<CharacterController>();
+
+        if (characterController != null)
+        {
+            characterController.enabled = false;
+        }
+
+        transform.SetPositionAndRotation(savedEnemyState.position, savedEnemyState.rotation);
+        Physics.SyncTransforms();
+
+        if (characterController != null)
+        {
+            characterController.enabled = true;
+        }
+
+        if (pathFollower != null)
+        {
+            pathFollower.StopMoving();
+        }
+
+        lastKnownPlayerPosition = savedEnemyState.lastKnownPlayerPosition;
+        hasLastKnownPlayerPosition = savedEnemyState.hasLastKnownPlayerPosition;
+        currentState = MonsterState.Idle;
+        MonsterState restoredState = savedEnemyState.monsterState == MonsterState.CaughtPlayer
+            ? MonsterState.Roaming
+            : savedEnemyState.monsterState;
+
+        // Scene loads restore the saved enemy state instead of respawning it in the Lab.
+        ChangeState(restoredState);
+        return true;
+    }
+
+    private void SaveCurrentEnemyState()
+    {
+        if (skipSaveOnDisable || !GameState.HasInstance || !gameObject.scene.IsValid())
+        {
+            return;
+        }
+
+        GameState.Instance.SaveEnemyState(
+            gameObject.scene.name,
+            transform.position,
+            transform.rotation,
+            currentState,
+            hasLastKnownPlayerPosition,
+            lastKnownPlayerPosition
+        );
     }
 
     private void GoToNextRoamPoint()
