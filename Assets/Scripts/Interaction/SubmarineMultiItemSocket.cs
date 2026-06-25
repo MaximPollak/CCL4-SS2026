@@ -14,6 +14,9 @@ public class SubmarineMultiItemSocket : MonoBehaviour, IInteractable
     [SerializeField] private GameObject[] objectsToEnablePerItem;
     [SerializeField] private GameObject objectToEnableWhenComplete;
 
+    [Header("Task Completion Indicator")]
+    [SerializeField] private TaskCompletionIndicator taskCompletionIndicator;
+
     [Header("Messages")]
     [SerializeField] private string missingItemMessage = "Missing required item.";
     [SerializeField] private string progressMessage = "Added item.";
@@ -48,9 +51,9 @@ public class SubmarineMultiItemSocket : MonoBehaviour, IInteractable
 
         GameState.Instance.MarkItemConsumed(requiredItemId);
         player.Inventory.ClearItem();
+
         currentItemCount++;
         SaveProgress();
-
         ApplyProgressVisuals();
 
         Debug.Log(progressMessage + " " + currentItemCount + "/" + requiredItemCount);
@@ -60,15 +63,12 @@ public class SubmarineMultiItemSocket : MonoBehaviour, IInteractable
             return;
         }
 
-        if (objectToEnableWhenComplete != null)
-        {
-            objectToEnableWhenComplete.SetActive(true);
-        }
-
         if (repairManager != null)
         {
             repairManager.CompleteTask(repairTask);
         }
+
+        ApplyProgressVisuals();
 
         Debug.Log(completedMessage);
     }
@@ -77,6 +77,7 @@ public class SubmarineMultiItemSocket : MonoBehaviour, IInteractable
     {
         if (repairManager == null)
         {
+            ApplyProgressVisuals();
             return;
         }
 
@@ -88,6 +89,7 @@ public class SubmarineMultiItemSocket : MonoBehaviour, IInteractable
         }
 
         currentItemCount = Mathf.Clamp(currentItemCount, 0, requiredItemCount);
+
         ApplyProgressVisuals();
     }
 
@@ -116,9 +118,16 @@ public class SubmarineMultiItemSocket : MonoBehaviour, IInteractable
             }
         }
 
+        bool isComplete = currentItemCount >= requiredItemCount;
+
         if (objectToEnableWhenComplete != null)
         {
-            objectToEnableWhenComplete.SetActive(currentItemCount >= requiredItemCount);
+            objectToEnableWhenComplete.SetActive(isComplete);
+        }
+
+        if (taskCompletionIndicator != null)
+        {
+            taskCompletionIndicator.SetComplete(isComplete);
         }
     }
 }

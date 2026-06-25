@@ -20,6 +20,9 @@ public class SubmarineItemSocket : MonoBehaviour, IInteractable
     [SerializeField] private GameObject objectToDisableAfterUse;
     [SerializeField] private GameObject objectToEnableAfterUse;
 
+    [Header("Task Completion Indicator")]
+    [SerializeField] private TaskCompletionIndicator taskCompletionIndicator;
+
     [Header("Optional Take Back")]
     [SerializeField] private bool canTakeItemBack = false;
     [SerializeField] private PickupItem itemToReturnPrefab;
@@ -48,6 +51,7 @@ public class SubmarineItemSocket : MonoBehaviour, IInteractable
     private void Start()
     {
         RestoreStateFromGameState();
+        UpdateTaskCompletionIndicator();
     }
 
     private void Update()
@@ -108,6 +112,8 @@ public class SubmarineItemSocket : MonoBehaviour, IInteractable
             repairManager.CompleteTask(repairTask);
         }
 
+        UpdateTaskCompletionIndicator();
+
         Debug.Log(completedMessage);
     }
 
@@ -166,6 +172,8 @@ public class SubmarineItemSocket : MonoBehaviour, IInteractable
             objectToEnableAfterUse.SetActive(false);
         }
 
+        UpdateTaskCompletionIndicator();
+
         Debug.Log(takeBackMessage);
     }
 
@@ -187,6 +195,17 @@ public class SubmarineItemSocket : MonoBehaviour, IInteractable
             objectToEnableAfterUse.SetActive(true);
             MakePlacedVisualDisplayOnly(objectToEnableAfterUse);
         }
+    }
+
+    private void UpdateTaskCompletionIndicator()
+    {
+        if (taskCompletionIndicator == null)
+        {
+            return;
+        }
+
+        bool isComplete = repairManager != null && repairManager.IsTaskComplete(repairTask);
+        taskCompletionIndicator.SetComplete(isComplete);
     }
 
     private void UpdatePrerequisiteVisibility()
