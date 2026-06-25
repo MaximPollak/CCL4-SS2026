@@ -41,6 +41,11 @@ public class PlayerInteraction : MonoBehaviour
 
     private void Update()
     {
+        if (ReadableNoteOverlay.IsOpen)
+        {
+            return;
+        }
+
         if (Keyboard.current == null)
         {
             return;

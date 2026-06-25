@@ -12,13 +12,20 @@ public class CrabGuard : MonoBehaviour, IInteractable
     [SerializeField] private GameObject guardedPaperObject;
     [SerializeField] private PickupItem guardedPaperPickup;
     [SerializeField] private Collider[] guardedPaperColliders;
+    [SerializeField] private Collider[] crabBlockingCollidersToDisableAfterBribe;
     [SerializeField] private bool disablePaperPickupUntilBribed = true;
+
+    [Header("Coin Result")]
+    [SerializeField] private GameObject[] coinObjectsToDisableAfterBribe;
 
     [Header("Animation")]
     [SerializeField] private Animator animator;
     [SerializeField] private string snapTriggerName = "Snap";
     [SerializeField] private string liftArmsTriggerName = "LiftArms";
     [SerializeField] private string isBribedBoolName = "IsBribed";
+    [SerializeField] private bool playAnimationStatesDirectly = true;
+    [SerializeField] private string snapStateName = "Armature_001|Snap";
+    [SerializeField] private string liftArmsStateName = "Armature_001|LiftArms";
     [SerializeField] private float snapAnimationLockTime = 0.75f;
     [SerializeField] private float liftArmsUnlockDelay = 1.25f;
 
@@ -32,6 +39,9 @@ public class CrabGuard : MonoBehaviour, IInteractable
     private int snapTriggerHash;
     private int liftArmsTriggerHash;
     private int isBribedBoolHash;
+    private bool hasSnapTriggerParameter;
+    private bool hasLiftArmsTriggerParameter;
+    private bool hasIsBribedBoolParameter;
 
     private void Reset()
     {
@@ -88,15 +98,18 @@ public class CrabGuard : MonoBehaviour, IInteractable
         GameState.Instance.MarkItemConsumed(requiredCoinItemId);
         player.Inventory.ClearItem();
         Log("Coin was consumed: " + requiredCoinItemId);
+        DisableBribedCoinObjects();
 
-        if (animator != null && !string.IsNullOrWhiteSpace(liftArmsTriggerName))
+        if (animator != null)
         {
-            if (!string.IsNullOrWhiteSpace(snapTriggerName))
+            if (!string.IsNullOrWhiteSpace(snapTriggerName) && hasSnapTriggerParameter)
             {
                 animator.ResetTrigger(snapTriggerHash);
             }
 
-            animator.SetTrigger(liftArmsTriggerHash);
+            TrySetAnimatorBool(isBribedBoolHash, hasIsBribedBoolParameter, true);
+            TrySetAnimatorTrigger(liftArmsTriggerHash, hasLiftArmsTriggerParameter);
+            TryPlayAnimatorState(liftArmsStateName);
             Log("Lift arms animation triggered.");
         }
 
@@ -117,9 +130,10 @@ public class CrabGuard : MonoBehaviour, IInteractable
             return;
         }
 
-        if (animator != null && !string.IsNullOrWhiteSpace(snapTriggerName))
+        if (animator != null)
         {
-            animator.SetTrigger(snapTriggerHash);
+            TrySetAnimatorTrigger(snapTriggerHash, hasSnapTriggerParameter);
+            TryPlayAnimatorState(snapStateName);
             Log("Snap animation triggered.");
         }
 
@@ -135,9 +149,19 @@ public class CrabGuard : MonoBehaviour, IInteractable
 
     private void ApplyBribedState()
     {
-        if (animator != null && !string.IsNullOrWhiteSpace(isBribedBoolName))
+        if (animator != null)
         {
-            animator.SetBool(isBribedBoolHash, isBribed);
+            TrySetAnimatorBool(isBribedBoolHash, hasIsBribedBoolParameter, isBribed);
+
+            if (isBribed)
+            {
+                TryPlayAnimatorState(liftArmsStateName);
+            }
+        }
+
+        if (isBribed)
+        {
+            DisableBribedCoinObjects();
         }
 
         bool paperCanBePickedUp = isBribed || !disablePaperPickupUntilBribed;
@@ -158,6 +182,18 @@ public class CrabGuard : MonoBehaviour, IInteractable
             }
         }
 
+        if (crabBlockingCollidersToDisableAfterBribe != null)
+        {
+            foreach (Collider blockingCollider in crabBlockingCollidersToDisableAfterBribe)
+            {
+                if (blockingCollider != null)
+                {
+                    // The crab can still be interacted with, but its note-blocking box collider opens.
+                    blockingCollider.enabled = !isBribed;
+                }
+            }
+        }
+
         if (paperCanBePickedUp)
         {
             Log("Paper pickup became available.");
@@ -165,6 +201,22 @@ public class CrabGuard : MonoBehaviour, IInteractable
         else
         {
             Log("Paper pickup is blocked until crab is bribed.");
+        }
+    }
+
+    private void DisableBribedCoinObjects()
+    {
+        if (coinObjectsToDisableAfterBribe == null)
+        {
+            return;
+        }
+
+        foreach (GameObject coinObject in coinObjectsToDisableAfterBribe)
+        {
+            if (coinObject != null)
+            {
+                coinObject.SetActive(false);
+            }
         }
     }
 
@@ -193,9 +245,74 @@ public class CrabGuard : MonoBehaviour, IInteractable
 
     private void CacheAnimatorHashes()
     {
+        hasSnapTriggerParameter = false;
+        hasLiftArmsTriggerParameter = false;
+        hasIsBribedBoolParameter = false;
+
         snapTriggerHash = Animator.StringToHash(snapTriggerName);
         liftArmsTriggerHash = Animator.StringToHash(liftArmsTriggerName);
         isBribedBoolHash = Animator.StringToHash(isBribedBoolName);
+
+        if (animator == null)
+        {
+            return;
+        }
+
+        foreach (AnimatorControllerParameter parameter in animator.parameters)
+        {
+            if (parameter.name == snapTriggerName && parameter.type == AnimatorControllerParameterType.Trigger)
+            {
+                hasSnapTriggerParameter = true;
+            }
+            else if (parameter.name == liftArmsTriggerName && parameter.type == AnimatorControllerParameterType.Trigger)
+            {
+                hasLiftArmsTriggerParameter = true;
+            }
+            else if (parameter.name == isBribedBoolName && parameter.type == AnimatorControllerParameterType.Bool)
+            {
+                hasIsBribedBoolParameter = true;
+            }
+        }
+    }
+
+    private void TrySetAnimatorTrigger(int parameterHash, bool hasParameter)
+    {
+        if (animator != null && hasParameter)
+        {
+            animator.SetTrigger(parameterHash);
+        }
+    }
+
+    private void TrySetAnimatorBool(int parameterHash, bool hasParameter, bool value)
+    {
+        if (animator != null && hasParameter)
+        {
+            animator.SetBool(parameterHash, value);
+        }
+    }
+
+    private void TryPlayAnimatorState(string stateName)
+    {
+        if (!playAnimationStatesDirectly || animator == null || string.IsNullOrWhiteSpace(stateName))
+        {
+            return;
+        }
+
+        int stateHash = Animator.StringToHash(stateName);
+        int baseLayerStateHash = Animator.StringToHash("Base Layer." + stateName);
+
+        if (animator.HasState(0, stateHash))
+        {
+            animator.Play(stateHash, 0, 0f);
+        }
+        else if (animator.HasState(0, baseLayerStateHash))
+        {
+            animator.Play(baseLayerStateHash, 0, 0f);
+        }
+        else
+        {
+            Log("Animator state not found: " + stateName);
+        }
     }
 
     private void Log(string message)

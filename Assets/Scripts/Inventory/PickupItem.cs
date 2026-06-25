@@ -104,6 +104,13 @@ public class PickupItem : MonoBehaviour, IInteractable
         }
 
         player.Inventory.PickUpItem(this, player.PlayerCamera.transform);
+
+        ReadableNoteOverlay readableNoteOverlay = GetComponentInChildren<ReadableNoteOverlay>(true);
+
+        if (readableNoteOverlay != null)
+        {
+            readableNoteOverlay.Show();
+        }
     }
 
     public void DropFromHand(Vector3 forwardDirection, Vector3 originalScale, float plopForce)
