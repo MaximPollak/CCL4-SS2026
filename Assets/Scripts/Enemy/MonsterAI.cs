@@ -39,6 +39,10 @@ public class MonsterAI : MonoBehaviour
     [Header("Chase")]
     public float catchDistance = 1.1f;
     public float loseSightDelay = 0.6f;
+    
+    [Header("Wwise Death Audio")]
+    [SerializeField] private string deathEvent = "Play_death";
+    [SerializeField] private float deathSoundDelay = 3f;
 
     [Header("Search")]
     public float searchDuration = 3f;
@@ -458,11 +462,19 @@ public class MonsterAI : MonoBehaviour
         }
 
         Debug.Log("Player caught!");
+        StartCoroutine(PlayDeathSoundAfterDelay());
 
         if (catchHandler != null)
         {
             catchHandler.HandlePlayerCaught(this);
         }
+    }
+
+    private System.Collections.IEnumerator PlayDeathSoundAfterDelay()
+    {
+        yield return new WaitForSeconds(deathSoundDelay);
+
+        AkUnitySoundEngine.PostEvent(deathEvent, gameObject);
     }
 
     public void ResetAfterCatchRespawn()

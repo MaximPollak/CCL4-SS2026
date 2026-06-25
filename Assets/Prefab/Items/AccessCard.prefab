@@ -82,6 +82,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PickupItem
   itemId: AccessCard
   itemSize: 0
+  dropSoundEvent: Play_dropping_something_small_01
+
   overrideHeldPosition: 0
   overrideHeldRotation: 1
   heldLocalPosition: {x: 0.45, y: -0.35, z: 0.75}

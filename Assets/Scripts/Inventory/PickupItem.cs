@@ -8,6 +8,9 @@ public class PickupItem : MonoBehaviour, IInteractable
     [SerializeField] private string itemId = "Screwdriver";
     [SerializeField] private ItemSize itemSize = ItemSize.Medium;
 
+    [Header("Wwise Drop Audio")]
+    [SerializeField] private string dropSoundEvent = "Play_dropped_item";
+
     [Header("Held Visual Override")]
     [SerializeField] private bool overrideHeldPosition = false;
     [SerializeField] private bool overrideHeldRotation = false;
@@ -164,6 +167,8 @@ public class PickupItem : MonoBehaviour, IInteractable
 
         ApplyWorldPickupPhysicsState(shouldPrintDebug);
 
+        PlayDropSound();
+
         IgnorePlayerCollisions(
             itemColliders,
             playerColliders,
@@ -218,6 +223,21 @@ public class PickupItem : MonoBehaviour, IInteractable
             );
         }
     }
+
+    private void PlayDropSound()
+{
+    if (string.IsNullOrWhiteSpace(dropSoundEvent))
+    {
+        return;
+    }
+
+    uint eventId = AkUnitySoundEngine.PostEvent(dropSoundEvent, gameObject);
+
+    if (eventId == 0)
+    {
+        Debug.LogError("Drop sound event not found or SoundBank not loaded: " + dropSoundEvent);
+    }
+}
 
     private IEnumerator AnimateSafeDrop(
         Vector3 startPosition,
@@ -278,6 +298,8 @@ public class PickupItem : MonoBehaviour, IInteractable
         }
 
         ApplyWorldPickupPhysicsState(shouldPrintDebug);
+
+        PlayDropSound();
 
         IgnorePlayerCollisions(itemColliders, playerColliders, true, 0f, shouldPrintDebug);
 

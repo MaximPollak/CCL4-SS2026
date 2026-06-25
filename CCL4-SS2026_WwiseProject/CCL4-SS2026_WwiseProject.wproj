@@ -13,6 +13,7 @@
 				<Language Name="SFX" ID="{A5B3553F-2666-4817-BF76-E6DE4746FCC5}" />
 			</LanguageList>
 			<PropertyList>
+				<Property Name="AutoSoundBankEnabled" Type="bool" Value="True" />
 				<Property Name="ExternalSourcesInputPath" Type="string">
 					<ValueList>
 						<Value Platform="Mac"></Value>
@@ -21,11 +22,13 @@
 				</Property>
 				<Property Name="ExternalSourcesOutputPath" Type="string">
 					<ValueList>
-						<Value Platform="Mac">GeneratedSoundBanks\Mac\</Value>
-						<Value Platform="Windows">GeneratedSoundBanks\Windows\</Value>
+						<Value Platform="Mac">GeneratedSoundBanks\Mac</Value>
+						<Value Platform="Windows">GeneratedSoundBanks\Windows</Value>
 					</ValueList>
 				</Property>
-				<Property Name="SoundBankGenerateEstimatedDuration" Type="bool" Value="True" /><Property Name="GenerateSoundBankXML" Type="bool" Value="False" /><Property Name="SoundBankGenerateHeaderFile" Type="bool" Value="True" /><Property Name="SoundBankGenerateMaxAttenuationInfo" Type="bool" Value="True" /><Property Name="GenerateSoundBankJSON" Type="bool" Value="True" /><Property Name="SoundBankGeneratePrintGUID" Type="bool" Value="True" /><Property Name="SoundBankGeneratePrintPath" Type="bool" Value="True" /><Property Name="AutoSoundBankEnabled" Type="bool" Value="True" /><Property Name="SoundBankHeaderFilePath" Type="string" Value="Z:/Users/maximpollak/Desktop/4.Semester/CCL4/CCL4-SS2026/CCL4-SS2026_WwiseProject/GeneratedSoundBanks/" />
+				<Property Name="LicenseKey" Type="string" Value="PHByb2plY3QgaWQ9IjIxMTYwIiBtYXNrPSJUWFNGNjg5MyIgZW5jPSIwIj48bGljZW5zZSBpZD0iMSIgbmFtZT0iV3dpc2UiIHR5cGU9IjMiIHBsYXRmb3Jtcz0iMiwzLDQsMTAsMTMsMTQsMzciIGV4cGlyZXM9IjIwMjYtMTItMDEiICAvPjxsaWNlbnNlIGlkPSIyMiIgbmFtZT0iTGV2ZWwgQSBMaWNlbnNlIiB0eXBlPSIzIiBwbGF0Zm9ybXM9IjIsMyw0LDEwLDEzLDE0LDM3IiBleHBpcmVzPSIyMDI2LTEyLTAxIiAgLz48bGljZW5zZSBpZD0iMjEiIG5hbWU9Ik1haW50ZW5hbmNlIiB0eXBlPSIzIiBwbGF0Zm9ybXM9IjIsMyw0LDEwLDEzLDE0LDM3IiBleHBpcmVzPSIyMDI2LTEyLTAxIiAgLz48bGljZW5zZSBpZD0iMjUiIG5hbWU9IkFsbCBXd2lzZSBQbHVnLUlucyIgdHlwZT0iMyIgIGV4cGlyZXM9IjIwMjYtMTItMDEiICAvPjwvcHJvamVjdD4=|hjyt8uC+iYdfaxoIYL7UVL73+6/gWTdhXGAgnTY5PmyAjGIotcjfblE4XJkxgzHe1LKSPMZWumB1x4PvRkBHIMN5vDB/QKPNRqaC8CqMsv8Ct2KMtCcTcS3hgKN38xJnpcu5ZKYJ44yITBgL6LWFy11LWYj+dDQNPzgz3PNwXFOAb5ss6yF9ptfrM8i2bx8ThHNEjr8gMjpdRwlX42mA/H2uXYWh22+gCZ0/Bu/yFodyHyL59r0m/A07O45ZZwK1yx/Pk15vO+dkbwjnTNbnMsFy9/WvsZDaGjVrpmk2zY+BPP8K1LqDcJz/dR+d2kU3gt55pWrDgwbK/PHteJC62w==" />
+				<Property Name="SoundBankGenerateHeaderFile" Type="bool" Value="True" />
+				<Property Name="SoundBankGenerateEstimatedDuration" Type="bool" Value="True" /><Property Name="SoundBankHeaderFilePath" Type="string" Value="GeneratedSoundBanks" />
 				<Property Name="SoundBankPaths" Type="string">
 					<ValueList>
 						<Value Platform="Mac">GeneratedSoundBanks\Mac\</Value>
@@ -58,6 +61,10 @@
 				</Property>
 				<Property Name="WwiseVersionWhenCreated" Type="string" Value="Branch=wwise_v2025.1.5|Build=9095|VersionName=v2025.1.5|Config=Release" />
 			</PropertyList>
+			<MiscSettings>
+				<MiscSettingEntry Name="Cache"><![CDATA[.cache]]></MiscSettingEntry>
+				<MiscSettingEntry Name="Originals"><![CDATA[Originals]]></MiscSettingEntry>
+			</MiscSettings>
 			<SharedValues>
 				<SharedPropertyList ClassName="AudioFileSource" PluginType="0" CompanyID="1" PluginID="0">
 					<PropertyList>

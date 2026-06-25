@@ -1,6 +1,434 @@
 <?xml version="1.0" encoding="utf-8"?>
 <WwiseDocument Type="WorkUnit" ID="{5D718B47-E347-4F43-A677-2491F78C9839}" SchemaVersion="133">
 	<Events>
-		<WorkUnit Name="Default Work Unit" ID="{5D718B47-E347-4F43-A677-2491F78C9839}" PersistMode="Standalone"/>
+		<WorkUnit Name="Default Work Unit" ID="{5D718B47-E347-4F43-A677-2491F78C9839}" PersistMode="Standalone">
+			<ChildrenList>
+				<Event Name="Play_locker" ID="{312338C9-0AFD-4DAF-88FB-FEB06D5A9306}">
+					<ChildrenList>
+						<Action Name="" ID="{AC06DF4F-C345-44E8-A56A-677B4FDE98A4}" ShortID="481915085">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="locker" ID="{59AFD97F-4600-4BF8-8775-7066B7BA94F2}" WorkUnitID="{993174C0-55F0-41B4-A294-3B951F391C6B}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="sub_swimming" ID="{E58DB607-9C74-4736-902E-00FFC9ECA023}">
+					<ChildrenList>
+						<Action Name="" ID="{9C3A6965-FF86-4370-9A89-4F2DFD16DC4B}" ShortID="626484535">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="New Blend Container" ID="{33FE8FB3-AD35-4BC8-AD13-D4DF7F48449D}" WorkUnitID="{993174C0-55F0-41B4-A294-3B951F391C6B}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_enemy_breaking_out" ID="{49E989AB-E623-4837-9BB2-DB59C3CDD158}">
+					<ChildrenList>
+						<Action Name="" ID="{81A6C15B-99C1-4358-B4F2-33BA0184DA1E}" ShortID="819789695">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="enemy_breaking_out" ID="{762D0187-335F-462B-8346-6C6BA1FEF14E}" WorkUnitID="{993174C0-55F0-41B4-A294-3B951F391C6B}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_enviorment_noise" ID="{0703A19F-67F4-4860-8D9E-4BE903335110}">
+					<ChildrenList>
+						<Action Name="" ID="{C83F3B4C-FA83-4C55-8098-3E4B99BD7366}" ShortID="334695111">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="enviorment" ID="{9E7D5E55-7480-44F0-BED0-499E693643DF}" WorkUnitID="{993174C0-55F0-41B4-A294-3B951F391C6B}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_running" ID="{0D219AB6-CC7D-442C-860D-D65A0291BEF5}">
+					<ChildrenList>
+						<Action Name="" ID="{A9DE07CF-EABF-4F5D-8ADC-C84F828F08C4}" ShortID="233128474">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="running" ID="{E7619D54-5717-48FB-AC42-029CCF8ED264}" WorkUnitID="{993174C0-55F0-41B4-A294-3B951F391C6B}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_walking" ID="{F7C15ED9-C7B5-4407-8FCE-554B27834420}">
+					<ChildrenList>
+						<Action Name="" ID="{1231ED8B-2A19-4EEA-9651-2BC43315B225}" ShortID="272836112">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="walking" ID="{F7BCFA12-86A3-473B-959E-51469F61CAC2}" WorkUnitID="{993174C0-55F0-41B4-A294-3B951F391C6B}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_out_of_breath" ID="{97059FF8-21FB-48FB-A89D-2A3E15E6A459}">
+					<ChildrenList>
+						<Action Name="" ID="{BA179C82-8B0F-45AB-948F-3E0EDA96B0EB}" ShortID="688338440">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="out_of_breath" ID="{5D00878A-839D-4B3C-8C95-CFB113454B72}" WorkUnitID="{993174C0-55F0-41B4-A294-3B951F391C6B}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_death" ID="{BE705198-DB86-485D-8A55-5FA9D68611AE}">
+					<ChildrenList>
+						<Action Name="" ID="{F5961A7D-12F0-46A2-89FA-AA82F8F07429}" ShortID="669379728">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="death" ID="{5CA8AF6C-3D17-43DA-8F32-82B363F8DCF2}" WorkUnitID="{993174C0-55F0-41B4-A294-3B951F391C6B}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_breathing_in_locker" ID="{A5AD45CA-B935-40F8-A667-0885D385542D}">
+					<ChildrenList>
+						<Action Name="" ID="{63D25480-6712-4BD3-84F1-F231842CC456}" ShortID="580951178">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="breathing_in_locker" ID="{5B786E13-8BD6-4F4A-AC53-DF32D627F615}" WorkUnitID="{993174C0-55F0-41B4-A294-3B951F391C6B}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_toilett_seat_closing" ID="{F3D4F289-C87B-4E87-9A78-68EA4D947570}">
+					<ChildrenList>
+						<Action Name="" ID="{72C8F822-1F6D-495D-B7EE-58A6D9F5BC83}" ShortID="445952933">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="toilett_seat_closing" ID="{CE8F030F-94FB-4570-940F-E65B76C5BDAF}" WorkUnitID="{993174C0-55F0-41B4-A294-3B951F391C6B}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_poison_into_water" ID="{79A826F6-E2ED-4346-AB75-FCFE632C0EB9}">
+					<ChildrenList>
+						<Action Name="" ID="{AA3E6238-FF18-4E6D-8400-9304708DF889}" ShortID="553205096">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="poison_into_water" ID="{A807AAF1-37CE-4218-979E-CAF1539EA3B6}" WorkUnitID="{993174C0-55F0-41B4-A294-3B951F391C6B}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_dripping" ID="{AD1C7839-DFBC-4D72-875C-6811CCAEF0E3}">
+					<ChildrenList>
+						<Action Name="" ID="{3524635A-EE9F-43CA-9FEB-255136F40A0B}" ShortID="354041635">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="dripping" ID="{6262F9AB-7C5B-4A72-8AE0-FEE6BB9A8FCA}" WorkUnitID="{993174C0-55F0-41B4-A294-3B951F391C6B}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_running_dripping_water" ID="{4601B92E-B8BB-4E7F-85AD-C53597DE7B75}">
+					<ChildrenList>
+						<Action Name="" ID="{B130D39F-999F-40BE-9C3B-556AA25F64CC}" ShortID="32626537">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="running_dripping_water" ID="{A8E13F08-D63D-448C-B97D-C39D2CEAD109}" WorkUnitID="{993174C0-55F0-41B4-A294-3B951F391C6B}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_monster_walking" ID="{B6D853B0-D645-4122-8C7F-3A70068C7F3C}">
+					<ChildrenList>
+						<Action Name="" ID="{198BDD5E-71A9-453E-AF62-3CA8C8B532D8}" ShortID="950953529">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="monster_walking" ID="{D4553DFF-397A-45E3-B730-E26BDE9B0703}" WorkUnitID="{993174C0-55F0-41B4-A294-3B951F391C6B}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_menu_music" ID="{543ADDB2-0FEA-4ED7-BED1-133F7129638F}">
+					<ChildrenList>
+						<Action Name="" ID="{2533178A-5306-4D8B-BD49-A94B7F0B6DE1}" ShortID="110633362">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="menu_music" ID="{C64FD921-8EE3-42CB-9F9A-9EAC1E0A827A}" WorkUnitID="{993174C0-55F0-41B4-A294-3B951F391C6B}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_button_click" ID="{CC763D83-BA9E-4169-885E-1F71405D44E3}">
+					<ChildrenList>
+						<Action Name="" ID="{F88D7B8D-4A15-4159-B484-5123CE7C9BDB}" ShortID="299957764">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="button_click" ID="{1C646F5F-28F4-4CA6-97CE-35EFAB96EE64}" WorkUnitID="{993174C0-55F0-41B4-A294-3B951F391C6B}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Stop_walking" ID="{E3A4709D-E0C0-47A3-BCAC-AF0056822C79}">
+					<ChildrenList>
+						<Action Name="" ID="{E2CBE1D1-2163-48E8-BD1E-D7E435D1D814}" ShortID="311130260">
+							<PropertyList>
+								<Property Name="ActionType" Type="int16" Value="2"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="walking" ID="{F7BCFA12-86A3-473B-959E-51469F61CAC2}" WorkUnitID="{993174C0-55F0-41B4-A294-3B951F391C6B}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Stop_breathing_in_locker" ID="{744AFA5B-877D-4485-9827-35628030C84D}">
+					<ChildrenList>
+						<Action Name="" ID="{DBCC3B0A-AF63-4E99-BC4D-7EB97BD7A97B}" ShortID="1026850135">
+							<PropertyList>
+								<Property Name="ActionType" Type="int16" Value="2"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="breathing_in_locker" ID="{5B786E13-8BD6-4F4A-AC53-DF32D627F615}" WorkUnitID="{993174C0-55F0-41B4-A294-3B951F391C6B}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Stop_monster_walking" ID="{36AE6E7B-B5EE-44E3-BEA4-E85E6C57A2D6}">
+					<ChildrenList>
+						<Action Name="" ID="{D6992393-702E-4D62-8A2D-59BBE4CFBE94}" ShortID="674593686">
+							<PropertyList>
+								<Property Name="ActionType" Type="int16" Value="2"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="monster_walking" ID="{D4553DFF-397A-45E3-B730-E26BDE9B0703}" WorkUnitID="{993174C0-55F0-41B4-A294-3B951F391C6B}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_monster_breathing" ID="{E27E23F5-9B9A-4006-AAA7-0C0B193E7852}">
+					<ChildrenList>
+						<Action Name="" ID="{B2683134-5638-4EE7-A088-DD07E84D4949}" ShortID="449579997">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="breathing_sound_monster_2" ID="{3BA5CAE5-CE15-4674-B61D-37899F7157ED}" WorkUnitID="{993174C0-55F0-41B4-A294-3B951F391C6B}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Stop_monster_breathing" ID="{2B007A77-A67E-466D-8A3F-7A23B5573504}">
+					<ChildrenList>
+						<Action Name="" ID="{D468CF44-F114-464D-9583-D54C22904D41}" ShortID="589632239">
+							<PropertyList>
+								<Property Name="ActionType" Type="int16" Value="2"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="breathing_sound_monster_2" ID="{3BA5CAE5-CE15-4674-B61D-37899F7157ED}" WorkUnitID="{993174C0-55F0-41B4-A294-3B951F391C6B}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_dropping_book" ID="{1F679818-D2F3-4E27-9D32-9BF867B98681}">
+					<ChildrenList>
+						<Action Name="" ID="{EB3C3360-994E-49B2-B9CA-574CA0CF37D8}" ShortID="1068977243">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="dropping_book" ID="{D1156794-9D3B-4F8E-BBC8-B1C8ACD7F31D}" WorkUnitID="{993174C0-55F0-41B4-A294-3B951F391C6B}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_dropped_item" ID="{6B9C2C94-6F6B-4693-8C99-9C09EFCB8790}">
+					<ChildrenList>
+						<Action Name="" ID="{2E781135-A6E8-45CF-AA00-F07B6EDD522D}" ShortID="132321050">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="dropped_item" ID="{BC8D7339-9065-4ED6-B7B4-FC0040A9A78B}" WorkUnitID="{993174C0-55F0-41B4-A294-3B951F391C6B}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_dropped_metal_thing" ID="{36F8D154-6A61-4B30-BE29-C67D45674421}">
+					<ChildrenList>
+						<Action Name="" ID="{7FBFF11E-1940-48A7-9411-FAF05BF40C8A}" ShortID="76723107">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="dropped_metal_thing" ID="{F2EBA7DE-5CBA-4A3D-BBBF-A702D0C6E5C5}" WorkUnitID="{993174C0-55F0-41B4-A294-3B951F391C6B}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_dropped_metal_thing_2" ID="{324127E4-64CE-43FC-9721-8172DFD756A2}">
+					<ChildrenList>
+						<Action Name="" ID="{B89E8E0A-946A-4465-966B-F8D940E73243}" ShortID="794150329">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="dropped_metal_thing_2" ID="{823F245E-10C5-4537-AD03-090008014E02}" WorkUnitID="{993174C0-55F0-41B4-A294-3B951F391C6B}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_droppeing_wobbely_theroms" ID="{4C06F7E7-0776-417F-A2AA-874BC0B13E0C}">
+					<ChildrenList>
+						<Action Name="" ID="{FDC8987A-5236-4A05-BE6D-B3AF221564E7}" ShortID="929832918">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="droppeing_wobbely_theroms" ID="{721F130E-F813-48EA-AF9A-2389CE00E5E8}" WorkUnitID="{993174C0-55F0-41B4-A294-3B951F391C6B}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_dropping_book_smaller" ID="{8247125E-B801-4CD5-A5D4-A87A8666AA58}">
+					<ChildrenList>
+						<Action Name="" ID="{D5CBDBFF-A60D-4BB2-9066-B6F12EF6AB99}" ShortID="117595133">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="dropping_book_smaller" ID="{9F026200-2C4E-4AC1-9EA5-98CA40B77D51}" WorkUnitID="{993174C0-55F0-41B4-A294-3B951F391C6B}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_dropping_kettle" ID="{66E2323C-15B6-47CB-8292-209DFBC56023}">
+					<ChildrenList>
+						<Action Name="" ID="{A32CB733-E9E4-4175-98D5-28A097AB3077}" ShortID="34076547">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="dropping_kettle" ID="{220152E1-A8A2-4D3E-B18D-8D8C6938FCF6}" WorkUnitID="{993174C0-55F0-41B4-A294-3B951F391C6B}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_dropping_meat" ID="{69E25F16-91D1-494B-B352-0F2394364EB9}">
+					<ChildrenList>
+						<Action Name="" ID="{4951C400-71DB-459F-B839-E6D1E8D369FD}" ShortID="15768311">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="dropping_meat" ID="{AA5DE829-B4E9-4393-B4B2-3A304AEB89F9}" WorkUnitID="{993174C0-55F0-41B4-A294-3B951F391C6B}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_dropping_something_heavy" ID="{E2D6D1F7-563F-4ADC-AC82-B0121250BDC7}">
+					<ChildrenList>
+						<Action Name="" ID="{254724E7-AF92-4DD6-8811-64CC5706C8A9}" ShortID="125363755">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="dropping_something_heavy" ID="{AD0D64A5-4150-4B10-B504-3711E0F8A272}" WorkUnitID="{993174C0-55F0-41B4-A294-3B951F391C6B}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_dropping_something_small" ID="{9CF3E1AE-925A-4769-B97E-600F58477DC1}">
+					<ChildrenList>
+						<Action Name="" ID="{7E0793EB-E439-48F9-A1BF-6B14CD7117A8}" ShortID="682377462">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="dropping_something_small" ID="{4BF1ED54-2760-4836-B120-1AFA0FDF7886}" WorkUnitID="{993174C0-55F0-41B4-A294-3B951F391C6B}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_dropping_something_small_01" ID="{EFB0984D-8CAC-44A9-A889-8CDDE8C9A799}">
+					<ChildrenList>
+						<Action Name="" ID="{4A6535B8-D71A-4130-8D62-C11D6080A468}" ShortID="928667507">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="dropping_something_small_01" ID="{460F89F8-CCD3-40CF-A29F-9AE5EABD05BF}" WorkUnitID="{993174C0-55F0-41B4-A294-3B951F391C6B}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_dropping_wood" ID="{D9AB2B59-939A-468C-BA6B-E2E3A4D49844}">
+					<ChildrenList>
+						<Action Name="" ID="{BC4D7787-2F5A-481F-9219-77C54B441F20}" ShortID="874850873">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="dropping_wood" ID="{5B617252-8806-47F2-8E69-46208E41C55B}" WorkUnitID="{993174C0-55F0-41B4-A294-3B951F391C6B}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Stop_enviorment_noise" ID="{067C7135-6ED6-4802-8C8B-3D73826747C1}">
+					<ChildrenList>
+						<Action Name="" ID="{E825B047-E4F5-4F36-B3A0-018F01EB452B}" ShortID="9718345">
+							<PropertyList>
+								<Property Name="ActionType" Type="int16" Value="2"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="enviorment" ID="{9E7D5E55-7480-44F0-BED0-499E693643DF}" WorkUnitID="{993174C0-55F0-41B4-A294-3B951F391C6B}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_white_noise" ID="{121889B2-15D4-4E69-9AC6-2C305F2B4A30}">
+					<ChildrenList>
+						<Action Name="" ID="{5077B4E8-0530-4974-A6D6-60156B805FC8}" ShortID="370421890">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="white_noise" ID="{C4543E40-1E1E-4290-9E22-C71FE10D2BBB}" WorkUnitID="{993174C0-55F0-41B4-A294-3B951F391C6B}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Stop_white_noise" ID="{AC67EEF4-6894-4375-B6CD-3AE6A2686420}">
+					<ChildrenList>
+						<Action Name="" ID="{CCCF0F59-95CC-42E1-9C0E-1BEE428F017D}" ShortID="201267608">
+							<PropertyList>
+								<Property Name="ActionType" Type="int16" Value="2"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="white_noise" ID="{C4543E40-1E1E-4290-9E22-C71FE10D2BBB}" WorkUnitID="{993174C0-55F0-41B4-A294-3B951F391C6B}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_locker_closing" ID="{40B8F08B-8D25-4762-929D-80B0057482F9}">
+					<ChildrenList>
+						<Action Name="" ID="{4FC56549-3E4F-430D-8D48-66911FBCE8FB}" ShortID="34391031">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="locker_closing" ID="{039B5E21-4501-42B5-B9BD-070533B522EF}" WorkUnitID="{993174C0-55F0-41B4-A294-3B951F391C6B}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+			</ChildrenList>
+		</WorkUnit>
 	</Events>
 </WwiseDocument>

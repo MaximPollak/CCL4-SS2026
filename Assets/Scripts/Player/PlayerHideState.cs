@@ -27,10 +27,15 @@ public class PlayerHideState : MonoBehaviour
     [SerializeField] private Color hiddenOverlayColor = new Color(0f, 0f, 0f, 0.55f);
     [SerializeField] private float overlayFadeSpeed = 8f;
 
+    [Header("Wwise Locker Audio")]
+    [SerializeField] private string lockerEvent = "Play_locker_closing";
+    [SerializeField] private string breathingStartEvent = "Play_breathing_in_locker";
+    [SerializeField] private string breathingStopEvent = "Stop_breathing_in_locker";
+
     public bool IsHidden { get; private set; }
     public bool IsTransitioning { get; private set; }
     public HidingSpot CurrentHidingSpot { get; private set; }
-
+    private bool isBreathingLoopPlaying;
     private float overlayAlphaTarget;
 
     private void Reset()
@@ -124,6 +129,7 @@ public class PlayerHideState : MonoBehaviour
     {
         IsTransitioning = true;
         CurrentHidingSpot = hidingSpot;
+        PlayLockerSound();
 
         SetMovementEnabled(false);
         SetLookEnabled(false);
@@ -137,6 +143,7 @@ public class PlayerHideState : MonoBehaviour
             enterTransitionDuration
         );
 
+        StartBreathingLoop();
         IsHidden = true;
         IsTransitioning = false;
     }
@@ -149,6 +156,9 @@ public class PlayerHideState : MonoBehaviour
         IsTransitioning = true;
         HidingSpot previousHidingSpot = CurrentHidingSpot;
         overlayAlphaTarget = 0f;
+
+        StopBreathingLoop();
+        PlayLockerSound();
 
         yield return MoveToPointRoutine(
             exitPoint,
@@ -267,6 +277,38 @@ public class PlayerHideState : MonoBehaviour
         }
     }
 
+    private void StartBreathingLoop()
+    {
+        if (isBreathingLoopPlaying)
+        {
+            return;
+        }
+
+        AkUnitySoundEngine.PostEvent(breathingStartEvent, gameObject);
+        isBreathingLoopPlaying = true;
+    }
+
+    private void StopBreathingLoop()
+    {
+        if (!isBreathingLoopPlaying)
+        {
+            return;
+        }
+
+        AkUnitySoundEngine.PostEvent(breathingStopEvent, gameObject);
+        isBreathingLoopPlaying = false;
+    }
+
+    private void PlayLockerSound()
+    {
+        uint eventId = AkUnitySoundEngine.PostEvent(lockerEvent, gameObject);
+
+        if (eventId == 0)
+        {
+            Debug.LogError("Locker sound event not found or SoundBank not loaded: " + lockerEvent);
+        }
+    }
+
     private Vector3 GetTargetBodyPosition(
         Transform targetPoint,
         Quaternion targetBodyRotation,
@@ -364,5 +406,10 @@ public class PlayerHideState : MonoBehaviour
             hiddenOverlayColor.b,
             alpha
         );
+    }
+
+    private void OnDisable()
+    {
+        StopBreathingLoop();
     }
 }

@@ -140,6 +140,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PickupItem
   itemId: Gitter
   itemSize: 2
+  dropSoundEvent: Play_dropping_kettle
+
   overrideHeldPosition: 1
   overrideHeldRotation: 1
   heldLocalPosition: {x: 0.69, y: 0.55, z: 0.75}

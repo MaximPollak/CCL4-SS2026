@@ -82,6 +82,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PickupItem
   itemId: SteeringWheel
   itemSize: 2
+  dropSoundEvent: Play_dropped_metal_thing
+
   overrideHeldPosition: 1
   overrideHeldRotation: 1
   heldLocalPosition: {x: 0.45, y: -0.3, z: 0.85}

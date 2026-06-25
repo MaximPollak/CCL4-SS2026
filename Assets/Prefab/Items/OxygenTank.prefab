@@ -82,6 +82,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PickupItem
   itemId: OxygenTank
   itemSize: 2
+  dropSoundEvent: Play_droppeing_wobbely_theroms
+
   overrideHeldPosition: 1
   overrideHeldRotation: 1
   heldLocalPosition: {x: 0.4, y: -0.05, z: 0.65}
