@@ -304,7 +304,7 @@ MonoBehaviour:
   requiredItemId: AccessCard
   removeItemFromInventory: 1
   objectToDisableAfterUse: {fileID: 0}
-  objectToEnableAfterUse: {fileID: 1770979714}
+  objectToEnableAfterUse: {fileID: 0}
   canTakeItemBack: 1
   itemToReturnPrefab: {fileID: -7801000000000000001, guid: 1ef106aad0105004484e14c41e09afc1, type: 3}
   takeBackMessage: Access card removed.
@@ -539,11 +539,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bcc2559aeba274a4f95f4a3c729cc57e, type: 3}
---- !u!1 &293415537 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8406000000000000003, guid: 59833a822b9c1e0429fcd263a17d739c, type: 3}
-  m_PrefabInstance: {fileID: 963930081}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &348194431
 GameObject:
   m_ObjectHideFlags: 0
@@ -655,6 +650,7 @@ GameObject:
   m_Component:
   - component: {fileID: 440898636}
   - component: {fileID: 440898635}
+  - component: {fileID: 440898637}
   m_Layer: 0
   m_Name: WwiseGlobal
   m_TagString: Untagged
@@ -702,6 +698,31 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &440898637
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 440898634}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 939cba30727bc4e3f875c534fa9d6b0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: AK.Wwise.Unity.MonoBehaviour::AkBank
+  triggerList: f7e1664c
+  useOtherObject: 0
+  data:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: 20773cf6c7b9f854982ef64e243fafa0, type: 2}
+  decodeBank: 0
+  overrideLoadSetting: 0
+  loadAsynchronous: 0
+  saveDecodedBank: 0
+  unloadTriggerList: 958ca0ea
+  bankNameInternal: 
+  valueGuidInternal: 
 --- !u!1001 &441966933
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -867,7 +888,7 @@ MonoBehaviour:
   requiredItemId: Gitter
   removeItemFromInventory: 1
   objectToDisableAfterUse: {fileID: 0}
-  objectToEnableAfterUse: {fileID: 1948121664}
+  objectToEnableAfterUse: {fileID: 0}
   canTakeItemBack: 0
   itemToReturnPrefab: {fileID: 0}
   takeBackMessage: Part removed.
@@ -1117,16 +1138,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 91afaa0b052fb8e449ba8e4f814bd3b7, type: 3}
---- !u!1 &795922936 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8405000000000000003, guid: af8781a92f5aad441b57ce65fce81a68, type: 3}
-  m_PrefabInstance: {fileID: 1066797783}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &877056406 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8402000000000000003, guid: f172ac1c530138247bf0ec87d7f67182, type: 3}
-  m_PrefabInstance: {fileID: 1847070212}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &947588514 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 00af45e689a92464585dcb7eb215cdc3, type: 3}
@@ -1421,11 +1432,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 84b853110a3cd804c8302206ba69bf1e, type: 3}
---- !u!1 &1006276699 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8401000000000000003, guid: 84b853110a3cd804c8302206ba69bf1e, type: 3}
-  m_PrefabInstance: {fileID: 144660775}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1017306169
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1495,11 +1501,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7e5d7a7c30a31984ba410171129c0bdc, type: 3}
---- !u!1 &1032560893 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8401000000000000003, guid: 84b853110a3cd804c8302206ba69bf1e, type: 3}
-  m_PrefabInstance: {fileID: 973453115}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1064776133
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1824,7 +1825,7 @@ MonoBehaviour:
   requiredItemId: Gitter
   removeItemFromInventory: 1
   objectToDisableAfterUse: {fileID: 0}
-  objectToEnableAfterUse: {fileID: 1377780676}
+  objectToEnableAfterUse: {fileID: 0}
   canTakeItemBack: 0
   itemToReturnPrefab: {fileID: 0}
   takeBackMessage: Part removed.
@@ -2063,7 +2064,7 @@ MonoBehaviour:
   requiredItemId: Fan
   removeItemFromInventory: 1
   objectToDisableAfterUse: {fileID: 0}
-  objectToEnableAfterUse: {fileID: 877056406}
+  objectToEnableAfterUse: {fileID: 0}
   canTakeItemBack: 0
   itemToReturnPrefab: {fileID: 0}
   takeBackMessage: Part removed.
@@ -2354,11 +2355,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1377780676 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8407000000000000002, guid: 91afaa0b052fb8e449ba8e4f814bd3b7, type: 3}
-  m_PrefabInstance: {fileID: 1201729849}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1435066810
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2467,7 +2463,7 @@ MonoBehaviour:
   requiredItemId: OxygenTank
   removeItemFromInventory: 1
   objectToDisableAfterUse: {fileID: 0}
-  objectToEnableAfterUse: {fileID: 1006276699}
+  objectToEnableAfterUse: {fileID: 0}
   canTakeItemBack: 0
   itemToReturnPrefab: {fileID: 0}
   takeBackMessage: Part removed.
@@ -2548,7 +2544,7 @@ MonoBehaviour:
   requiredItemId: OxygenTank
   removeItemFromInventory: 1
   objectToDisableAfterUse: {fileID: 0}
-  objectToEnableAfterUse: {fileID: 1032560893}
+  objectToEnableAfterUse: {fileID: 0}
   canTakeItemBack: 0
   itemToReturnPrefab: {fileID: 0}
   takeBackMessage: Part removed.
@@ -2665,7 +2661,7 @@ MonoBehaviour:
   requiredItemId: Battery
   removeItemFromInventory: 1
   objectToDisableAfterUse: {fileID: 0}
-  objectToEnableAfterUse: {fileID: 795922936}
+  objectToEnableAfterUse: {fileID: 0}
   canTakeItemBack: 0
   itemToReturnPrefab: {fileID: 0}
   takeBackMessage: Part removed.
@@ -2791,7 +2787,7 @@ MonoBehaviour:
   requiredItemId: PressureValve
   removeItemFromInventory: 1
   objectToDisableAfterUse: {fileID: 0}
-  objectToEnableAfterUse: {fileID: 293415537}
+  objectToEnableAfterUse: {fileID: 0}
   canTakeItemBack: 0
   itemToReturnPrefab: {fileID: 0}
   takeBackMessage: Part removed.
@@ -2972,11 +2968,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7e5d7a7c30a31984ba410171129c0bdc, type: 3}
---- !u!1 &1770979714 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7801000000000000003, guid: 1ef106aad0105004484e14c41e09afc1, type: 3}
-  m_PrefabInstance: {fileID: 1705123993}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1771923705 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -5012882058489478073, guid: 00af45e689a92464585dcb7eb215cdc3, type: 3}
@@ -3170,6 +3161,86 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f172ac1c530138247bf0ec87d7f67182, type: 3}
+--- !u!1 &1873859738
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1873859741}
+  - component: {fileID: 1873859740}
+  - component: {fileID: 1873859739}
+  m_Layer: 0
+  m_Name: EnvioremnetNoise
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1873859739
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1873859738}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eeff33aa54341d249a5fadfce70c6feb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnvironmentNoisePlayer
+  playEvent: Play_enviorment_noise
+  stopEvent: Stop_enviorment_noise
+  playWhiteNoise: 1
+  playWhiteNoiseEvent: Play_white_noise
+  stopWhiteNoiseEvent: Stop_white_noise
+  playOnEnable: 1
+  playImmediately: 1
+  startupDelaySeconds: 0.25
+  initialDelaySeconds: 60
+  minimumCooldownSeconds: 90
+  maximumCooldownSeconds: 120
+--- !u!114 &1873859740
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1873859738}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e005f984f901948ecaa1ba738455db50, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: AK.Wwise.Unity.MonoBehaviour::AkGameObj
+  m_listeners:
+    initialListenerList: []
+    useDefaultListeners: 1
+  isEnvironmentAware: 1
+  isStaticObject: 0
+  usePositionOffsetData: 0
+  m_positionOffsetData:
+    KeepMe: 0
+    positionOffset: {x: 0, y: 0, z: 0}
+  scalingFactor: 1
+  m_posOffsetData: {fileID: 0}
+  listenerMask: 1
+--- !u!4 &1873859741
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1873859738}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -60.99134, y: 0.00097, z: 2.7033}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1898485530
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3300,11 +3371,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0206c8b073f1d6845810bb705f0e36e7, type: 3}
---- !u!1 &1948121664 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8407000000000000002, guid: 91afaa0b052fb8e449ba8e4f814bd3b7, type: 3}
-  m_PrefabInstance: {fileID: 693514796}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1988401123
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3589,3 +3655,4 @@ SceneRoots:
   - {fileID: 508158188}
   - {fileID: 1128057541}
   - {fileID: 421491712}
+  - {fileID: 1873859741}

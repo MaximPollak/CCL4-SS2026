@@ -139,11 +139,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PickupItem
   itemId: OilCanister
+  dropSoundEvent: Play_dropped_metal_thing_2
   overrideHeldPosition: 0
   overrideHeldRotation: 0
   heldLocalPosition: {x: 0.45, y: -0.35, z: 0.75}
   heldLocalRotation: {x: 15, y: -25, z: 10}
   heldScaleMultiplier: 3.5
+  usePhysicsOnDrop: 0
   addRigidbodyIfMissing: 1
   upwardDropForce: 0.6
   spinForce: 0
+  makeWorldCollidersTriggers: 1
+  keepWorldRigidbodyKinematic: 1
+  persistScenePickupState: 1
+  animateSafeDrop: 1
+  safeDropDuration: 0.22
+  safeDropArcHeight: 0.25
+  safeDropForwardSpin: 35
+  centerVisualOnDropPoint: 1
+  snapSafeDropToGround: 1
+  safeDropGroundClearance: 0.03
+  safeDropGroundRayHeight: 1.2
+  safeDropGroundRayDistance: 3
+  printDropDebugLogs: 0
