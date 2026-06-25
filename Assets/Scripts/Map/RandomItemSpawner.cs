@@ -43,6 +43,11 @@ public class RandomItemSpawner : MonoBehaviour
         }
     }
 
+    private void OnDisable()
+    {
+        SaveCurrentSpawnedItemStates();
+    }
+
     public void SpawnItems()
     {
         ClearSpawnedItems();
@@ -130,7 +135,7 @@ public class RandomItemSpawner : MonoBehaviour
                 itemPrefab = availableItems[randomItemIndex];
             }
 
-            SpawnItemPrefab(
+            GameObject spawnedItem = SpawnItemPrefab(
                 itemPrefab,
                 spawnPoint,
                 SceneManager.GetActiveScene().name,
@@ -145,7 +150,11 @@ public class RandomItemSpawner : MonoBehaviour
                 {
                     itemId = pickupItem.ItemId,
                     spawnPointIndex = spawnPointIndex,
-                    isAvailable = true
+                    isAvailable = true,
+                    hasSavedTransform = true,
+                    position = spawnedItem.transform.position,
+                    rotation = spawnedItem.transform.rotation,
+                    scale = spawnedItem.transform.localScale
                 });
             }
         }
@@ -266,12 +275,19 @@ public class RandomItemSpawner : MonoBehaviour
                 continue;
             }
 
-            SpawnItemPrefab(
-                itemPrefab,
-                availableSpawnPoints[spawnState.spawnPointIndex],
-                sceneName,
-                spawnState.spawnPointIndex
-            );
+            if (spawnState.hasSavedTransform)
+            {
+                SpawnItemPrefabAtState(itemPrefab, spawnState, sceneName);
+            }
+            else
+            {
+                SpawnItemPrefab(
+                    itemPrefab,
+                    availableSpawnPoints[spawnState.spawnPointIndex],
+                    sceneName,
+                    spawnState.spawnPointIndex
+                );
+            }
         }
 
         if (printSpawnDebugLogs)
@@ -360,6 +376,44 @@ public class RandomItemSpawner : MonoBehaviour
         }
     }
 
+    private void SaveCurrentSpawnedItemStates()
+    {
+        if (!GameState.HasInstance)
+        {
+            return;
+        }
+
+        string sceneName = SceneManager.GetActiveScene().name;
+
+        foreach (GameObject spawnedItem in spawnedItems)
+        {
+            if (spawnedItem == null)
+            {
+                continue;
+            }
+
+            RuntimeSpawnedItem runtimeSpawnedItem = spawnedItem.GetComponent<RuntimeSpawnedItem>();
+
+            if (
+                runtimeSpawnedItem == null
+                || runtimeSpawnedItem.SpawnPointIndex < 0
+                || runtimeSpawnedItem.SceneName != sceneName
+            )
+            {
+                continue;
+            }
+
+            // Scene switches destroy map objects, so cache the latest live transform first.
+            GameState.Instance.UpdateRandomSpawnItemState(
+                sceneName,
+                runtimeSpawnedItem.SpawnPointIndex,
+                spawnedItem.transform.position,
+                spawnedItem.transform.rotation,
+                spawnedItem.transform.localScale
+            );
+        }
+    }
+
     private GameObject SpawnItemPrefab(
         GameObject itemPrefab,
         Transform spawnPoint,
@@ -420,6 +474,43 @@ public class RandomItemSpawner : MonoBehaviour
                 spawnedItem.transform.position
             );
         }
+
+        spawnedItems.Add(spawnedItem);
+        return spawnedItem;
+    }
+
+    private GameObject SpawnItemPrefabAtState(
+        GameObject itemPrefab,
+        GameState.RandomSpawnState spawnState,
+        string sceneName
+    )
+    {
+        Transform parent = parentItemsToSpawner ? transform : null;
+
+        GameObject spawnedItem = Instantiate(
+            itemPrefab,
+            spawnState.position,
+            spawnState.rotation,
+            parent
+        );
+
+        spawnedItem.transform.localScale = spawnState.scale;
+
+        PickupItem spawnedPickupItem = spawnedItem.GetComponentInChildren<PickupItem>(true);
+
+        if (spawnedPickupItem != null)
+        {
+            spawnedPickupItem.PrepareForWorldSpawn(printSpawnDebugLogs);
+        }
+
+        RuntimeSpawnedItem runtimeSpawnedItem = spawnedItem.GetComponent<RuntimeSpawnedItem>();
+
+        if (runtimeSpawnedItem == null)
+        {
+            runtimeSpawnedItem = spawnedItem.AddComponent<RuntimeSpawnedItem>();
+        }
+
+        runtimeSpawnedItem.Initialize(sceneName, spawnState.spawnPointIndex);
 
         spawnedItems.Add(spawnedItem);
         return spawnedItem;

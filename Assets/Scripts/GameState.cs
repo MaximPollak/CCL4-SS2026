@@ -17,6 +17,10 @@ public class GameState : MonoBehaviour
         public string itemId;
         public int spawnPointIndex;
         public bool isAvailable = true;
+        public bool hasSavedTransform = false;
+        public Vector3 position;
+        public Quaternion rotation;
+        public Vector3 scale = Vector3.one;
     }
 
     private static GameState instance;
@@ -42,6 +46,8 @@ public class GameState : MonoBehaviour
     }
 
     public string HeldItemId { get; private set; } = "";
+
+    public static bool HasInstance => instance != null;
 
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
     private static void EnsureInstance()
@@ -102,6 +108,7 @@ public class GameState : MonoBehaviour
         consumedItemCounts.Clear();
         consumedScenePickupKeys.Clear();
         droppedItemsByScene.Clear();
+        // A new playthrough must get a fresh random item distribution.
         randomSpawnStatesByScene.Clear();
     }
 
@@ -255,7 +262,19 @@ public class GameState : MonoBehaviour
             return;
         }
 
-        randomSpawnStatesByScene[sceneName] = new List<RandomSpawnState>(spawnStates);
+        List<RandomSpawnState> copiedStates = new List<RandomSpawnState>();
+
+        foreach (RandomSpawnState spawnState in spawnStates)
+        {
+            if (spawnState == null)
+            {
+                continue;
+            }
+
+            copiedStates.Add(CopyRandomSpawnState(spawnState));
+        }
+
+        randomSpawnStatesByScene[sceneName] = copiedStates;
     }
 
     public bool TryGetRandomSpawnStates(string sceneName, out List<RandomSpawnState> spawnStates)
@@ -291,6 +310,38 @@ public class GameState : MonoBehaviour
             }
 
             spawnState.isAvailable = false;
+            return;
+        }
+    }
+
+    public void UpdateRandomSpawnItemState(
+        string sceneName,
+        int spawnPointIndex,
+        Vector3 position,
+        Quaternion rotation,
+        Vector3 scale
+    )
+    {
+        if (
+            string.IsNullOrWhiteSpace(sceneName)
+            || !randomSpawnStatesByScene.TryGetValue(sceneName, out List<RandomSpawnState> spawnStates)
+        )
+        {
+            return;
+        }
+
+        foreach (RandomSpawnState spawnState in spawnStates)
+        {
+            if (spawnState.spawnPointIndex != spawnPointIndex)
+            {
+                continue;
+            }
+
+            // Persist the live world transform so scene switches do not reroll or snap map items.
+            spawnState.position = position;
+            spawnState.rotation = rotation;
+            spawnState.scale = scale;
+            spawnState.hasSavedTransform = true;
             return;
         }
     }
@@ -364,6 +415,20 @@ public class GameState : MonoBehaviour
     private void HandleSceneLoaded(Scene scene, LoadSceneMode loadSceneMode)
     {
         StartCoroutine(RestoreDroppedItemsAfterSceneLoad(scene.name));
+    }
+
+    private RandomSpawnState CopyRandomSpawnState(RandomSpawnState spawnState)
+    {
+        return new RandomSpawnState
+        {
+            itemId = spawnState.itemId,
+            spawnPointIndex = spawnState.spawnPointIndex,
+            isAvailable = spawnState.isAvailable,
+            hasSavedTransform = spawnState.hasSavedTransform,
+            position = spawnState.position,
+            rotation = spawnState.rotation,
+            scale = spawnState.scale
+        };
     }
 
     private System.Collections.IEnumerator RestoreDroppedItemsAfterSceneLoad(string sceneName)

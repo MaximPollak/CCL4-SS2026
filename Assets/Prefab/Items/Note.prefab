@@ -223,6 +223,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8837740125524533152}
   - component: {fileID: 6871254913594772794}
+  - component: {fileID: 7220310162304059262}
   m_Layer: 0
   m_Name: Note
   m_TagString: Untagged
@@ -281,3 +282,24 @@ MonoBehaviour:
   safeDropGroundRayHeight: 1.2
   safeDropGroundRayDistance: 3
   printDropDebugLogs: 0
+--- !u!65 &7220310162304059262
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6713650357714419630}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.33693314, y: 0.25958797, z: 0.059719086}
+  m_Center: {x: 0.016935349, y: 0.0012211949, z: 0.0060653687}
