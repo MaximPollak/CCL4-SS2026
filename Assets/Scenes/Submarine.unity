@@ -422,6 +422,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: GitterR
       objectReference: {fileID: 0}
+    - target: {fileID: 8713944839473207848, guid: 91afaa0b052fb8e449ba8e4f814bd3b7, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -655,7 +659,7 @@ MonoBehaviour:
   requiredItemId: AccessCard
   removeItemFromInventory: 1
   objectToDisableAfterUse: {fileID: 0}
-  objectToEnableAfterUse: {fileID: 1770979714}
+  objectToEnableAfterUse: {fileID: 0}
   taskCompletionIndicator: {fileID: 0}
   canTakeItemBack: 1
   itemToReturnPrefab: {fileID: -7801000000000000001, guid: 1ef106aad0105004484e14c41e09afc1, type: 3}
@@ -891,11 +895,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bcc2559aeba274a4f95f4a3c729cc57e, type: 3}
---- !u!1 &293415537 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8406000000000000003, guid: 59833a822b9c1e0429fcd263a17d739c, type: 3}
-  m_PrefabInstance: {fileID: 963930081}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &348194431
 GameObject:
   m_ObjectHideFlags: 0
@@ -1106,13 +1105,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: PressureValve
       objectReference: {fileID: 0}
+    - target: {fileID: 6710289640573083391, guid: 59833a822b9c1e0429fcd263a17d739c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8406000000000000003, guid: 59833a822b9c1e0429fcd263a17d739c, type: 3}
       propertyPath: m_Name
-      value: PressureVaule
+      value: PressureValve
       objectReference: {fileID: 0}
     - target: {fileID: 8406000000000000003, guid: 59833a822b9c1e0429fcd263a17d739c, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1350,7 +1353,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8405000000000000003, guid: af8781a92f5aad441b57ce65fce81a68, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1396,7 +1399,7 @@ MonoBehaviour:
   requiredItemId: Gitter
   removeItemFromInventory: 1
   objectToDisableAfterUse: {fileID: 0}
-  objectToEnableAfterUse: {fileID: 1948121664}
+  objectToEnableAfterUse: {fileID: 0}
   taskCompletionIndicator: {fileID: 496433081}
   canTakeItemBack: 0
   itemToReturnPrefab: {fileID: 0}
@@ -2668,11 +2671,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 84b853110a3cd804c8302206ba69bf1e, type: 3}
---- !u!1 &1006276699 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8401000000000000003, guid: 84b853110a3cd804c8302206ba69bf1e, type: 3}
-  m_PrefabInstance: {fileID: 144660775}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1017306169
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2792,11 +2790,6 @@ Transform:
   - {fileID: 27087806}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1032560893 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8401000000000000003, guid: 84b853110a3cd804c8302206ba69bf1e, type: 3}
-  m_PrefabInstance: {fileID: 973453115}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1064776133
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2811,7 +2804,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 206404145347576384, guid: 84b853110a3cd804c8302206ba69bf1e, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 690910938843060474, guid: 84b853110a3cd804c8302206ba69bf1e, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3026,7 +3019,7 @@ MonoBehaviour:
   removeItemFromInventory: 1
   objectToDisableAfterUse: {fileID: 0}
   objectToEnableAfterUse: {fileID: 0}
-  taskCompletionIndicator: {fileID: 0}
+  taskCompletionIndicator: {fileID: 1758106940}
   canTakeItemBack: 0
   itemToReturnPrefab: {fileID: 0}
   takeBackMessage: Part removed.
@@ -3172,7 +3165,7 @@ MonoBehaviour:
   requiredItemId: Gitter
   removeItemFromInventory: 1
   objectToDisableAfterUse: {fileID: 0}
-  objectToEnableAfterUse: {fileID: 1377780676}
+  objectToEnableAfterUse: {fileID: 0}
   taskCompletionIndicator: {fileID: 0}
   canTakeItemBack: 0
   itemToReturnPrefab: {fileID: 0}
@@ -3367,7 +3360,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8713944839473207848, guid: 91afaa0b052fb8e449ba8e4f814bd3b7, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3467,6 +3460,10 @@ PrefabInstance:
     - target: {fileID: 4792425786502680679, guid: 1ef106aad0105004484e14c41e09afc1, type: 3}
       propertyPath: m_Name
       value: AccessCard
+      objectReference: {fileID: 0}
+    - target: {fileID: 4792425786502680679, guid: 1ef106aad0105004484e14c41e09afc1, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5317006716315519709, guid: 1ef106aad0105004484e14c41e09afc1, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3818,11 +3815,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1377780676 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8407000000000000002, guid: 91afaa0b052fb8e449ba8e4f814bd3b7, type: 3}
-  m_PrefabInstance: {fileID: 1201729849}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1435066810
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3931,7 +3923,7 @@ MonoBehaviour:
   requiredItemId: OxygenTank
   removeItemFromInventory: 1
   objectToDisableAfterUse: {fileID: 0}
-  objectToEnableAfterUse: {fileID: 1006276699}
+  objectToEnableAfterUse: {fileID: 0}
   taskCompletionIndicator: {fileID: 2007918816}
   canTakeItemBack: 0
   itemToReturnPrefab: {fileID: 0}
@@ -4125,7 +4117,7 @@ MonoBehaviour:
   requiredItemId: OxygenTank
   removeItemFromInventory: 1
   objectToDisableAfterUse: {fileID: 0}
-  objectToEnableAfterUse: {fileID: 1032560893}
+  objectToEnableAfterUse: {fileID: 0}
   taskCompletionIndicator: {fileID: 1836884824}
   canTakeItemBack: 0
   itemToReturnPrefab: {fileID: 0}
@@ -4234,7 +4226,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7f39ca7eb134db19a9eea4deafd3817, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SubmarineItemSocket
-  repairManager: {fileID: 0}
+  repairManager: {fileID: 348194432}
   repairTask: 10
   requireCompletedTaskFirst: 0
   prerequisiteTask: 0
@@ -4483,7 +4475,7 @@ MonoBehaviour:
   requiredItemId: PressureValve
   removeItemFromInventory: 1
   objectToDisableAfterUse: {fileID: 0}
-  objectToEnableAfterUse: {fileID: 293415537}
+  objectToEnableAfterUse: {fileID: 0}
   taskCompletionIndicator: {fileID: 1896908799}
   canTakeItemBack: 0
   itemToReturnPrefab: {fileID: 0}
@@ -4715,11 +4707,6 @@ Transform:
   - {fileID: 668073754}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1770979714 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7801000000000000003, guid: 1ef106aad0105004484e14c41e09afc1, type: 3}
-  m_PrefabInstance: {fileID: 1705123993}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1771923705 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -5012882058489478073, guid: 00af45e689a92464585dcb7eb215cdc3, type: 3}
@@ -5261,20 +5248,19 @@ PrefabInstance:
       propertyPath: m_Name
       value: FireTool
       objectReference: {fileID: 0}
-    - target: {fileID: 8404000000000000003, guid: 0206c8b073f1d6845810bb705f0e36e7, type: 3}
+    - target: {fileID: 6782971624235457325, guid: 0206c8b073f1d6845810bb705f0e36e7, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8404000000000000003, guid: 0206c8b073f1d6845810bb705f0e36e7, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0206c8b073f1d6845810bb705f0e36e7, type: 3}
---- !u!1 &1948121664 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8407000000000000002, guid: 91afaa0b052fb8e449ba8e4f814bd3b7, type: 3}
-  m_PrefabInstance: {fileID: 693514796}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1988401123
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5289,7 +5275,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 206404145347576384, guid: 84b853110a3cd804c8302206ba69bf1e, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 690910938843060474, guid: 84b853110a3cd804c8302206ba69bf1e, type: 3}
       propertyPath: m_LocalPosition.x
@@ -5572,6 +5558,10 @@ PrefabInstance:
     - target: {fileID: 8713944839473207848, guid: 91afaa0b052fb8e449ba8e4f814bd3b7, type: 3}
       propertyPath: m_Name
       value: GitterL
+      objectReference: {fileID: 0}
+    - target: {fileID: 8713944839473207848, guid: 91afaa0b052fb8e449ba8e4f814bd3b7, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
