@@ -47,6 +47,12 @@ public class MonsterAI : MonoBehaviour
     [Header("Search")]
     public float searchDuration = 3f;
 
+    [Header("Dropped Item Alerts")]
+    [SerializeField] private float smallItemAlertRange = 4f;
+    [SerializeField] private float mediumItemAlertRange = 7f;
+    [SerializeField] private float bigItemAlertRange = 10f;
+    [SerializeField] private bool printDroppedItemAlertLogs = true;
+
     [Header("Search Vision Boost")]
     public bool useSearchVisionBoost = true;
     public float searchViewAngle = 140f;
@@ -83,6 +89,7 @@ public class MonsterAI : MonoBehaviour
     private Vector3 lastKnownPlayerPosition;
     private bool hasLastKnownPlayerPosition;
     private float lastTimePlayerSeen = Mathf.NegativeInfinity;
+    private bool isInvestigatingDroppedItem;
 
     private int searchLookPhase;
     private float searchLookPauseTimer;
@@ -117,6 +124,9 @@ public class MonsterAI : MonoBehaviour
         catchDistance = Mathf.Max(0f, catchDistance);
         loseSightDelay = Mathf.Max(0f, loseSightDelay);
         searchDuration = Mathf.Max(0f, searchDuration);
+        smallItemAlertRange = Mathf.Max(0f, smallItemAlertRange);
+        mediumItemAlertRange = Mathf.Max(0f, mediumItemAlertRange);
+        bigItemAlertRange = Mathf.Max(0f, bigItemAlertRange);
         searchViewAngle = Mathf.Clamp(searchViewAngle, 0f, 360f);
         searchViewDistance = Mathf.Max(0f, searchViewDistance);
         searchLookAroundAngle = Mathf.Clamp(searchLookAroundAngle, 0f, 180f);
@@ -365,6 +375,7 @@ public class MonsterAI : MonoBehaviour
         if (searchTimer >= searchDuration && canFinishSearch)
         {
             hasLastKnownPlayerPosition = false;
+            isInvestigatingDroppedItem = false;
             ChangeState(MonsterState.Roaming);
         }
     }
@@ -422,7 +433,9 @@ public class MonsterAI : MonoBehaviour
     {
         ApplyNormalVision();
         ResetVisionLookOffset();
+        ClearRoamPauseState();
         SetMonsterSpeed(chasingSpeed);
+        isInvestigatingDroppedItem = false;
 
         if (pathFollower == null || player == null)
         {
@@ -435,7 +448,8 @@ public class MonsterAI : MonoBehaviour
     private void EnterSearchingLastSeenPosition()
     {
         ApplySearchVisionBoost();
-        SetMonsterSpeed(searchingSpeed);
+        ClearRoamPauseState();
+        SetMonsterSpeed(isInvestigatingDroppedItem ? chasingSpeed : searchingSpeed);
 
         searchTimer = 0f;
         ResetSearchLook();
@@ -489,6 +503,7 @@ public class MonsterAI : MonoBehaviour
         lastKnownPlayerPosition = Vector3.zero;
         hasLastKnownPlayerPosition = false;
         lastTimePlayerSeen = Mathf.NegativeInfinity;
+        isInvestigatingDroppedItem = false;
         waitTimer = 0f;
         searchTimer = 0f;
         roamSearchTimer = 0f;
@@ -533,6 +548,7 @@ public class MonsterAI : MonoBehaviour
 
         lastKnownPlayerPosition = savedEnemyState.lastKnownPlayerPosition;
         hasLastKnownPlayerPosition = savedEnemyState.hasLastKnownPlayerPosition;
+        isInvestigatingDroppedItem = false;
         currentState = MonsterState.Idle;
         MonsterState restoredState = savedEnemyState.monsterState == MonsterState.CaughtPlayer
             ? MonsterState.Roaming
@@ -610,6 +626,98 @@ public class MonsterAI : MonoBehaviour
         }
 
         pathFollower.SetMoveSpeed(newSpeed);
+    }
+
+    private void ClearRoamPauseState()
+    {
+        isWaitingAtRoamPoint = false;
+        isSearchingAtRoamPoint = false;
+        waitTimer = 0f;
+        roamSearchTimer = 0f;
+        currentRoamPhase = "walking";
+    }
+
+    public void TryInvestigateDroppedItemAlert(PickupItem droppedItem, Vector3 alertPosition)
+    {
+        if (droppedItem == null)
+        {
+            return;
+        }
+
+        if (currentState == MonsterState.ChasingPlayer || currentState == MonsterState.CaughtPlayer)
+        {
+            if (printDroppedItemAlertLogs)
+            {
+                Debug.Log(
+                    "Dropped item alert ignored because monster is busy: " + currentState,
+                    this
+                );
+            }
+
+            return;
+        }
+
+        float alertRange = GetDroppedItemAlertRange(droppedItem.Size);
+        float distanceToAlert = Vector3.Distance(transform.position, alertPosition);
+        bool isInRange = distanceToAlert <= alertRange;
+
+        if (printDroppedItemAlertLogs)
+        {
+            Debug.Log(
+                "Dropped item alert | item: " + droppedItem.ItemId
+                + " | size: " + droppedItem.Size
+                + " | range: " + alertRange.ToString("0.00")
+                + " | monster distance: " + distanceToAlert.ToString("0.00")
+                + " | in range: " + isInRange,
+                this
+            );
+        }
+
+        if (!isInRange)
+        {
+            return;
+        }
+
+        // Player-dropped items become investigation targets, reusing the last-seen search state.
+        lastKnownPlayerPosition = alertPosition;
+        hasLastKnownPlayerPosition = true;
+        isInvestigatingDroppedItem = true;
+
+        if (printDroppedItemAlertLogs)
+        {
+            Debug.Log(
+                "Monster investigating dropped item | item: " + droppedItem.ItemId
+                + " | target position: " + alertPosition
+                + " | current state: " + currentState
+                + " | using run speed: " + chasingSpeed.ToString("0.00"),
+                this
+            );
+        }
+
+        if (currentState == MonsterState.SearchingLastSeenPosition)
+        {
+            EnterSearchingLastSeenPosition();
+        }
+        else
+        {
+            ChangeState(MonsterState.SearchingLastSeenPosition);
+        }
+    }
+
+    private float GetDroppedItemAlertRange(ItemSize itemSize)
+    {
+        switch (itemSize)
+        {
+            case ItemSize.Small:
+                return smallItemAlertRange;
+
+            case ItemSize.Big:
+                return bigItemAlertRange;
+
+            case ItemSize.Medium:
+            default:
+                return mediumItemAlertRange;
+        }
     }
 
     private void ApplyNormalVision()

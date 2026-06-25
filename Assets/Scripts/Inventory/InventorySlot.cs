@@ -360,6 +360,35 @@ public class InventorySlot : MonoBehaviour
             droppedItem.transform.rotation,
             droppedItem.transform.localScale
         );
+
+        NotifyMonsterOfPlayerDroppedItem(droppedItem);
+    }
+
+    private void NotifyMonsterOfPlayerDroppedItem(PickupItem droppedItem)
+    {
+        if (droppedItem == null)
+        {
+            return;
+        }
+
+        Debug.Log(
+            "Dropped item alert sent | item: " + droppedItem.ItemId
+            + " | size: " + droppedItem.Size
+            + " | position: " + droppedItem.transform.position,
+            droppedItem
+        );
+
+        MonsterAI monsterAI = FindFirstObjectByType<MonsterAI>();
+
+        if (monsterAI == null)
+        {
+            Debug.Log("Dropped item alert skipped because no MonsterAI was found.");
+
+            return;
+        }
+
+        // Only intentional player drops call this alert; physics impacts and audio events are ignored.
+        monsterAI.TryInvestigateDroppedItemAlert(droppedItem, droppedItem.transform.position);
     }
 
     private void RestoreHeldItemFromGameState()

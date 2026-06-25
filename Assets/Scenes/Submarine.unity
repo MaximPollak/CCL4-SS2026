@@ -930,8 +930,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SubmarineRepairManager
   requiredTasks: 000000000100000002000000030000000400000005000000060000000700000008000000090000000a0000000b000000
+  surviveSceneName: SurviveScene
+  useLoadingScreenOnEscape: 0
+  escapeLoadingScreenTime: 0.5
   objectToEnableOnEscape: {fileID: 0}
   objectToDisableOnEscape: {fileID: 0}
+  debugTreatAllTasksComplete: 0
   printDebugLogs: 1
 --- !u!4 &348194433
 Transform:
@@ -2222,6 +2226,46 @@ Transform:
   m_Children: []
   m_Father: {fileID: 496433082}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &756786098 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 586045317092795319, guid: 00af45e689a92464585dcb7eb215cdc3, type: 3}
+  m_PrefabInstance: {fileID: 2133628571}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &756786100
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 756786098}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eda137455f124969a9e97fb81fe2db3f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SubmarineEscapeButton
+  repairManager: {fileID: 348194432}
+  printDebugLogs: 1
+--- !u!65 &756786103
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 756786098}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.020678477, y: 0.020901205, z: 0.016038852}
+  m_Center: {x: 0.027813256, y: 0.026102502, z: 0.0014723408}
 --- !u!1 &804523802
 GameObject:
   m_ObjectHideFlags: 0
@@ -6205,6 +6249,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -5012882058489478073, guid: 00af45e689a92464585dcb7eb215cdc3, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1771923709}
+    - targetCorrespondingSourceObject: {fileID: 586045317092795319, guid: 00af45e689a92464585dcb7eb215cdc3, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 756786100}
+    - targetCorrespondingSourceObject: {fileID: 586045317092795319, guid: 00af45e689a92464585dcb7eb215cdc3, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 756786103}
     - targetCorrespondingSourceObject: {fileID: -5679941666241095196, guid: 00af45e689a92464585dcb7eb215cdc3, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2133628573}

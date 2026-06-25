@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SubmarineRepairManager : MonoBehaviour
 {
@@ -13,7 +14,6 @@ public class SubmarineRepairManager : MonoBehaviour
         SubmarineRepairTask.OilTank,
         SubmarineRepairTask.CodeBox,
         SubmarineRepairTask.VentilatorLeft,
-        SubmarineRepairTask.VentilatorRight,
         SubmarineRepairTask.SteeringWheel,
         SubmarineRepairTask.AccessCard,
         SubmarineRepairTask.Battery,
@@ -22,10 +22,14 @@ public class SubmarineRepairManager : MonoBehaviour
     };
 
     [Header("Escape Result")]
+    [SerializeField] private string surviveSceneName = "SurviveScene";
+    [SerializeField] private bool useLoadingScreenOnEscape = false;
+    [SerializeField] private float escapeLoadingScreenTime = 0.5f;
     [SerializeField] private GameObject objectToEnableOnEscape;
     [SerializeField] private GameObject objectToDisableOnEscape;
 
     [Header("Debug")]
+    [SerializeField] private bool debugTreatAllTasksComplete = false;
     [SerializeField] private bool printDebugLogs = true;
 
     private readonly HashSet<SubmarineRepairTask> completedTasks = new HashSet<SubmarineRepairTask>();
@@ -40,6 +44,11 @@ public class SubmarineRepairManager : MonoBehaviour
     {
         get
         {
+            if (debugTreatAllTasksComplete)
+            {
+                return true;
+            }
+
             foreach (SubmarineRepairTask requiredTask in requiredTasks)
             {
                 if (!completedTasks.Contains(requiredTask))
@@ -82,7 +91,7 @@ public class SubmarineRepairManager : MonoBehaviour
 
         if (!IsEscapeReady)
         {
-            Debug.Log("Cannot start submarine yet. Repairs are still missing.");
+            Debug.Log("Cannot start submarine yet. Repairs are still missing: " + GetMissingRequiredTasksText());
             return false;
         }
 
@@ -99,6 +108,7 @@ public class SubmarineRepairManager : MonoBehaviour
         }
 
         Debug.Log("Submarine escape sequence started.");
+        LoadSurviveScene();
         return true;
     }
 
@@ -138,5 +148,48 @@ public class SubmarineRepairManager : MonoBehaviour
                 completedTasks.Add(requiredTask);
             }
         }
+    }
+
+    private void LoadSurviveScene()
+    {
+        if (string.IsNullOrWhiteSpace(surviveSceneName))
+        {
+            Debug.LogWarning("Cannot finish submarine escape because no survive scene name is assigned.", this);
+            return;
+        }
+
+        // Final escape is allowed only after all required tasks, or the debug all-done override, pass.
+        if (printDebugLogs)
+        {
+            Debug.Log("Loading survive scene: " + surviveSceneName, this);
+        }
+
+        if (useLoadingScreenOnEscape && !SceneLoadingScreen.IsLoading)
+        {
+            SceneLoadingScreen.LoadSceneWithScreen(surviveSceneName, escapeLoadingScreenTime);
+            return;
+        }
+
+        SceneManager.LoadScene(surviveSceneName);
+    }
+
+    private string GetMissingRequiredTasksText()
+    {
+        if (debugTreatAllTasksComplete)
+        {
+            return "none (debug override is enabled)";
+        }
+
+        List<string> missingTasks = new List<string>();
+
+        foreach (SubmarineRepairTask requiredTask in requiredTasks)
+        {
+            if (!completedTasks.Contains(requiredTask))
+            {
+                missingTasks.Add(requiredTask.ToString());
+            }
+        }
+
+        return missingTasks.Count == 0 ? "none" : string.Join(", ", missingTasks);
     }
 }
