@@ -63,7 +63,7 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: -8404000000000000002}
   m_SourcePrefab: {fileID: 100100000, guid: c9eac32a8ba578344839d108981bbca8, type: 3}
---- !u!1 &8404000000000000003 stripped
+--- !u!1 &6782971624235457325 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: c9eac32a8ba578344839d108981bbca8, type: 3}
   m_PrefabInstance: {fileID: 5971945801362368124}
@@ -74,28 +74,43 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8404000000000000003}
+  m_GameObject: {fileID: 6782971624235457325}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5dfd163c6ce16451a9e6186031d26c98, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PickupItem
   itemId: FireTool
+  itemSize: 0
   overrideHeldPosition: 1
   overrideHeldRotation: 1
   heldLocalPosition: {x: 0.45, y: -0.35, z: 0.75}
   heldLocalRotation: {x: -100, y: -25, z: 10}
   heldScaleMultiplier: 6
+  usePhysicsOnDrop: 0
   addRigidbodyIfMissing: 1
   upwardDropForce: 0.6
   spinForce: 0
+  makeWorldCollidersTriggers: 1
+  keepWorldRigidbodyKinematic: 1
+  persistScenePickupState: 1
+  animateSafeDrop: 1
+  safeDropDuration: 0.22
+  safeDropArcHeight: 0.25
+  safeDropForwardSpin: 35
+  centerVisualOnDropPoint: 1
+  snapSafeDropToGround: 1
+  safeDropGroundClearance: 0.03
+  safeDropGroundRayHeight: 1.2
+  safeDropGroundRayDistance: 3
+  printDropDebugLogs: 0
 --- !u!65 &-8404000000000000002
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8404000000000000003}
+  m_GameObject: {fileID: 6782971624235457325}
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2

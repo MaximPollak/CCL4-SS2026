@@ -45,6 +45,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Vent_Room
       objectReference: {fileID: 0}
+    - target: {fileID: 462811138003500310, guid: 52a7dcd08865a4641b3790dee55ee6f3, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 947986743808403372, guid: 52a7dcd08865a4641b3790dee55ee6f3, type: 3}
       propertyPath: m_LocalScale.x
       value: 1
@@ -174,6 +178,46 @@ PrefabInstance:
     - target: {fileID: 5468169976627641263, guid: 84c37f452fd67684faf8b354c2b957b0, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6298742926371920608, guid: 84c37f452fd67684faf8b354c2b957b0, type: 3}
+      propertyPath: m_Size.x
+      value: 0.020000009
+      objectReference: {fileID: 0}
+    - target: {fileID: 6298742926371920608, guid: 84c37f452fd67684faf8b354c2b957b0, type: 3}
+      propertyPath: m_Size.y
+      value: 0.0050880797
+      objectReference: {fileID: 0}
+    - target: {fileID: 6298742926371920608, guid: 84c37f452fd67684faf8b354c2b957b0, type: 3}
+      propertyPath: m_Center.x
+      value: 3.5019795e-10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6298742926371920608, guid: 84c37f452fd67684faf8b354c2b957b0, type: 3}
+      propertyPath: m_Center.y
+      value: -0.0074579846
+      objectReference: {fileID: 0}
+    - target: {fileID: 6298742926371920608, guid: 84c37f452fd67684faf8b354c2b957b0, type: 3}
+      propertyPath: m_Center.z
+      value: -0.00075264694
+      objectReference: {fileID: 0}
+    - target: {fileID: 6775957973785164156, guid: 84c37f452fd67684faf8b354c2b957b0, type: 3}
+      propertyPath: m_Size.x
+      value: 0.020000009
+      objectReference: {fileID: 0}
+    - target: {fileID: 6775957973785164156, guid: 84c37f452fd67684faf8b354c2b957b0, type: 3}
+      propertyPath: m_Size.y
+      value: 0.005236493
+      objectReference: {fileID: 0}
+    - target: {fileID: 6775957973785164156, guid: 84c37f452fd67684faf8b354c2b957b0, type: 3}
+      propertyPath: m_Center.x
+      value: -3.5462214e-10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6775957973785164156, guid: 84c37f452fd67684faf8b354c2b957b0, type: 3}
+      propertyPath: m_Center.y
+      value: 0.007383759
+      objectReference: {fileID: 0}
+    - target: {fileID: 6775957973785164156, guid: 84c37f452fd67684faf8b354c2b957b0, type: 3}
+      propertyPath: m_Center.z
+      value: -0.00075264927
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
