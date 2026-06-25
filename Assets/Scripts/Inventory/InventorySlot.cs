@@ -99,6 +99,51 @@ public class InventorySlot : MonoBehaviour
         DropCurrentItem(playerCameraTransform, true);
     }
 
+    public bool DropHeldItemAt(
+        Vector3 dropPosition,
+        Quaternion dropRotation,
+        bool saveToGameState = true
+    )
+    {
+        if (currentItem == null)
+        {
+            return false;
+        }
+
+        PickupItem itemToDrop = currentItem;
+        Collider[] playerColliders = GetComponentsInChildren<Collider>();
+
+        // Enemy catches drop the held item exactly where the player was caught.
+        itemToDrop.DropFromHand(
+            dropPosition,
+            dropRotation * Vector3.forward,
+            originalItemScale,
+            0f,
+            playerColliders,
+            0f,
+            printDropDebugLogs
+        );
+
+        itemToDrop.transform.rotation = dropRotation;
+
+        currentItem = null;
+
+        if (saveToGameState)
+        {
+            GameState.Instance.ClearHeldItem();
+            GameState.Instance.AddDroppedWorldItem(
+                SceneManager.GetActiveScene().name,
+                itemToDrop.ItemId,
+                dropPosition,
+                dropRotation,
+                originalItemScale
+            );
+        }
+
+        OnInventoryChanged?.Invoke(CurrentItemId);
+        return true;
+    }
+
     public void ClearItem()
     {
         ClearItem(true);

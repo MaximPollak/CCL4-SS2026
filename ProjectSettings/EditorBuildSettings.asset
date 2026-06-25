@@ -9,11 +9,20 @@ EditorBuildSettings:
     path: Assets/Scenes/SampleScene.unity
     guid: 99c9720ab356a0642a771bea13969a05
   - enabled: 1
+    path: Assets/Scenes/StartScreen.unity
+    guid: eb80ddd5159d14942ac7f95b2efe05bb
+  - enabled: 1
+    path: Assets/Scenes/StoryScene.unity
+    guid: 8eddf942ed64af54e921145d54cdb4a7
+  - enabled: 1
     path: Assets/Scenes/Map.unity
     guid: 0911384f89358c44eaceb17e02daa54e
   - enabled: 1
     path: Assets/Scenes/Submarine.unity
     guid: 35729652348e3ca4aa780356b8fb7e3b
+  - enabled: 1
+    path: Assets/Scenes/DeathScene.unity
+    guid: a9e5ee6fe02ddbd49a18e445bbf67aae
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0

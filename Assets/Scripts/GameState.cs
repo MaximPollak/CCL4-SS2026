@@ -17,6 +17,21 @@ public class GameState : MonoBehaviour
         public string itemId;
         public int spawnPointIndex;
         public bool isAvailable = true;
+        public bool hasSavedTransform = false;
+        public Vector3 position;
+        public Quaternion rotation;
+        public Vector3 scale = Vector3.one;
+    }
+
+    public class EnemyState
+    {
+        public string sceneName;
+        public Vector3 position;
+        public Quaternion rotation;
+        public MonsterAI.MonsterState monsterState = MonsterAI.MonsterState.Roaming;
+        public Vector3 lastKnownPlayerPosition;
+        public bool hasLastKnownPlayerPosition;
+        public bool hasSavedState;
     }
 
     private static GameState instance;
@@ -31,6 +46,7 @@ public class GameState : MonoBehaviour
         new Dictionary<string, List<WorldItemState>>();
     private readonly Dictionary<string, List<RandomSpawnState>> randomSpawnStatesByScene =
         new Dictionary<string, List<RandomSpawnState>>();
+    private EnemyState enemyState = new EnemyState();
 
     public static GameState Instance
     {
@@ -42,6 +58,9 @@ public class GameState : MonoBehaviour
     }
 
     public string HeldItemId { get; private set; } = "";
+    public int PlayerCatchCount { get; private set; }
+
+    public static bool HasInstance => instance != null;
 
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
     private static void EnsureInstance()
@@ -102,7 +121,11 @@ public class GameState : MonoBehaviour
         consumedItemCounts.Clear();
         consumedScenePickupKeys.Clear();
         droppedItemsByScene.Clear();
+        // A new playthrough must get a fresh random item distribution.
         randomSpawnStatesByScene.Clear();
+        // Catch count and enemy persistence belong to one playthrough only.
+        PlayerCatchCount = 0;
+        enemyState = new EnemyState();
     }
 
     public void RegisterItemPrefab(GameObject itemPrefab)
@@ -255,7 +278,19 @@ public class GameState : MonoBehaviour
             return;
         }
 
-        randomSpawnStatesByScene[sceneName] = new List<RandomSpawnState>(spawnStates);
+        List<RandomSpawnState> copiedStates = new List<RandomSpawnState>();
+
+        foreach (RandomSpawnState spawnState in spawnStates)
+        {
+            if (spawnState == null)
+            {
+                continue;
+            }
+
+            copiedStates.Add(CopyRandomSpawnState(spawnState));
+        }
+
+        randomSpawnStatesByScene[sceneName] = copiedStates;
     }
 
     public bool TryGetRandomSpawnStates(string sceneName, out List<RandomSpawnState> spawnStates)
@@ -293,6 +328,93 @@ public class GameState : MonoBehaviour
             spawnState.isAvailable = false;
             return;
         }
+    }
+
+    public void UpdateRandomSpawnItemState(
+        string sceneName,
+        int spawnPointIndex,
+        Vector3 position,
+        Quaternion rotation,
+        Vector3 scale
+    )
+    {
+        if (
+            string.IsNullOrWhiteSpace(sceneName)
+            || !randomSpawnStatesByScene.TryGetValue(sceneName, out List<RandomSpawnState> spawnStates)
+        )
+        {
+            return;
+        }
+
+        foreach (RandomSpawnState spawnState in spawnStates)
+        {
+            if (spawnState.spawnPointIndex != spawnPointIndex)
+            {
+                continue;
+            }
+
+            // Persist the live world transform so scene switches do not reroll or snap map items.
+            spawnState.position = position;
+            spawnState.rotation = rotation;
+            spawnState.scale = scale;
+            spawnState.hasSavedTransform = true;
+            return;
+        }
+    }
+
+    public int RegisterPlayerCaught()
+    {
+        PlayerCatchCount++;
+        return PlayerCatchCount;
+    }
+
+    public void SaveEnemyState(
+        string sceneName,
+        Vector3 position,
+        Quaternion rotation,
+        MonsterAI.MonsterState monsterState,
+        bool hasLastKnownPlayerPosition = false,
+        Vector3 lastKnownPlayerPosition = default(Vector3)
+    )
+    {
+        if (string.IsNullOrWhiteSpace(sceneName))
+        {
+            return;
+        }
+
+        // Normal scene switches call this before unloading so the monster does not reset to Lab.
+        enemyState.sceneName = sceneName;
+        enemyState.position = position;
+        enemyState.rotation = rotation;
+        enemyState.monsterState = monsterState == MonsterAI.MonsterState.CaughtPlayer
+            ? MonsterAI.MonsterState.Roaming
+            : monsterState;
+        enemyState.hasLastKnownPlayerPosition = hasLastKnownPlayerPosition;
+        enemyState.lastKnownPlayerPosition = lastKnownPlayerPosition;
+        enemyState.hasSavedState = true;
+    }
+
+    public bool TryGetEnemyStateForScene(string sceneName, out EnemyState savedEnemyState)
+    {
+        if (
+            !string.IsNullOrWhiteSpace(sceneName)
+            && enemyState.hasSavedState
+            && enemyState.sceneName == sceneName
+        )
+        {
+            savedEnemyState = enemyState;
+            return true;
+        }
+
+        savedEnemyState = null;
+        return false;
+    }
+
+    public bool HasEnemyStateInDifferentScene(string sceneName)
+    {
+        return !string.IsNullOrWhiteSpace(sceneName)
+            && enemyState.hasSavedState
+            && enemyState.sceneName != sceneName;
     }
 
     public void AddDroppedWorldItem(
@@ -364,6 +486,20 @@ public class GameState : MonoBehaviour
     private void HandleSceneLoaded(Scene scene, LoadSceneMode loadSceneMode)
     {
         StartCoroutine(RestoreDroppedItemsAfterSceneLoad(scene.name));
+    }
+
+    private RandomSpawnState CopyRandomSpawnState(RandomSpawnState spawnState)
+    {
+        return new RandomSpawnState
+        {
+            itemId = spawnState.itemId,
+            spawnPointIndex = spawnState.spawnPointIndex,
+            isAvailable = spawnState.isAvailable,
+            hasSavedTransform = spawnState.hasSavedTransform,
+            position = spawnState.position,
+            rotation = spawnState.rotation,
+            scale = spawnState.scale
+        };
     }
 
     private System.Collections.IEnumerator RestoreDroppedItemsAfterSceneLoad(string sceneName)

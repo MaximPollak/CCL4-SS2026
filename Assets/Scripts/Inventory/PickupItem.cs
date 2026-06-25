@@ -6,6 +6,7 @@ public class PickupItem : MonoBehaviour, IInteractable
 {
     [Header("Item Settings")]
     [SerializeField] private string itemId = "Screwdriver";
+    [SerializeField] private ItemSize itemSize = ItemSize.Medium;
 
     [Header("Held Visual Override")]
     [SerializeField] private bool overrideHeldPosition = false;
@@ -42,6 +43,7 @@ public class PickupItem : MonoBehaviour, IInteractable
     [SerializeField] private bool printDropDebugLogs = false;
 
     public string ItemId => itemId;
+    public ItemSize Size => itemSize;
     public bool OverrideHeldPosition => overrideHeldPosition;
     public bool OverrideHeldRotation => overrideHeldRotation;
     public Vector3 HeldLocalPosition => heldLocalPosition;
