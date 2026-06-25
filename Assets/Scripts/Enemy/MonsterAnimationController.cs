@@ -13,14 +13,15 @@ public class MonsterAnimationController : MonoBehaviour
     [SerializeField] private string isSearchingParameter = "IsSearching";
     [SerializeField] private string isLookingAroundParameter = "IsLookingAround";
     [SerializeField] private string isChasingParameter = "IsChasing";
-    [SerializeField] private string speedParameter = "Speed";
 
     [Header("Movement Detection")]
     [SerializeField] private float movingSpeedThreshold = 0.05f;
     [SerializeField] private bool printDebugWarnings = true;
+    [SerializeField] private float debugLogInterval = 0.5f;
 
     [SerializeField] private float stopMovingDelay = 0.15f;
-private float lastMovingTime;
+    private float lastMovingTime;
+    private float nextDebugLogTime;
 
     private Vector3 lastPosition;
     private bool hasLastPosition;
@@ -30,13 +31,11 @@ private float lastMovingTime;
     private int isSearchingHash;
     private int isLookingAroundHash;
     private int isChasingHash;
-    private int speedHash;
 
     private bool hasIsMovingParameter;
     private bool hasIsSearchingParameter;
     private bool hasIsLookingAroundParameter;
     private bool hasIsChasingParameter;
-    private bool hasSpeedParameter;
 
     private void Reset()
     {
@@ -77,25 +76,31 @@ private float lastMovingTime;
         float horizontalSpeed = GetHorizontalSpeed();
         bool isCaught = monsterAI.currentState == MonsterAI.MonsterState.CaughtPlayer;
         bool isChasing = monsterAI.currentState == MonsterAI.MonsterState.ChasingPlayer;
-        bool isSearching = monsterAI.currentState == MonsterAI.MonsterState.SearchingLastSeenPosition;
-        bool isActuallyMoving = !isCaught && horizontalSpeed >= movingSpeedThreshold;
+        bool hasReachedDestination = HasReachedDestination();
+        bool isSearchingLastSeen = monsterAI.currentState == MonsterAI.MonsterState.SearchingLastSeenPosition;
+        bool isRoamWaiting = monsterAI.IsWaitingAtRoamPoint;
+        bool isRoamSearching = monsterAI.IsSearchingAtRoamPoint;
+        bool isSearching = isRoamSearching || (isSearchingLastSeen && hasReachedDestination);
+        bool forceStill = isCaught || isRoamWaiting || isRoamSearching || (isSearchingLastSeen && hasReachedDestination);
+        bool isActuallyMoving = !forceStill && horizontalSpeed >= movingSpeedThreshold;
 
-if (isActuallyMoving)
-{
-    lastMovingTime = Time.time;
-}
+        if (isActuallyMoving)
+        {
+            lastMovingTime = Time.time;
+        }
 
-bool isMoving = !isCaught && Time.time - lastMovingTime <= stopMovingDelay;
-        bool isLookingAround = isSearching && !isMoving && HasReachedSearchPoint();
+        bool isMoving = !forceStill && Time.time - lastMovingTime <= stopMovingDelay;
+        bool isLookingAround = isSearching && !isMoving && hasReachedDestination;
 
-        animator.speed = isChasing ? 1.6f : 1f;
+        animator.speed = isChasing ? 1.7f : 1.3f;
 
         // The Animator must have matching parameters for these calls to affect transitions.
         SetBoolIfAvailable(hasIsMovingParameter, isMovingHash, isMoving);
         SetBoolIfAvailable(hasIsSearchingParameter, isSearchingHash, isSearching);
         SetBoolIfAvailable(hasIsLookingAroundParameter, isLookingAroundHash, isLookingAround);
         SetBoolIfAvailable(hasIsChasingParameter, isChasingHash, isChasing);
-        SetFloatIfAvailable(hasSpeedParameter, speedHash, horizontalSpeed);
+
+        LogAnimationState(isMoving, isSearching, isChasing, hasReachedDestination);
     }
 
     private void AssignReferences()
@@ -137,7 +142,6 @@ bool isMoving = !isCaught && Time.time - lastMovingTime <= stopMovingDelay;
         hasIsSearchingParameter = false;
         hasIsLookingAroundParameter = false;
         hasIsChasingParameter = false;
-        hasSpeedParameter = false;
         cachedController = animator != null ? animator.runtimeAnimatorController : null;
 
         if (animator == null)
@@ -157,7 +161,6 @@ bool isMoving = !isCaught && Time.time - lastMovingTime <= stopMovingDelay;
         isSearchingHash = Animator.StringToHash(isSearchingParameter);
         isLookingAroundHash = Animator.StringToHash(isLookingAroundParameter);
         isChasingHash = Animator.StringToHash(isChasingParameter);
-        speedHash = Animator.StringToHash(speedParameter);
 
         foreach (AnimatorControllerParameter parameter in animator.parameters)
         {
@@ -176,10 +179,6 @@ bool isMoving = !isCaught && Time.time - lastMovingTime <= stopMovingDelay;
             else if (parameter.name == isChasingParameter && parameter.type == AnimatorControllerParameterType.Bool)
             {
                 hasIsChasingParameter = true;
-            }
-            else if (parameter.name == speedParameter && parameter.type == AnimatorControllerParameterType.Float)
-            {
-                hasSpeedParameter = true;
             }
         }
 
@@ -209,11 +208,56 @@ bool isMoving = !isCaught && Time.time - lastMovingTime <= stopMovingDelay;
         return movement.magnitude / Time.deltaTime;
     }
 
-    private bool HasReachedSearchPoint()
+    private bool HasReachedDestination()
     {
         return pathFollower == null
             || pathFollower.HasReachedDestination
             || !pathFollower.HasPath;
+    }
+
+    private void LogAnimationState(
+        bool isMoving,
+        bool isSearching,
+        bool isChasing,
+        bool hasReachedDestination
+    )
+    {
+        if (!printDebugWarnings || Time.time < nextDebugLogTime)
+        {
+            return;
+        }
+
+        nextDebugLogTime = Time.time + debugLogInterval;
+
+        string phase = "walking";
+
+        if (isChasing)
+        {
+            phase = "chasing";
+        }
+        else if (monsterAI.IsSearchingAtRoamPoint)
+        {
+            phase = "searching wait";
+        }
+        else if (monsterAI.IsWaitingAtRoamPoint)
+        {
+            phase = "idle wait";
+        }
+        else if (monsterAI.currentState == MonsterAI.MonsterState.SearchingLastSeenPosition && hasReachedDestination)
+        {
+            phase = "searching wait";
+        }
+
+        Debug.Log(
+            "Monster animation state: " +
+            monsterAI.currentState +
+            " | IsMoving=" + isMoving +
+            " | IsSearching=" + isSearching +
+            " | IsChasing=" + isChasing +
+            " | ReachedDestination=" + hasReachedDestination +
+            " | Phase=" + phase,
+            this
+        );
     }
 
     private void SetBoolIfAvailable(bool hasParameter, int parameterHash, bool value)
@@ -221,14 +265,6 @@ bool isMoving = !isCaught && Time.time - lastMovingTime <= stopMovingDelay;
         if (hasParameter)
         {
             animator.SetBool(parameterHash, value);
-        }
-    }
-
-    private void SetFloatIfAvailable(bool hasParameter, int parameterHash, float value)
-    {
-        if (hasParameter)
-        {
-            animator.SetFloat(parameterHash, value);
         }
     }
 

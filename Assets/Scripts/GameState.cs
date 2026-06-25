@@ -40,6 +40,7 @@ public class GameState : MonoBehaviour
     private readonly HashSet<SubmarineRepairTask> completedSubmarineTasks = new HashSet<SubmarineRepairTask>();
     private readonly Dictionary<SubmarineRepairTask, int> submarineTaskProgress =
         new Dictionary<SubmarineRepairTask, int>();
+    private readonly HashSet<string> bribedCrabIds = new HashSet<string>();
     private readonly Dictionary<string, int> consumedItemCounts = new Dictionary<string, int>();
     private readonly HashSet<string> consumedScenePickupKeys = new HashSet<string>();
     private readonly Dictionary<string, List<WorldItemState>> droppedItemsByScene =
@@ -118,6 +119,7 @@ public class GameState : MonoBehaviour
         HeldItemId = "";
         completedSubmarineTasks.Clear();
         submarineTaskProgress.Clear();
+        bribedCrabIds.Clear();
         consumedItemCounts.Clear();
         consumedScenePickupKeys.Clear();
         droppedItemsByScene.Clear();
@@ -203,6 +205,21 @@ public class GameState : MonoBehaviour
         }
 
         submarineTaskProgress[task] = progress;
+    }
+
+    public bool IsCrabBribed(string crabId)
+    {
+        return !string.IsNullOrWhiteSpace(crabId) && bribedCrabIds.Contains(crabId);
+    }
+
+    public void MarkCrabBribed(string crabId)
+    {
+        if (string.IsNullOrWhiteSpace(crabId))
+        {
+            return;
+        }
+
+        bribedCrabIds.Add(crabId);
     }
 
     public void MarkItemConsumed(string itemId)
