@@ -45,6 +45,11 @@ public class SubmarineItemSocket : MonoBehaviour, IInteractable
         }
     }
 
+    private void Start()
+    {
+        RestoreStateFromGameState();
+    }
+
     private void Update()
     {
         UpdatePrerequisiteVisibility();
@@ -82,6 +87,7 @@ public class SubmarineItemSocket : MonoBehaviour, IInteractable
 
         if (removeItemFromInventory)
         {
+            GameState.Instance.MarkItemConsumed(requiredItemId);
             player.Inventory.ClearItem();
         }
 
@@ -92,6 +98,7 @@ public class SubmarineItemSocket : MonoBehaviour, IInteractable
 
         if (objectToEnableAfterUse != null)
         {
+            PreparePlacedVisualForDisplay(objectToEnableAfterUse);
             objectToEnableAfterUse.SetActive(true);
             MakePlacedVisualDisplayOnly(objectToEnableAfterUse);
         }
@@ -147,6 +154,7 @@ public class SubmarineItemSocket : MonoBehaviour, IInteractable
         );
 
         player.Inventory.PickUpItem(returnedItem, player.PlayerCamera.transform);
+        GameState.Instance.UnmarkItemConsumed(returnedItem.ItemId);
 
         if (repairManager != null)
         {
@@ -159,6 +167,26 @@ public class SubmarineItemSocket : MonoBehaviour, IInteractable
         }
 
         Debug.Log(takeBackMessage);
+    }
+
+    private void RestoreStateFromGameState()
+    {
+        if (repairManager == null || !repairManager.IsTaskComplete(repairTask))
+        {
+            return;
+        }
+
+        if (objectToDisableAfterUse != null)
+        {
+            objectToDisableAfterUse.SetActive(false);
+        }
+
+        if (objectToEnableAfterUse != null)
+        {
+            PreparePlacedVisualForDisplay(objectToEnableAfterUse);
+            objectToEnableAfterUse.SetActive(true);
+            MakePlacedVisualDisplayOnly(objectToEnableAfterUse);
+        }
     }
 
     private void UpdatePrerequisiteVisibility()
@@ -186,6 +214,8 @@ public class SubmarineItemSocket : MonoBehaviour, IInteractable
 
     private void MakePlacedVisualDisplayOnly(GameObject placedVisual)
     {
+        PreparePlacedVisualForDisplay(placedVisual);
+
         PickupItem[] pickupItems = placedVisual.GetComponentsInChildren<PickupItem>(true);
 
         foreach (PickupItem pickupItem in pickupItems)
@@ -203,6 +233,24 @@ public class SubmarineItemSocket : MonoBehaviour, IInteractable
             }
 
             itemCollider.enabled = false;
+        }
+    }
+
+    private void PreparePlacedVisualForDisplay(GameObject placedVisual)
+    {
+        if (placedVisual == null)
+        {
+            return;
+        }
+
+        PickupItem[] pickupItems = placedVisual.GetComponentsInChildren<PickupItem>(true);
+
+        foreach (PickupItem pickupItem in pickupItems)
+        {
+            if (pickupItem != null)
+            {
+                pickupItem.DisableScenePickupPersistence();
+            }
         }
     }
 }

@@ -15,7 +15,7 @@ public class SubmarineRepeatedToolSocket : MonoBehaviour, IInteractable
     [SerializeField] private string prerequisiteMissingMessage = "Another repair step must be completed first.";
 
     [Header("Required Tool")]
-    [SerializeField] private string requiredItemId = "Wrench";
+    [SerializeField] private string requiredItemId = "FireTool";
     [SerializeField] private int requiredUseCount = 4;
 
     [Header("Visual Progress")]
@@ -37,6 +37,11 @@ public class SubmarineRepeatedToolSocket : MonoBehaviour, IInteractable
         ownRenderers = GetComponents<Renderer>();
 
         UpdatePrerequisiteVisibility();
+    }
+
+    private void Start()
+    {
+        RestoreStateFromGameState();
     }
 
     private void Update()
@@ -77,18 +82,8 @@ public class SubmarineRepeatedToolSocket : MonoBehaviour, IInteractable
         }
 
         currentUseCount++;
-
-        int visualIndex = currentUseCount - 1;
-
-        if (objectsToEnablePerUse != null && visualIndex < objectsToEnablePerUse.Length)
-        {
-            GameObject progressObject = objectsToEnablePerUse[visualIndex];
-
-            if (progressObject != null)
-            {
-                progressObject.SetActive(true);
-            }
-        }
+        SaveProgress();
+        ApplyProgressVisuals();
 
         Debug.Log(progressMessage + " " + currentUseCount + "/" + requiredUseCount);
 
@@ -133,6 +128,56 @@ public class SubmarineRepeatedToolSocket : MonoBehaviour, IInteractable
         foreach (Renderer ownRenderer in ownRenderers)
         {
             ownRenderer.enabled = shouldShow;
+        }
+    }
+
+    private void RestoreStateFromGameState()
+    {
+        if (repairManager == null)
+        {
+            return;
+        }
+
+        currentUseCount = repairManager.GetTaskProgress(repairTask);
+
+        if (repairManager.IsTaskComplete(repairTask))
+        {
+            currentUseCount = Mathf.Max(currentUseCount, requiredUseCount);
+        }
+
+        currentUseCount = Mathf.Clamp(currentUseCount, 0, requiredUseCount);
+        ApplyProgressVisuals();
+        UpdatePrerequisiteVisibility();
+    }
+
+    private void SaveProgress()
+    {
+        if (repairManager == null)
+        {
+            return;
+        }
+
+        repairManager.SetTaskProgress(repairTask, currentUseCount);
+    }
+
+    private void ApplyProgressVisuals()
+    {
+        if (objectsToEnablePerUse != null)
+        {
+            for (int i = 0; i < objectsToEnablePerUse.Length; i++)
+            {
+                GameObject progressObject = objectsToEnablePerUse[i];
+
+                if (progressObject != null)
+                {
+                    progressObject.SetActive(i < currentUseCount);
+                }
+            }
+        }
+
+        if (objectToEnableWhenComplete != null)
+        {
+            objectToEnableWhenComplete.SetActive(currentUseCount >= requiredUseCount);
         }
     }
 }
