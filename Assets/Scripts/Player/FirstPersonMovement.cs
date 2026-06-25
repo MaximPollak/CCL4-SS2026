@@ -12,6 +12,11 @@ public class FirstPersonMovement : MonoBehaviour
     [SerializeField] private float movementSpeed = 4f;
     [SerializeField] private float gravity = -20f;
 
+    [Header("Wwise Walking Loop")]
+    [SerializeField] private string walkingStartEvent = "Play_walking";
+    [SerializeField] private string walkingStopEvent = "Stop_walking";
+    [SerializeField] private float minimumMoveInput = 0.1f;
+
     [Header("Crouch")]
     [SerializeField] private bool allowCrouch = true;
     [SerializeField] private bool holdToCrouch = false;
@@ -29,6 +34,7 @@ public class FirstPersonMovement : MonoBehaviour
     private float standingCameraHeight;
     private float controllerBottomOffset;
     private bool wantsToCrouch;
+    private bool isWalkingSoundPlaying;
     private InputAction runtimeCrouchAction;
     private readonly Collider[] standUpHits = new Collider[8];
 
@@ -89,6 +95,8 @@ public class FirstPersonMovement : MonoBehaviour
         {
             activeCrouchAction.Disable();
         }
+
+        StopWalkingLoop();
     }
 
     private void Update()
@@ -103,6 +111,7 @@ public class FirstPersonMovement : MonoBehaviour
     {
         if (moveAction == null || moveAction.action == null)
         {
+            StopWalkingLoop();
             return;
         }
 
@@ -113,6 +122,39 @@ public class FirstPersonMovement : MonoBehaviour
 
         float currentSpeed = IsCrouching ? crouchSpeed : standingSpeed;
         characterController.Move(moveDirection * currentSpeed * Time.deltaTime);
+
+        bool isMoving = input.sqrMagnitude > minimumMoveInput * minimumMoveInput;
+
+        if (isMoving)
+        {
+            StartWalkingLoop();
+        }
+        else
+        {
+            StopWalkingLoop();
+        }
+    }
+
+    private void StartWalkingLoop()
+    {
+        if (isWalkingSoundPlaying)
+        {
+            return;
+        }
+
+        AkUnitySoundEngine.PostEvent(walkingStartEvent, gameObject);
+        isWalkingSoundPlaying = true;
+    }
+
+    private void StopWalkingLoop()
+    {
+        if (!isWalkingSoundPlaying)
+        {
+            return;
+        }
+
+        AkUnitySoundEngine.PostEvent(walkingStopEvent, gameObject);
+        isWalkingSoundPlaying = false;
     }
 
     private void ApplyGravity()

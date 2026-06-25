@@ -13,6 +13,15 @@ public class MonsterPathFollower : MonoBehaviour
     public float turnSpeed = 8f;
     public float waypointReachDistance = 0.2f;
 
+    [Header("Wwise Monster Walking")]
+    [SerializeField] private string monsterWalkingStartEvent = "Play_monster_walking";
+    [SerializeField] private string monsterWalkingStopEvent = "Stop_monster_walking";
+    [SerializeField] private float minimumMovementForSound = 0.05f;
+
+    [Header("Wwise Monster Breathing")]
+    [SerializeField] private string monsterBreathingStartEvent = "Play_monster_breathing";
+    [SerializeField] private string monsterBreathingStopEvent = "Stop_monster_breathing";
+
     [Header("Stuck Detection")]
     public float stuckCheckInterval = 0.5f;
     public float stuckDistanceThreshold = 0.08f;
@@ -35,6 +44,8 @@ public class MonsterPathFollower : MonoBehaviour
 
     private List<Vector3> pathPoints = new List<Vector3>();
     private int currentPathIndex;
+    private bool isMonsterWalkingSoundPlaying;
+    private bool isMonsterBreathingSoundPlaying;
 
     private Vector3 currentDestination;
     private float nextRepathTime;
@@ -47,6 +58,12 @@ public class MonsterPathFollower : MonoBehaviour
     {
         AssignReferences(true);
         ApplyCharacterControllerDefaults();
+    }
+
+    private System.Collections.IEnumerator Start()
+    {
+        yield return null;
+        StartMonsterBreathingLoop();
     }
 
     private void OnValidate()
@@ -265,11 +282,72 @@ public class MonsterPathFollower : MonoBehaviour
 
     private void Move(Vector3 horizontalMovement)
     {
+        if (horizontalMovement.sqrMagnitude > minimumMovementForSound * minimumMovementForSound)
+        {
+            StartMonsterWalkingLoop();
+        }
+        else
+        {
+            StopMonsterWalkingLoop();
+        }
+
         Vector3 finalMovement =
             horizontalMovement
             + Vector3.up * verticalVelocity;
 
         characterController.Move(finalMovement * Time.deltaTime);
+    }
+
+    private void StartMonsterWalkingLoop()
+    {
+        if (isMonsterWalkingSoundPlaying)
+        {
+            return;
+        }
+
+        AkUnitySoundEngine.PostEvent(monsterWalkingStartEvent, gameObject);
+        isMonsterWalkingSoundPlaying = true;
+    }
+
+    private void StopMonsterWalkingLoop()
+    {
+        if (!isMonsterWalkingSoundPlaying)
+        {
+            return;
+        }
+
+        AkUnitySoundEngine.PostEvent(monsterWalkingStopEvent, gameObject);
+        isMonsterWalkingSoundPlaying = false;
+    }
+
+
+    private void StartMonsterBreathingLoop()
+    {
+        if (isMonsterBreathingSoundPlaying)
+        {
+            return;
+        }
+
+        uint eventId = AkUnitySoundEngine.PostEvent(monsterBreathingStartEvent, gameObject);
+
+        if (eventId == 0)
+        {
+            Debug.LogError("Monster breathing event not found or SoundBank not loaded: " + monsterBreathingStartEvent);
+            return;
+        }
+
+        isMonsterBreathingSoundPlaying = true;
+    }
+
+    private void StopMonsterBreathingLoop()
+    {
+        if (!isMonsterBreathingSoundPlaying)
+        {
+            return;
+        }
+
+        AkUnitySoundEngine.PostEvent(monsterBreathingStopEvent, gameObject);
+        isMonsterBreathingSoundPlaying = false;
     }
 
     private void UpdateStuckTracking()
@@ -308,5 +386,11 @@ public class MonsterPathFollower : MonoBehaviour
         stuckTimer = 0f;
         lastStuckCheckPosition = transform.position;
         nextStuckCheckTime = Time.time + stuckCheckInterval;
+    }
+
+    private void OnDisable()
+    {
+        StopMonsterWalkingLoop();
+        StopMonsterBreathingLoop();
     }
 }
