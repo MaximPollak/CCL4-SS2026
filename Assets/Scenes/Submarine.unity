@@ -508,6 +508,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 84b853110a3cd804c8302206ba69bf1e, type: 3}
+--- !u!1 &144660776 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 206404145347576384, guid: 84b853110a3cd804c8302206ba69bf1e, type: 3}
+  m_PrefabInstance: {fileID: 144660775}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &181321970
 GameObject:
   m_ObjectHideFlags: 0
@@ -659,7 +664,7 @@ MonoBehaviour:
   requiredItemId: AccessCard
   removeItemFromInventory: 1
   objectToDisableAfterUse: {fileID: 0}
-  objectToEnableAfterUse: {fileID: 0}
+  objectToEnableAfterUse: {fileID: 1705123994}
   taskCompletionIndicator: {fileID: 0}
   canTakeItemBack: 1
   itemToReturnPrefab: {fileID: -7801000000000000001, guid: 1ef106aad0105004484e14c41e09afc1, type: 3}
@@ -1377,6 +1382,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Battery
       objectReference: {fileID: 0}
+    - target: {fileID: 3433255223631770162, guid: af8781a92f5aad441b57ce65fce81a68, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8405000000000000003, guid: af8781a92f5aad441b57ce65fce81a68, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -1425,7 +1434,7 @@ MonoBehaviour:
   requiredItemId: Gitter
   removeItemFromInventory: 1
   objectToDisableAfterUse: {fileID: 0}
-  objectToEnableAfterUse: {fileID: 0}
+  objectToEnableAfterUse: {fileID: 693514797}
   taskCompletionIndicator: {fileID: 496433081}
   canTakeItemBack: 0
   itemToReturnPrefab: {fileID: 0}
@@ -1665,6 +1674,10 @@ PrefabInstance:
     - target: {fileID: 5985758294471086684, guid: f172ac1c530138247bf0ec87d7f67182, type: 3}
       propertyPath: m_Name
       value: FanL
+      objectReference: {fileID: 0}
+    - target: {fileID: 5985758294471086684, guid: f172ac1c530138247bf0ec87d7f67182, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6366541592957569254, guid: f172ac1c530138247bf0ec87d7f67182, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1965,6 +1978,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 91afaa0b052fb8e449ba8e4f814bd3b7, type: 3}
+--- !u!1 &693514797 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8713944839473207848, guid: 91afaa0b052fb8e449ba8e4f814bd3b7, type: 3}
+  m_PrefabInstance: {fileID: 693514796}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &698105304
 GameObject:
   m_ObjectHideFlags: 0
@@ -2204,11 +2222,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 496433082}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &795922936 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8405000000000000003, guid: af8781a92f5aad441b57ce65fce81a68, type: 3}
-  m_PrefabInstance: {fileID: 1066797783}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &804523802
 GameObject:
   m_ObjectHideFlags: 0
@@ -2463,11 +2476,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1075631627}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &877056406 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8402000000000000003, guid: f172ac1c530138247bf0ec87d7f67182, type: 3}
-  m_PrefabInstance: {fileID: 1847070212}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &947588514 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 00af45e689a92464585dcb7eb215cdc3, type: 3}
@@ -2685,6 +2693,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 59833a822b9c1e0429fcd263a17d739c, type: 3}
+--- !u!1 &963930082 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6710289640573083391, guid: 59833a822b9c1e0429fcd263a17d739c, type: 3}
+  m_PrefabInstance: {fileID: 963930081}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &973453115
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2762,6 +2775,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 84b853110a3cd804c8302206ba69bf1e, type: 3}
+--- !u!1 &973453116 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 206404145347576384, guid: 84b853110a3cd804c8302206ba69bf1e, type: 3}
+  m_PrefabInstance: {fileID: 973453115}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1017306169
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3132,6 +3150,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: af8781a92f5aad441b57ce65fce81a68, type: 3}
+--- !u!1 &1066797784 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3433255223631770162, guid: af8781a92f5aad441b57ce65fce81a68, type: 3}
+  m_PrefabInstance: {fileID: 1066797783}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1075631625
 GameObject:
   m_ObjectHideFlags: 0
@@ -3609,7 +3632,7 @@ MonoBehaviour:
   requiredItemId: Fan
   removeItemFromInventory: 1
   objectToDisableAfterUse: {fileID: 0}
-  objectToEnableAfterUse: {fileID: 877056406}
+  objectToEnableAfterUse: {fileID: 1847070213}
   taskCompletionIndicator: {fileID: 0}
   canTakeItemBack: 0
   itemToReturnPrefab: {fileID: 0}
@@ -4219,7 +4242,7 @@ MonoBehaviour:
   requiredItemId: OxygenTank
   removeItemFromInventory: 1
   objectToDisableAfterUse: {fileID: 0}
-  objectToEnableAfterUse: {fileID: 0}
+  objectToEnableAfterUse: {fileID: 144660776}
   taskCompletionIndicator: {fileID: 2007918816}
   canTakeItemBack: 0
   itemToReturnPrefab: {fileID: 0}
@@ -4413,7 +4436,7 @@ MonoBehaviour:
   requiredItemId: OxygenTank
   removeItemFromInventory: 1
   objectToDisableAfterUse: {fileID: 0}
-  objectToEnableAfterUse: {fileID: 0}
+  objectToEnableAfterUse: {fileID: 973453116}
   taskCompletionIndicator: {fileID: 1836884824}
   canTakeItemBack: 0
   itemToReturnPrefab: {fileID: 0}
@@ -4531,7 +4554,7 @@ MonoBehaviour:
   requiredItemId: Battery
   removeItemFromInventory: 1
   objectToDisableAfterUse: {fileID: 0}
-  objectToEnableAfterUse: {fileID: 795922936}
+  objectToEnableAfterUse: {fileID: 1066797784}
   taskCompletionIndicator: {fileID: 1027762790}
   canTakeItemBack: 0
   itemToReturnPrefab: {fileID: 0}
@@ -4864,7 +4887,7 @@ MonoBehaviour:
   requiredItemId: PressureValve
   removeItemFromInventory: 1
   objectToDisableAfterUse: {fileID: 0}
-  objectToEnableAfterUse: {fileID: 0}
+  objectToEnableAfterUse: {fileID: 963930082}
   taskCompletionIndicator: {fileID: 1896908799}
   canTakeItemBack: 0
   itemToReturnPrefab: {fileID: 0}
@@ -4977,6 +5000,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1ef106aad0105004484e14c41e09afc1, type: 3}
+--- !u!1 &1705123994 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4792425786502680679, guid: 1ef106aad0105004484e14c41e09afc1, type: 3}
+  m_PrefabInstance: {fileID: 1705123993}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1710030358
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5207,6 +5235,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Note
       objectReference: {fileID: 0}
+    - target: {fileID: 6713650357714419630, guid: e37454f6677cda940953d4cab992a77d, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6871254913594772794, guid: e37454f6677cda940953d4cab992a77d, type: 3}
       propertyPath: heldLocalPosition.x
       value: 0.6
@@ -5375,6 +5407,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f172ac1c530138247bf0ec87d7f67182, type: 3}
+--- !u!1 &1847070213 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5985758294471086684, guid: f172ac1c530138247bf0ec87d7f67182, type: 3}
+  m_PrefabInstance: {fileID: 1847070212}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1857565081
 GameObject:
   m_ObjectHideFlags: 0
@@ -5501,6 +5538,86 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1836884825}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1873859738
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1873859741}
+  - component: {fileID: 1873859740}
+  - component: {fileID: 1873859739}
+  m_Layer: 0
+  m_Name: EnvioremnetNoise
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1873859739
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1873859738}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eeff33aa54341d249a5fadfce70c6feb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnvironmentNoisePlayer
+  playEvent: Play_enviorment_noise
+  stopEvent: Stop_enviorment_noise
+  playWhiteNoise: 1
+  playWhiteNoiseEvent: Play_white_noise
+  stopWhiteNoiseEvent: Stop_white_noise
+  playOnEnable: 1
+  playImmediately: 1
+  startupDelaySeconds: 0.25
+  initialDelaySeconds: 60
+  minimumCooldownSeconds: 90
+  maximumCooldownSeconds: 120
+--- !u!114 &1873859740
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1873859738}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e005f984f901948ecaa1ba738455db50, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: AK.Wwise.Unity.MonoBehaviour::AkGameObj
+  m_listeners:
+    initialListenerList: []
+    useDefaultListeners: 1
+  isEnvironmentAware: 1
+  isStaticObject: 0
+  usePositionOffsetData: 0
+  m_positionOffsetData:
+    KeepMe: 0
+    positionOffset: {x: 0, y: 0, z: 0}
+  scalingFactor: 1
+  m_posOffsetData: {fileID: 0}
+  listenerMask: 1
+--- !u!4 &1873859741
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1873859738}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -60.99134, y: 0.00097, z: 2.7033}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1896908798
 GameObject:
@@ -6114,6 +6231,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SceneTransitionDoor
   targetSceneName: Map
   targetSpawnPointId: MapSubmarineEntrance
+  useMapSubmarineLoadingScreen: 1
+  mapSubmarineLoadingScreenTime: 2
   printDebugLogs: 1
 --- !u!135 &2133628574
 SphereCollider:
@@ -6136,86 +6255,6 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.011094513
   m_Center: {x: -0.000000006088344, y: 0.000000005116426, z: -0.0007388084}
---- !u!1 &1873859738
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1873859741}
-  - component: {fileID: 1873859740}
-  - component: {fileID: 1873859739}
-  m_Layer: 0
-  m_Name: EnvioremnetNoise
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1873859739
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1873859738}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eeff33aa54341d249a5fadfce70c6feb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EnvironmentNoisePlayer
-  playEvent: Play_enviorment_noise
-  stopEvent: Stop_enviorment_noise
-  playWhiteNoise: 1
-  playWhiteNoiseEvent: Play_white_noise
-  stopWhiteNoiseEvent: Stop_white_noise
-  playOnEnable: 1
-  playImmediately: 1
-  startupDelaySeconds: 0.25
-  initialDelaySeconds: 60
-  minimumCooldownSeconds: 90
-  maximumCooldownSeconds: 120
---- !u!114 &1873859740
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1873859738}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e005f984f901948ecaa1ba738455db50, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: AK.Wwise.Unity.MonoBehaviour::AkGameObj
-  m_listeners:
-    initialListenerList: []
-    useDefaultListeners: 1
-  isEnvironmentAware: 1
-  isStaticObject: 0
-  usePositionOffsetData: 0
-  m_positionOffsetData:
-    KeepMe: 0
-    positionOffset: {x: 0, y: 0, z: 0}
-  scalingFactor: 1
-  m_posOffsetData: {fileID: 0}
-  listenerMask: 1
---- !u!4 &1873859741
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1873859738}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -60.99134, y: 0.00097, z: 2.7033}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
