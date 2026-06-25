@@ -104,6 +104,7 @@ GameObject:
   - component: {fileID: 8130600003087792253}
   - component: {fileID: 2109107959932948977}
   - component: {fileID: 379819663420417725}
+  - component: {fileID: 5714684891260453812}
   m_Layer: 0
   m_Name: Monster
   m_TagString: Untagged
@@ -162,7 +163,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 765020c4fa6bd46b798680bfb3a00065, type: 3}
-  m_Name: 
+  m_Name:
   m_EditorClassIdentifier: Assembly-CSharp::MonsterPathFollower
   pathfinder: {fileID: 0}
   target: {fileID: 0}
@@ -233,6 +234,28 @@ MonoBehaviour:
   searchLookAroundTurnSpeed: 80
   currentState: 0
   printDebugLogs: 1
+--- !u!114 &5714684891260453812
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2762202695893217419}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c468efb6b4a4fb88bd9c0907c6ec7bc, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::MonsterAnimationController
+  monsterAI: {fileID: 0}
+  pathFollower: {fileID: 0}
+  animator: {fileID: 0}
+  isMovingParameter: IsMoving
+  isSearchingParameter: IsSearching
+  isLookingAroundParameter: IsLookingAround
+  isChasingParameter: IsChasing
+  speedParameter: Speed
+  movingSpeedThreshold: 0.05
+  printDebugWarnings: 1
 --- !u!1 &8693977129644988940
 GameObject:
   m_ObjectHideFlags: 0

@@ -388,6 +388,7 @@ public class MonsterAI : MonoBehaviour
     private void EnterChasingPlayer()
     {
         ApplyNormalVision();
+        ResetVisionLookOffset();
         SetMonsterSpeed(chasingSpeed);
 
         if (pathFollower == null || player == null)
@@ -517,6 +518,8 @@ public class MonsterAI : MonoBehaviour
 
     private void GoToNextRoamPoint()
     {
+        ResetVisionLookOffset();
+
         if (roamPoints == null || roamPoints.Length == 0)
         {
             return;
@@ -571,6 +574,14 @@ public class MonsterAI : MonoBehaviour
 
         vision.viewAngle = normalViewAngle;
         vision.viewDistance = normalViewDistance;
+    }
+
+    private void ResetVisionLookOffset()
+    {
+        if (vision != null)
+        {
+            vision.ResetViewYawOffset();
+        }
     }
 
     private void ApplySearchVisionBoost()
@@ -685,15 +696,20 @@ public class MonsterAI : MonoBehaviour
         }
 
         float targetYaw = GetLookPatternYaw(phase, lookAngle);
-        Quaternion targetRotation = startRotation * Quaternion.Euler(0f, targetYaw, 0f);
-
-        transform.rotation = Quaternion.RotateTowards(
-            transform.rotation,
-            targetRotation,
+        float currentYaw = vision != null ? vision.ViewYawOffset : 0f;
+        float nextYaw = Mathf.MoveTowards(
+            currentYaw,
+            targetYaw,
             turnSpeed * Time.deltaTime
         );
 
-        if (Quaternion.Angle(transform.rotation, targetRotation) > 1f)
+        // Look-around should move only the FOV/head direction, not rotate the monster body.
+        if (vision != null)
+        {
+            vision.SetViewYawOffset(nextYaw);
+        }
+
+        if (Mathf.Abs(Mathf.DeltaAngle(nextYaw, targetYaw)) > 1f)
         {
             return false;
         }
