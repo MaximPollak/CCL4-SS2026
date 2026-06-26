@@ -26,11 +26,11 @@
                 <p class="eyebrow">ePortfolio Group 17</p>
                 <h1 id="hero-title">Underwater Horror Escape Room</h1>
                 <p class="hero__summary">
-                    A diver investigates a silent underwater base, finds the crew missing, and must repair the submarine before the escaped lab creature catches them five times.
+                    A first-person underwater horror escape game where the player explores the base, manages one held item, avoids a stalking monster, solves NPC puzzles, and repairs the submarine before the third catch becomes fatal.
                 </p>
                 <div class="hero__actions" aria-label="Project status">
-                    <a class="button" href="#map">View map placeholder</a>
-                    <a class="button button--quiet" href="#items">Review item plan</a>
+                    <a class="button" href="#system-design">View implemented systems</a>
+                    <a class="button button--quiet" href="#items">Review puzzle flow</a>
                 </div>
             </div>
         </section>
@@ -38,10 +38,10 @@
         <section class="section section--map" id="map" aria-labelledby="map-title">
             <div class="section__inner">
                 <div class="section-heading section-heading--wide">
-                    <p class="eyebrow">Level design placeholder</p>
+                    <p class="eyebrow">Implemented scene flow</p>
                     <h2 id="map-title">Base Map</h2>
                     <p>
-                        Placeholder will be replaced by actual map drawing
+                        The project now switches between the Map scene and the Submarine scene while preserving player items, monster state, dropped objects, and task progress for the current playthrough.
                     </p>
                 </div>
                 <div class="map-workbench">
@@ -49,13 +49,13 @@
                         <img src="assets/map.jpeg" alt="Top-down layout map of the underwater base.">
                     </figure>
                     <aside class="map-notes" aria-label="Map planning notes">
-                        <h3>Map Notes</h3>
+                        <h3>Scene Notes</h3>
                         <ul>
-                            <li>One map square should represent about 1 m.</li>
-                            <li>A full measure line should represent about 5 m.</li>
-                            <li>Locked areas should include office, lab, storage, or bedroom routes.</li>
-                            <li>The monster needs enough corridors for patrol, chase, and rerouting.</li>
-                            <li>The submarine should stay readable as the final escape objective.</li>
+                            <li>Map and Submarine transitions use a short black loading screen to hide spawn restoration.</li>
+                            <li>Item distribution happens once per new run and is restored after scene switches.</li>
+                            <li>Dropped items persist in the scene where the player left them.</li>
+                            <li>The monster keeps its scene, position, rotation, and current behavior across scene changes.</li>
+                            <li>The submarine is the final escape objective and loads the Survive scene after all required repairs.</li>
                         </ul>
                     </aside>
                 </div>
@@ -72,17 +72,17 @@
                     <article class="character-card">
                         <img class="character-card__image" src="assets/antagonist.png" alt="Antagonist reference image with an old diving suit.">
                         <h3>Escaped Lab Monster</h3>
-                        <p>Main enemy that stalks the player through the base.</p>
+                        <p>Roams between points, searches after arrivals, chases on sight, investigates player-dropped items, and kills the player on the third catch.</p>
                     </article>
                     <article class="character-card">
                         <img class="character-card__image" src="assets/crab.png" alt="Crab NPC reference image.">
                         <h3>Crab</h3>
-                        <p>Planned interaction NPC connected to item or puzzle progression.</p>
+                        <p>Guards a note. Without a coin it snaps as a warning; with a coin it lifts its arms, consumes the coin, opens the note collider, and stays bribed.</p>
                     </article>
                     <article class="character-card">
                         <img class="character-card__image" src="assets/fish.png" alt="Fish NPC reference image.">
                         <h3>Fish</h3>
-                        <p>Aquarium NPC planned around danger, poisoning, or guarded item interaction.</p>
+                        <p>The aquarium puzzle uses poison to turn the water green, deactivate the fish, and unlock the coin pickup needed for the crab.</p>
                     </article>
                 </div>
             </div>
@@ -91,36 +91,36 @@
         <section class="section" id="items" aria-labelledby="items-title">
             <div class="section__inner">
                 <div class="section-heading section-heading--wide">
-                    <p class="eyebrow">Puzzle and repair planning</p>
+                    <p class="eyebrow">Implemented puzzle and repair loop</p>
                     <h2 id="items-title">Items And Interactions</h2>
                     <p>
-                        These are current working notes. The final item count can change after the map and puzzles are tested.
+                        Items are one-slot pickups with persistent world state. The first distribution is random per new run, filtered by item size so small, medium, and big items only spawn at compatible points.
                     </p>
                 </div>
                 <div class="item-layout">
                     <article class="item-panel">
                         <h3>Submarine Repair Items</h3>
                         <ul class="compact-list">
-                            <li>3 fuel canisters</li>
-                            <li>Engine component</li>
-                            <li>Battery pack</li>
-                            <li>Navigation chip</li>
-                            <li>Oxygen tank</li>
-                            <li>Front glass</li>
-                            <li>Wrench for tightening screws</li>
-                            <li>Access card or key for the submarine</li>
-                            <li>Steering wheel for the submarine</li>
-                            <li>Pressure valve</li>
+                            <li>Left and right oxygen tanks</li>
+                            <li>Pressure valve placement</li>
+                            <li>Pressure valve turning step</li>
+                            <li>Oil tank multi-item repair</li>
+                            <li>Code box puzzle</li>
+                            <li>Left and right ventilator tasks</li>
+                            <li>Steering wheel</li>
+                            <li>Access card</li>
+                            <li>Battery</li>
+                            <li>Vent cover repair step</li>
                         </ul>
                     </article>
                     <article class="item-panel item-panel--wide">
-                        <h3>Interaction Ideas</h3>
+                        <h3>Current Interaction Chain</h3>
                         <div class="interaction-list">
-                            <p><strong>Crowbar:</strong> opens a loose floor part to access an item.</p>
-                            <p><strong>Keycard or badge:</strong> opens main office, lab, or bedroom. Spawn is outside of locked rooms.</p>
-                            <p><strong>Code clue:</strong> opens the storage room. The clue can be on paper in the kitchen or main office.</p>
-                            <p><strong>Screwdriver:</strong> opens the submarine engine panel.</p>
-                            <p><strong>Movable plant:</strong> reveals a card, clue, or item.</p>
+                            <p><strong>Aquarium poison:</strong> using the poison item turns the aquarium water green, removes the fish, and makes the coin available.</p>
+                            <p><strong>Crab bribe:</strong> giving the coin to the crab consumes it, plays the lift-arms animation, disables the blocking collider, and unlocks the note.</p>
+                            <p><strong>Readable note:</strong> picking up the note opens a fullscreen text overlay and pauses the game until the player closes it.</p>
+                            <p><strong>Dropped item alert:</strong> intentional item drops can alert the monster based on item size and range. Physics impacts and Wwise sounds do not trigger this logic.</p>
+                            <p><strong>Final escape:</strong> the final submarine button only loads the Survive scene after all required submarine tasks are complete, with a debug all-done checkbox for testing.</p>
                         </div>
                     </article>
                 </div>
@@ -130,10 +130,10 @@
         <section class="section" id="mockups" aria-labelledby="mockups-title">
             <div class="section__inner">
                 <div class="section-heading section-heading--wide">
-                    <p class="eyebrow">2 pts</p>
-                    <h2 id="mockups-title">Final Mockup Slots</h2>
+                    <p class="eyebrow">Playable feature checklist</p>
+                    <h2 id="mockups-title">Current Gameplay Screens</h2>
                     <p>
-                        These are placeholders for now. Replace each slot with screenshots, wireframes, or final mockups as the Unity project becomes playable.
+                        These cards summarize the current implemented views and can be replaced with screenshots from the Unity scenes.
                     </p>
                 </div>
                 <div class="mockup-grid">
@@ -142,42 +142,42 @@
                             <span>Main menu mockup</span>
                         </div>
                         <h3>Onboarding Menu</h3>
-                        <p>Start, credits, mood-setting intro text, and transition into the base scene.</p>
+                        <p>Start screen and story scene reset the run state before loading into the playable loop.</p>
                     </article>
                     <article class="mockup-card">
                         <div class="mockup-card__frame">
                             <span>Gameplay HUD mockup</span>
                         </div>
                         <h3>Exploration View</h3>
-                        <p>First-person movement, interact prompt, catch counter, and one-slot inventory.</p>
+                        <p>First-person movement, crouching, hiding spots, one-slot inventory, crosshair, and held-item display.</p>
                     </article>
                     <article class="mockup-card">
                         <div class="mockup-card__frame">
                             <span>Map mockup</span>
                         </div>
                         <h3>Base Layout</h3>
-                        <p>Replace with the final map picture and room labels once the level layout is finished.</p>
+                        <p>Map scene contains randomized item placement, spawn point size filters, lockers, NPC puzzles, and monster navigation.</p>
                     </article>
                     <article class="mockup-card">
                         <div class="mockup-card__frame">
                             <span>Item pickup mockup</span>
                         </div>
                         <h3>Repair Interaction</h3>
-                        <p>Show how the player collects or uses repair items.</p>
+                        <p>Pickup, drop, restore, consume, socket, repeated-tool, and multi-item repair interactions are implemented.</p>
                     </article>
                     <article class="mockup-card">
                         <div class="mockup-card__frame">
                             <span>Monster chase mockup</span>
                         </div>
                         <h3>Enemy Encounter</h3>
-                        <p>Monster reacts to sound, recalculates path, and catches the player if they fail to escape.</p>
+                        <p>Monster roams, idles, searches, chases, investigates dropped items, and preserves its state during scene transitions.</p>
                     </article>
                     <article class="mockup-card">
                         <div class="mockup-card__frame">
                             <span>Ending mockup</span>
                         </div>
                         <h3>Escape Or Death</h3>
-                        <p>Final submarine escape after repairs, or death screen after five captures.</p>
+                        <p>Survive scene loads after final submarine escape; Death scene loads after the third monster catch.</p>
                     </article>
                 </div>
             </div>
@@ -186,43 +186,43 @@
         <section class="section" id="system-design" aria-labelledby="system-design-title">
             <div class="section__inner">
                 <div class="section-heading section-heading--wide">
-                    <p class="eyebrow">3 pts</p>
+                    <p class="eyebrow">Runtime architecture</p>
                     <h2 id="system-design-title">System Design</h2>
                     <p>
-                        Functional relationships between scenes, characters, items, and enemy behavior. This section will be updated as the Unity scenes become more concrete.
+                        The current project uses persistent run state for scene switching, item placement, enemy behavior, submarine tasks, NPC puzzle state, and endings.
                     </p>
                 </div>
                 <div class="system-flow" aria-label="Scene and gameplay relationship diagram">
                     <div class="flow-node">Main Menu</div>
                     <div class="flow-arrow" aria-hidden="true">-></div>
-                    <div class="flow-node">Underwater Base</div>
+                    <div class="flow-node">Map / Submarine</div>
                     <div class="flow-arrow" aria-hidden="true">-></div>
-                    <div class="flow-node">Escape / Death Ending</div>
+                    <div class="flow-node">Survive / Death</div>
                 </div>
                 <div class="relationship-grid">
                     <article>
                         <h3>Player</h3>
-                        <p>Moves through the base, carries one item at a time, hides, repairs the submarine, and triggers endings.</p>
+                        <p>Moves through the base, crouches, hides in lockers, carries one item, drops items, repairs the submarine, and triggers endings.</p>
                     </article>
                     <article>
                         <h3>Monster</h3>
-                        <p>Escaped lab antagonist. Uses sound and pathfinding to locate, chase, and catch the player.</p>
+                        <p>Uses vision, A* paths, roaming waits, search animations, dropped-item investigation, catch-count respawns, and final death logic.</p>
                     </article>
                     <article>
                         <h3>Map</h3>
-                        <p>Defines rooms, corridors, locked routes, hiding locations, and the pathfinding grid.</p>
+                        <p>Hosts random item spawn points, size-filtered placement, aquarium and crab puzzles, lockers, and monster navigation.</p>
                     </article>
                     <article>
                         <h3>Items</h3>
-                        <p>Unlock rooms, solve small puzzles, and repair submarine parts.</p>
+                        <p>Have stable item IDs, size categories, held transforms, drop physics settings, persistence, and optional alert radius behavior.</p>
                     </article>
                     <article>
                         <h3>NPCs</h3>
-                        <p>Fish and crab are planned interaction characters. Their exact mechanics can stay flexible until implementation.</p>
+                        <p>Fish and crab now form a puzzle chain: poison the aquarium, take the coin, bribe the crab, then read the note.</p>
                     </article>
                     <article>
                         <h3>Audio</h3>
-                        <p>Environmental sounds build tension and can reveal player position to the monster.</p>
+                        <p>Wwise events handle menu music, ambience, walking loops, breathing, death, lockers, and item drop audio. Enemy alerts remain gameplay-only.</p>
                     </article>
                 </div>
 
@@ -230,14 +230,14 @@
                     <div>
                         <h3 id="technical-focus-title">Custom Enemy Navigation</h3>
                         <p>
-                            The enemy system is planned as a grid-based A* pathfinder. The monster should navigate corridors, avoid static obstacles, and recalculate its route when the player moves or creates sound.
+                            The enemy uses a grid-based A* pathfinder with a custom path follower. It can roam, chase, search, investigate dropped item alerts, and save its state before scene unloads.
                         </p>
                     </div>
                     <ul>
-                        <li>Grid-based node architecture for the base map</li>
-                        <li>Dynamic rerouting during chase behavior</li>
-                        <li>Sound events that can update the monster target</li>
-                        <li>Hiding spots that can interrupt or redirect pursuit</li>
+                        <li>GridManager, GridNode, AStarPathfinder, and MonsterPathBlocker drive navigation.</li>
+                        <li>MonsterPathFollower handles movement, repathing, stuck detection, gravity, and walk audio.</li>
+                        <li>MonsterVision drives chase priority and search fallback when line of sight is lost.</li>
+                        <li>MonsterAnimationController maps movement, chase, idle wait, and searching states to animator parameters.</li>
                     </ul>
                 </div>
             </div>
@@ -246,42 +246,44 @@
         <section class="section" id="infrastructure" aria-labelledby="infrastructure-title">
             <div class="section__inner">
                 <div class="section-heading section-heading--wide">
-                    <p class="eyebrow">3 pts</p>
+                    <p class="eyebrow">Implemented classes</p>
                     <h2 id="infrastructure-title">System Infrastructure</h2>
                 </div>
                 <div class="class-map" aria-label="Planned class relationship diagram">
-                    <div class="class-box class-box--core">GameManager</div>
-                    <div class="class-box">SceneController</div>
-                    <div class="class-box">UIManager</div>
-                    <div class="class-box class-box--player">PlayerController</div>
-                    <div class="class-box">Inventory</div>
-                    <div class="class-box">Interactable</div>
-                    <div class="class-box">Item</div>
-                    <div class="class-box class-box--enemy">EnemyAI</div>
+                    <div class="class-box class-box--core">GameState</div>
+                    <div class="class-box">SceneTransitionDoor</div>
+                    <div class="class-box">SceneLoadingScreen</div>
+                    <div class="class-box class-box--player">PlayerInteraction</div>
+                    <div class="class-box">InventorySlot</div>
+                    <div class="class-box">PickupItem</div>
+                    <div class="class-box">RandomItemSpawner</div>
+                    <div class="class-box class-box--enemy">MonsterAI</div>
+                    <div class="class-box">MonsterVision</div>
+                    <div class="class-box">MonsterPathFollower</div>
                     <div class="class-box">AStarPathfinder</div>
                     <div class="class-box">GridNode</div>
-                    <div class="class-box">SoundEmitter</div>
-                    <div class="class-box">MonsterHearing</div>
-                    <div class="class-box class-box--npc">NPCBase</div>
-                    <div class="class-box">FishNPC</div>
-                    <div class="class-box">CrabNPC</div>
+                    <div class="class-box">SubmarineRepairManager</div>
+                    <div class="class-box">SubmarineEscapeButton</div>
+                    <div class="class-box class-box--npc">CrabGuard</div>
+                    <div class="class-box">AquariumPoisonInteraction</div>
+                    <div class="class-box">ReadableNoteOverlay</div>
                     <div class="class-box">HidingSpot</div>
                 </div>
                 <div class="diagram-notes" aria-label="Class relationship notes">
                     <article class="loop-card">
                         <span>01</span>
                         <h3>Core Loop</h3>
-                        <p>GameManager coordinates scene state, UI, win/death conditions, and the five-catch rule.</p>
+                        <p>GameState coordinates run resets, held item restore, scene item persistence, random spawn state, crab/aquarium state, enemy state, and the three-catch rule.</p>
                     </article>
                     <article class="loop-card">
                         <span>02</span>
                         <h3>Interaction Loop</h3>
-                        <p>PlayerController uses Interactable objects, stores Items in Inventory, and activates submarine repair steps.</p>
+                        <p>PlayerInteraction raycasts to IInteractable objects. InventorySlot manages the held item, drops, item persistence, and dropped-item monster alerts.</p>
                     </article>
                     <article class="loop-card">
                         <span>03</span>
                         <h3>Enemy Loop</h3>
-                        <p>SoundEmitter and MonsterHearing inform EnemyAI, which requests paths from AStarPathfinder and GridNode data.</p>
+                        <p>MonsterAI reads vision and alert events, requests paths, changes animation phases, handles catch respawns, and falls back to roaming after searches.</p>
                     </article>
                 </div>
             </div>
@@ -290,14 +292,14 @@
         <section class="section section--closing" id="log" aria-labelledby="log-title">
             <div class="section__inner placeholder-log">
                 <div>
-                    <p class="eyebrow">To be updated later</p>
-                    <h2 id="log-title">Development Log Placeholder</h2>
+                    <p class="eyebrow">Current status</p>
+                    <h2 id="log-title">Development Log</h2>
                     <p>
-                        This section will be filled once implementation starts. Each entry can include the date, what changed, screenshots, and what needs to be decided next.
+                        The prototype has moved from planning into integrated gameplay systems. The next documentation pass can add fresh Unity screenshots of the final button, crab puzzle, aquarium puzzle, monster search behavior, and the Map/Submarine loading transition.
                     </p>
                 </div>
                 <div class="log-frame">
-                    <span>Daily updates will go here</span>
+                    <span>Systems implemented and ready for screenshot updates</span>
                 </div>
             </div>
         </section>
