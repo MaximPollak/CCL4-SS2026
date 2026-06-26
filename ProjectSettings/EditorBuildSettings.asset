@@ -26,6 +26,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/SurviveScene.unity
     guid: aa09144942f8cd74391756e99f3e1f7e
+  - enabled: 1
+    path: Assets/Scenes/GuideScene.unity
+    guid: 51ef77349b80c7c4eab62f31c8933565
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0

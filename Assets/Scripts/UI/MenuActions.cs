@@ -10,6 +10,15 @@ public class MenuActions : MonoBehaviour
         SceneManager.LoadScene("Map");
     }
 
+
+    public void BackToMenu(){
+        SceneManager.LoadScene("StartScreen");
+    }
+
+    public void Guide(){
+        SceneManager.LoadScene("GuideScene");
+    }
+
     public void StartToStoryScene()
     {
         SceneManager.LoadScene("StoryScene");

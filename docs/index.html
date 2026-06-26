@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CCL4 Underwater Horror Escape Room</title>
+    <title>What Remains Below - CCL4</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -13,6 +13,7 @@
             <a href="#map">Map</a>
             <a href="#characters">Characters</a>
             <a href="#items">Items</a>
+            <a href="#instructions">Instructions</a>
             <a href="#mockups">Mockups</a>
             <a href="#system-design">Systems</a>
             <a href="#infrastructure">Classes</a>
@@ -24,13 +25,70 @@
         <section class="hero" aria-labelledby="hero-title">
             <div class="hero__content">
                 <p class="eyebrow">ePortfolio Group 17</p>
-                <h1 id="hero-title">Underwater Horror Escape Room</h1>
+                <h1 id="hero-title">What Remains Below</h1>
                 <p class="hero__summary">
                     A first-person underwater horror escape game where the player explores the base, manages one held item, avoids a stalking monster, solves NPC puzzles, and repairs the submarine before the third catch becomes fatal.
                 </p>
                 <div class="hero__actions" aria-label="Project status">
-                    <a class="button" href="#system-design">View implemented systems</a>
-                    <a class="button button--quiet" href="#items">Review puzzle flow</a>
+                    <a class="button" href="#mockups">View current screenshots</a>
+                    <a class="button button--quiet" href="#system-design">View implemented systems</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="section section--instructions" id="instructions" aria-labelledby="instructions-title">
+            <div class="section__inner">
+                <div class="section-heading section-heading--wide">
+                    <p class="eyebrow">Instructions</p>
+                    <h2 id="instructions-title">How To Run The Game</h2>
+                    <p>
+                        The game can be tested directly in Unity during development or played from a Windows build when one is exported.
+                    </p>
+                </div>
+
+                <div class="instruction-grid">
+                    <article class="instruction-card">
+                        <h3>Download from Onedrive</h3>
+                        <ol>
+                            <li>Open the shared OneDrive build link from the project submission.</li>
+                            <li>Download the full build folder, not only the .exe file.</li>
+                            <li>Unzip the folder if Windows downloaded it as an archive.</li>
+                        </ol>
+                    </article>
+
+                    <article class="instruction-card">
+                        <h3>Run From Unity</h3>
+                        <ol>
+                            <li>Clone or pull the repository.</li>
+                            <li>Install Git LFS and make sure large assets are downloaded.</li>
+                            <li>Open the Wwise project and generate SoundBanks.</li>
+                            <li>Open the Unity project with Unity Editor 6000.3.6f1.</li>
+                            <li>Open the StartScreen scene and press Play.</li>
+                        </ol>
+                    </article>
+
+                    <article class="instruction-card">
+                        <h3>Run From Build.exe</h3>
+                        <ol>
+                            <li>Download or copy the complete build folder.</li>
+                            <li>Keep the .exe and its generated data folder together.</li>
+                            <li>Open the .exe file from the build folder.</li>
+                            <li>Use Start to begin, Guide for controls, or Quit to exit.</li>
+                            <li>If audio is missing, regenerate SoundBanks in the Unity/Wwise project before making a new build.</li>
+                        </ol>
+                    </article>
+                </div>
+
+                <div class="controls-panel" aria-label="Keyboard and mouse controls">
+                    <h3>Controls</h3>
+                    <div class="controls-grid">
+                        <div><kbd>WASD</kbd><span>Move</span></div>
+                        <div><kbd>Mouse</kbd><span>Look around</span></div>
+                        <div><kbd>E</kbd><span>Interact, enter lockers, use items, close note overlay</span></div>
+                        <div><kbd>Q</kbd><span>Drop the currently held item</span></div>
+                        <div><kbd>C</kbd><span>Crouch or stand up</span></div>
+                        <div><kbd>Space</kbd><span>Close readable note overlay</span></div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -46,7 +104,7 @@
                 </div>
                 <div class="map-workbench">
                     <figure class="map-image">
-                        <img src="assets/map.jpeg" alt="Top-down layout map of the underwater base.">
+                        <img src="assets/screens/base-overview.jpg" alt="Unity editor overview of the underwater base map layout.">
                     </figure>
                     <aside class="map-notes" aria-label="Map planning notes">
                         <h3>Scene Notes</h3>
@@ -139,44 +197,44 @@
                 <div class="mockup-grid">
                     <article class="mockup-card">
                         <div class="mockup-card__frame">
-                            <span>Main menu mockup</span>
+                            <img src="assets/screens/main-menu.jpg" alt="What Remains Below main menu with Start, Guide, and Quit buttons.">
                         </div>
-                        <h3>Onboarding Menu</h3>
-                        <p>Start screen and story scene reset the run state before loading into the playable loop.</p>
+                        <h3>Main Menu</h3>
+                        <p>The start screen presents What Remains Below with Start, Guide, and Quit options. Starting a run resets the playthrough state.</p>
                     </article>
                     <article class="mockup-card">
                         <div class="mockup-card__frame">
-                            <span>Gameplay HUD mockup</span>
+                            <img src="assets/screens/locker-hiding.jpg" alt="First-person locker view with the monster visible through the locker slats.">
                         </div>
-                        <h3>Exploration View</h3>
-                        <p>First-person movement, crouching, hiding spots, one-slot inventory, crosshair, and held-item display.</p>
+                        <h3>Hiding And Threat</h3>
+                        <p>Lockers and hiding spots let the player break line of sight while the monster patrols and searches nearby.</p>
                     </article>
                     <article class="mockup-card">
                         <div class="mockup-card__frame">
-                            <span>Map mockup</span>
+                            <img src="assets/screens/base-overview.jpg" alt="Wide editor view of the connected rooms in the underwater base.">
                         </div>
                         <h3>Base Layout</h3>
                         <p>Map scene contains randomized item placement, spawn point size filters, lockers, NPC puzzles, and monster navigation.</p>
                     </article>
                     <article class="mockup-card">
                         <div class="mockup-card__frame">
-                            <span>Item pickup mockup</span>
+                            <img src="assets/screens/bedroom-battery.jpg" alt="First-person bedroom view showing the player holding a battery.">
                         </div>
-                        <h3>Repair Interaction</h3>
-                        <p>Pickup, drop, restore, consume, socket, repeated-tool, and multi-item repair interactions are implemented.</p>
+                        <h3>Inventory And Repair Items</h3>
+                        <p>The one-slot inventory shows the held item, supports pickup/drop persistence, and feeds submarine repair sockets.</p>
                     </article>
                     <article class="mockup-card">
                         <div class="mockup-card__frame">
-                            <span>Monster chase mockup</span>
+                            <img src="assets/screens/base-hub.jpg" alt="Dark central base hub with submarine machinery and first-person HUD.">
                         </div>
-                        <h3>Enemy Encounter</h3>
-                        <p>Monster roams, idles, searches, chases, investigates dropped items, and preserves its state during scene transitions.</p>
+                        <h3>Central Base Hub</h3>
+                        <p>The hub connects exploration, submarine access, item routing, and monster movement through the shared map space.</p>
                     </article>
                     <article class="mockup-card">
                         <div class="mockup-card__frame">
-                            <span>Ending mockup</span>
+                            <img src="assets/screens/survive-screen.jpg" alt="You Survived ending screen for What Remains Below.">
                         </div>
-                        <h3>Escape Or Death</h3>
+                        <h3>Survive Or Die</h3>
                         <p>Survive scene loads after final submarine escape; Death scene loads after the third monster catch.</p>
                     </article>
                 </div>

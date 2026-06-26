@@ -234,6 +234,7 @@ nav a:focus-visible {
 .map-workbench,
 .character-grid,
 .item-layout,
+.instruction-grid,
 .mockup-grid,
 .relationship-grid,
 .diagram-notes {
@@ -267,6 +268,8 @@ nav a:focus-visible {
 .map-notes,
 .character-card,
 .item-panel,
+.instruction-card,
+.controls-panel,
 .mockup-card,
 .relationship-grid article,
 .technical-focus,
@@ -281,12 +284,16 @@ nav a:focus-visible {
 .map-notes,
 .character-card,
 .item-panel,
+.instruction-card,
+.controls-panel,
 .relationship-grid article,
 .technical-focus {
     padding: 1.35rem;
 }
 
 .map-notes h3,
+.instruction-card h3,
+.controls-panel h3,
 .relationship-grid h3 {
     color: var(--foam);
 }
@@ -300,6 +307,8 @@ nav a:focus-visible {
 .map-notes li,
 .character-card p,
 .item-panel li,
+.instruction-card li,
+.controls-grid span,
 .interaction-list p,
 .mockup-card p,
 .relationship-grid p,
@@ -311,6 +320,52 @@ nav a:focus-visible {
 
 .item-layout {
     grid-template-columns: minmax(280px, 0.75fr) minmax(0, 1.25fr);
+}
+
+.instruction-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.instruction-card ol {
+    margin: 1rem 0 0;
+    padding-left: 1.25rem;
+}
+
+.controls-panel {
+    margin-top: 1rem;
+}
+
+.controls-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.75rem;
+    margin-top: 1rem;
+}
+
+.controls-grid div {
+    display: grid;
+    gap: 0.45rem;
+    min-height: 92px;
+    padding: 0.9rem;
+    border: 1px solid rgba(246, 240, 230, 0.12);
+    border-radius: 4px;
+    background: rgba(7, 22, 42, 0.44);
+}
+
+kbd {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: fit-content;
+    min-width: 2rem;
+    padding: 0.18rem 0.45rem;
+    border: 1px solid rgba(138, 223, 200, 0.54);
+    border-radius: 4px;
+    background: rgba(138, 223, 200, 0.1);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 0.82rem;
+    font-weight: 800;
 }
 
 .character-grid {
@@ -381,6 +436,7 @@ nav a:focus-visible {
     background:
         linear-gradient(135deg, rgba(138, 223, 200, 0.12), transparent),
         rgba(7, 22, 42, 0.64);
+    overflow: hidden;
 }
 
 .mockup-card__frame span {
@@ -390,6 +446,14 @@ nav a:focus-visible {
     font-size: 1.3rem;
     line-height: 1.2;
     text-align: center;
+}
+
+.mockup-card__frame img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    min-height: 210px;
+    object-fit: cover;
 }
 
 .mockup-card h3,
@@ -598,6 +662,8 @@ nav a:focus-visible {
     .character-grid,
     .relationship-grid,
     .item-layout,
+    .instruction-grid,
+    .controls-grid,
     .diagram-notes,
     .class-map {
         grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -655,6 +721,8 @@ nav a:focus-visible {
     .character-grid,
     .relationship-grid,
     .item-layout,
+    .instruction-grid,
+    .controls-grid,
     .diagram-notes,
     .class-map {
         grid-template-columns: 1fr;
