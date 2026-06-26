@@ -40,9 +40,10 @@ public class MonsterAI : MonoBehaviour
     public float catchDistance = 1.1f;
     public float loseSightDelay = 0.6f;
     
-    [Header("Wwise Death Audio")]
+    [Header("Wwise Catch Audio")]
+    [SerializeField] private string earRingingEvent = "Play_ear_ringing";
     [SerializeField] private string deathEvent = "Play_death";
-    [SerializeField] private float deathSoundDelay = 3f;
+    [SerializeField] private float catchSoundDelay = 0f;
 
     [Header("Search")]
     public float searchDuration = 3f;
@@ -476,7 +477,6 @@ public class MonsterAI : MonoBehaviour
         }
 
         Debug.Log("Player caught!");
-        StartCoroutine(PlayDeathSoundAfterDelay());
 
         if (catchHandler != null)
         {
@@ -484,11 +484,24 @@ public class MonsterAI : MonoBehaviour
         }
     }
 
-    private System.Collections.IEnumerator PlayDeathSoundAfterDelay()
+    public void PlayCatchSound(bool isFinalCatch)
     {
-        yield return new WaitForSeconds(deathSoundDelay);
+        string eventName = isFinalCatch ? deathEvent : earRingingEvent;
 
-        AkUnitySoundEngine.PostEvent(deathEvent, gameObject);
+        if (catchSoundDelay > 0f)
+        {
+            StartCoroutine(PlayCatchSoundAfterDelay(eventName));
+            return;
+        }
+
+        AkUnitySoundEngine.PostEvent(eventName, gameObject);
+    }
+
+    private System.Collections.IEnumerator PlayCatchSoundAfterDelay(string eventName)
+    {
+        yield return new WaitForSeconds(catchSoundDelay);
+
+        AkUnitySoundEngine.PostEvent(eventName, gameObject);
     }
 
     public void ResetAfterCatchRespawn()

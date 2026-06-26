@@ -35,6 +35,7 @@ public class FirstPersonMovement : MonoBehaviour
     private float controllerBottomOffset;
     private bool wantsToCrouch;
     private bool isWalkingSoundPlaying;
+    private uint walkingPlayingId;
     private InputAction runtimeCrouchAction;
     private readonly Collider[] standUpHits = new Collider[8];
 
@@ -99,6 +100,11 @@ public class FirstPersonMovement : MonoBehaviour
         StopWalkingLoop();
     }
 
+    private void OnDestroy()
+    {
+        StopWalkingLoop();
+    }
+
     private void Update()
     {
         HandleCrouchInput();
@@ -142,7 +148,14 @@ public class FirstPersonMovement : MonoBehaviour
             return;
         }
 
-        AkUnitySoundEngine.PostEvent(walkingStartEvent, gameObject);
+        walkingPlayingId = AkUnitySoundEngine.PostEvent(walkingStartEvent, gameObject);
+
+        if (walkingPlayingId == 0)
+        {
+            Debug.LogError("Walking sound event not found or SoundBank not loaded: " + walkingStartEvent);
+            return;
+        }
+
         isWalkingSoundPlaying = true;
     }
 
@@ -153,7 +166,25 @@ public class FirstPersonMovement : MonoBehaviour
             return;
         }
 
-        AkUnitySoundEngine.PostEvent(walkingStopEvent, gameObject);
+        if (walkingPlayingId != 0)
+        {
+            AkUnitySoundEngine.ExecuteActionOnEvent(
+                walkingStartEvent,
+                AkActionOnEventType.AkActionOnEventType_Stop,
+                gameObject,
+                0,
+                AkCurveInterpolation.AkCurveInterpolation_Linear,
+                walkingPlayingId
+            );
+
+            walkingPlayingId = 0;
+        }
+
+        if (!string.IsNullOrWhiteSpace(walkingStopEvent))
+        {
+            AkUnitySoundEngine.PostEvent(walkingStopEvent, gameObject);
+        }
+
         isWalkingSoundPlaying = false;
     }
 

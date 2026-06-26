@@ -25,7 +25,14 @@ public class MonsterCatchHandler : MonoBehaviour
 
         int catchCount = GameState.Instance.RegisterPlayerCaught();
 
-        if (catchCount >= catchesBeforeDeath)
+        bool isFinalCatch = catchCount >= catchesBeforeDeath;
+
+        if (monsterAI != null)
+        {
+            monsterAI.PlayCatchSound(isFinalCatch);
+        }
+
+        if (isFinalCatch)
         {
             TriggerDeath();
             return;

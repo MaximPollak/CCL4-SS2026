@@ -17,6 +17,7 @@
 						<ObjectRef Name="Stop_breathing_in_locker" ID="{744AFA5B-877D-4485-9827-35628030C84D}" WorkUnitID="{5D718B47-E347-4F43-A677-2491F78C9839}" Origin="Manual" Filter="7"/>
 						<ObjectRef Name="Play_dropping_something_small_01" ID="{EFB0984D-8CAC-44A9-A889-8CDDE8C9A799}" WorkUnitID="{5D718B47-E347-4F43-A677-2491F78C9839}" Origin="Manual" Filter="7"/>
 						<ObjectRef Name="Stop_monster_walking" ID="{36AE6E7B-B5EE-44E3-BEA4-E85E6C57A2D6}" WorkUnitID="{5D718B47-E347-4F43-A677-2491F78C9839}" Origin="Manual" Filter="7"/>
+						<ObjectRef Name="Stop_menu_music" ID="{2CB62C96-753C-459E-8DAF-DCC6F8AD24E2}" WorkUnitID="{5D718B47-E347-4F43-A677-2491F78C9839}" Origin="Manual" Filter="7"/>
 						<ObjectRef Name="Stop_monster_breathing" ID="{2B007A77-A67E-466D-8A3F-7A23B5573504}" WorkUnitID="{5D718B47-E347-4F43-A677-2491F78C9839}" Origin="Manual" Filter="7"/>
 						<ObjectRef Name="Play_dropping_wood" ID="{D9AB2B59-939A-468C-BA6B-E2E3A4D49844}" WorkUnitID="{5D718B47-E347-4F43-A677-2491F78C9839}" Origin="Manual" Filter="7"/>
 						<ObjectRef Name="Play_dropped_item" ID="{6B9C2C94-6F6B-4693-8C99-9C09EFCB8790}" WorkUnitID="{5D718B47-E347-4F43-A677-2491F78C9839}" Origin="Manual" Filter="7"/>
@@ -25,11 +26,13 @@
 						<ObjectRef Name="Stop_walking" ID="{E3A4709D-E0C0-47A3-BCAC-AF0056822C79}" WorkUnitID="{5D718B47-E347-4F43-A677-2491F78C9839}" Origin="Manual" Filter="7"/>
 						<ObjectRef Name="Play_dropping_kettle" ID="{66E2323C-15B6-47CB-8292-209DFBC56023}" WorkUnitID="{5D718B47-E347-4F43-A677-2491F78C9839}" Origin="Manual" Filter="7"/>
 						<ObjectRef Name="Stop_enviorment_noise" ID="{067C7135-6ED6-4802-8C8B-3D73826747C1}" WorkUnitID="{5D718B47-E347-4F43-A677-2491F78C9839}" Origin="Manual" Filter="7"/>
+						<ObjectRef Name="Play_ear_ringing" ID="{07730833-72DD-481F-93B3-33F5292013AE}" WorkUnitID="{5D718B47-E347-4F43-A677-2491F78C9839}" Origin="Manual" Filter="7"/>
 						<ObjectRef Name="Play_enemy_breaking_out" ID="{49E989AB-E623-4837-9BB2-DB59C3CDD158}" WorkUnitID="{5D718B47-E347-4F43-A677-2491F78C9839}" Origin="Manual" Filter="7"/>
 						<ObjectRef Name="Play_death" ID="{BE705198-DB86-485D-8A55-5FA9D68611AE}" WorkUnitID="{5D718B47-E347-4F43-A677-2491F78C9839}" Origin="Manual" Filter="7"/>
 						<ObjectRef Name="Play_enviorment_noise" ID="{0703A19F-67F4-4860-8D9E-4BE903335110}" WorkUnitID="{5D718B47-E347-4F43-A677-2491F78C9839}" Origin="Manual" Filter="7"/>
 						<ObjectRef Name="Play_out_of_breath" ID="{97059FF8-21FB-48FB-A89D-2A3E15E6A459}" WorkUnitID="{5D718B47-E347-4F43-A677-2491F78C9839}" Origin="Manual" Filter="7"/>
 						<ObjectRef Name="Play_dropping_meat" ID="{69E25F16-91D1-494B-B352-0F2394364EB9}" WorkUnitID="{5D718B47-E347-4F43-A677-2491F78C9839}" Origin="Manual" Filter="7"/>
+						<ObjectRef Name="Stop_story" ID="{8E943934-DEDE-49DB-B0A2-45CE8C9A08EB}" WorkUnitID="{5D718B47-E347-4F43-A677-2491F78C9839}" Origin="Manual" Filter="7"/>
 						<ObjectRef Name="Play_dropping_something_heavy" ID="{E2D6D1F7-563F-4ADC-AC82-B0121250BDC7}" WorkUnitID="{5D718B47-E347-4F43-A677-2491F78C9839}" Origin="Manual" Filter="7"/>
 						<ObjectRef Name="Play_dropped_metal_thing" ID="{36F8D154-6A61-4B30-BE29-C67D45674421}" WorkUnitID="{5D718B47-E347-4F43-A677-2491F78C9839}" Origin="Manual" Filter="7"/>
 						<ObjectRef Name="Play_dropping_book_smaller" ID="{8247125E-B801-4CD5-A5D4-A87A8666AA58}" WorkUnitID="{5D718B47-E347-4F43-A677-2491F78C9839}" Origin="Manual" Filter="7"/>
@@ -46,6 +49,7 @@
 				<SoundBank Name="submarine" ID="{94F622D4-6A1A-46A3-9274-6CEF3DABA0ED}">
 					<ObjectInclusionList>
 						<ObjectRef Name="Play_droppeing_wobbely_theroms" ID="{4C06F7E7-0776-417F-A2AA-874BC0B13E0C}" WorkUnitID="{5D718B47-E347-4F43-A677-2491F78C9839}" Origin="Manual" Filter="7"/>
+						<ObjectRef Name="Stop_white_noise" ID="{AC67EEF4-6894-4375-B6CD-3AE6A2686420}" WorkUnitID="{5D718B47-E347-4F43-A677-2491F78C9839}" Origin="Manual" Filter="7"/>
 						<ObjectRef Name="Play_dropped_metal_thing_2" ID="{324127E4-64CE-43FC-9721-8172DFD756A2}" WorkUnitID="{5D718B47-E347-4F43-A677-2491F78C9839}" Origin="Manual" Filter="7"/>
 						<ObjectRef Name="Play_walking" ID="{F7C15ED9-C7B5-4407-8FCE-554B27834420}" WorkUnitID="{5D718B47-E347-4F43-A677-2491F78C9839}" Origin="Manual" Filter="7"/>
 						<ObjectRef Name="Play_running" ID="{0D219AB6-CC7D-442C-860D-D65A0291BEF5}" WorkUnitID="{5D718B47-E347-4F43-A677-2491F78C9839}" Origin="Manual" Filter="7"/>
@@ -54,7 +58,9 @@
 						<ObjectRef Name="Play_dropped_item" ID="{6B9C2C94-6F6B-4693-8C99-9C09EFCB8790}" WorkUnitID="{5D718B47-E347-4F43-A677-2491F78C9839}" Origin="Manual" Filter="7"/>
 						<ObjectRef Name="sub_swimming" ID="{E58DB607-9C74-4736-902E-00FFC9ECA023}" WorkUnitID="{5D718B47-E347-4F43-A677-2491F78C9839}" Origin="Manual" Filter="7"/>
 						<ObjectRef Name="Play_dropping_something_small" ID="{9CF3E1AE-925A-4769-B97E-600F58477DC1}" WorkUnitID="{5D718B47-E347-4F43-A677-2491F78C9839}" Origin="Manual" Filter="7"/>
+						<ObjectRef Name="Stop_walking" ID="{E3A4709D-E0C0-47A3-BCAC-AF0056822C79}" WorkUnitID="{5D718B47-E347-4F43-A677-2491F78C9839}" Origin="Manual" Filter="7"/>
 						<ObjectRef Name="Play_dropping_kettle" ID="{66E2323C-15B6-47CB-8292-209DFBC56023}" WorkUnitID="{5D718B47-E347-4F43-A677-2491F78C9839}" Origin="Manual" Filter="7"/>
+						<ObjectRef Name="Stop_enviorment_noise" ID="{067C7135-6ED6-4802-8C8B-3D73826747C1}" WorkUnitID="{5D718B47-E347-4F43-A677-2491F78C9839}" Origin="Manual" Filter="7"/>
 						<ObjectRef Name="Play_enviorment_noise" ID="{0703A19F-67F4-4860-8D9E-4BE903335110}" WorkUnitID="{5D718B47-E347-4F43-A677-2491F78C9839}" Origin="Manual" Filter="7"/>
 						<ObjectRef Name="Play_out_of_breath" ID="{97059FF8-21FB-48FB-A89D-2A3E15E6A459}" WorkUnitID="{5D718B47-E347-4F43-A677-2491F78C9839}" Origin="Manual" Filter="7"/>
 						<ObjectRef Name="Play_dropping_meat" ID="{69E25F16-91D1-494B-B352-0F2394364EB9}" WorkUnitID="{5D718B47-E347-4F43-A677-2491F78C9839}" Origin="Manual" Filter="7"/>
@@ -69,8 +75,13 @@
 				<SoundBank Name="menu" ID="{BC6FC5B7-5FE6-4D55-B7BF-E69556B2DE67}">
 					<ObjectInclusionList>
 						<ObjectRef Name="Play_button_click" ID="{CC763D83-BA9E-4169-885E-1F71405D44E3}" WorkUnitID="{5D718B47-E347-4F43-A677-2491F78C9839}" Origin="Manual" Filter="7"/>
+						<ObjectRef Name="Stop_menu_music" ID="{2CB62C96-753C-459E-8DAF-DCC6F8AD24E2}" WorkUnitID="{5D718B47-E347-4F43-A677-2491F78C9839}" Origin="Manual" Filter="7"/>
+						<ObjectRef Name="Play_ending" ID="{D375E383-0E03-473D-9795-6663087437FB}" WorkUnitID="{5D718B47-E347-4F43-A677-2491F78C9839}" Origin="Manual" Filter="7"/>
 						<ObjectRef Name="Stop_enviorment_noise" ID="{067C7135-6ED6-4802-8C8B-3D73826747C1}" WorkUnitID="{5D718B47-E347-4F43-A677-2491F78C9839}" Origin="Manual" Filter="7"/>
+						<ObjectRef Name="Stop_story" ID="{8E943934-DEDE-49DB-B0A2-45CE8C9A08EB}" WorkUnitID="{5D718B47-E347-4F43-A677-2491F78C9839}" Origin="Manual" Filter="7"/>
+						<ObjectRef Name="Play_story" ID="{E7294513-01E0-4E20-B496-3CC22B2EC815}" WorkUnitID="{5D718B47-E347-4F43-A677-2491F78C9839}" Origin="Manual" Filter="7"/>
 						<ObjectRef Name="Play_menu_music" ID="{543ADDB2-0FEA-4ED7-BED1-133F7129638F}" WorkUnitID="{5D718B47-E347-4F43-A677-2491F78C9839}" Origin="Manual" Filter="7"/>
+						<ObjectRef Name="Stop_ending" ID="{8811DA09-D49C-4F37-B5F5-8D593181A9D2}" WorkUnitID="{5D718B47-E347-4F43-A677-2491F78C9839}" Origin="Manual" Filter="7"/>
 					</ObjectInclusionList>
 					<ObjectExclusionList/>
 					<GameSyncExclusionList/>

@@ -428,6 +428,81 @@
 						</Action>
 					</ChildrenList>
 				</Event>
+				<Event Name="Play_ear_ringing" ID="{07730833-72DD-481F-93B3-33F5292013AE}">
+					<ChildrenList>
+						<Action Name="" ID="{B84AA334-A793-4897-A919-59C0BC2C4111}" ShortID="346576304">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="ear_ringing" ID="{B0F7E2A2-D352-45D4-9A28-CCBC983975E7}" WorkUnitID="{993174C0-55F0-41B4-A294-3B951F391C6B}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_story" ID="{E7294513-01E0-4E20-B496-3CC22B2EC815}">
+					<ChildrenList>
+						<Action Name="" ID="{57DF8A4F-E351-4B98-89D3-6ADC78F42FFE}" ShortID="294619327">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="story" ID="{D0636B2E-CEE6-486F-80EC-B409475821E5}" WorkUnitID="{993174C0-55F0-41B4-A294-3B951F391C6B}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Stop_story" ID="{8E943934-DEDE-49DB-B0A2-45CE8C9A08EB}">
+					<ChildrenList>
+						<Action Name="" ID="{03C4DE39-4BB4-4FF7-AFFE-7DCBFEB79A9B}" ShortID="183605455">
+							<PropertyList>
+								<Property Name="ActionType" Type="int16" Value="2"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="story" ID="{D0636B2E-CEE6-486F-80EC-B409475821E5}" WorkUnitID="{993174C0-55F0-41B4-A294-3B951F391C6B}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_ending" ID="{D375E383-0E03-473D-9795-6663087437FB}">
+					<ChildrenList>
+						<Action Name="" ID="{CAC07E93-B931-4DEB-BA0D-C46BFFEF81DC}" ShortID="1068901671">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="ending" ID="{3E745186-4F12-4A0E-BA20-DD683EDECCCD}" WorkUnitID="{993174C0-55F0-41B4-A294-3B951F391C6B}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Stop_ending" ID="{8811DA09-D49C-4F37-B5F5-8D593181A9D2}">
+					<ChildrenList>
+						<Action Name="" ID="{78920A59-BCAD-4B77-9AE9-B7A9BC80CA4F}" ShortID="49061124">
+							<PropertyList>
+								<Property Name="ActionType" Type="int16" Value="2"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="ending" ID="{3E745186-4F12-4A0E-BA20-DD683EDECCCD}" WorkUnitID="{993174C0-55F0-41B4-A294-3B951F391C6B}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Stop_menu_music" ID="{2CB62C96-753C-459E-8DAF-DCC6F8AD24E2}">
+					<ChildrenList>
+						<Action Name="" ID="{6187723A-9FE8-434A-AD13-E6EF91C12033}" ShortID="460396275">
+							<PropertyList>
+								<Property Name="ActionType" Type="int16" Value="2"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="menu_music" ID="{C64FD921-8EE3-42CB-9F9A-9EAC1E0A827A}" WorkUnitID="{993174C0-55F0-41B4-A294-3B951F391C6B}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
 			</ChildrenList>
 		</WorkUnit>
 	</Events>
