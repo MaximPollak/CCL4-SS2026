@@ -586,10 +586,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MenuObjectPassBy
   waypoints:
-  - {fileID: 1416033565}
-  - {fileID: 1895646063}
-  - {fileID: 1689130519}
   - {fileID: 949045257}
+  - {fileID: 1689130519}
+  - {fileID: 1895646063}
+  - {fileID: 1416033565}
   speed: 5
   arriveDistance: 0.1
   pingPong: 0

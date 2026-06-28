@@ -350,8 +350,9 @@ MonoBehaviour:
     But be careful \u2014 something is lurking down there.\n\nTo stay safe, you can
     hide in lockers by pressing E, or crawl into vents by crouching with C. You should
     be safe while hiding there.\n\nUse WASD to move around. Press E to pick up items,
-    drop them, place them into the submarine, hide in lockers, or enter the submarine.\n\nAnd
-    Make sure you are not"
+    drop them, place them into the submarine, hide in lockers, or enter the submarine.\n\nTo
+    check what items are still missing you can open a list using TAB.\n\nAnd Make
+    sure you are not"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2badc46b624958f46b50e8574c7091da, type: 2}
   m_sharedMaterial: {fileID: -5231241472926568305, guid: 2badc46b624958f46b50e8574c7091da, type: 2}
