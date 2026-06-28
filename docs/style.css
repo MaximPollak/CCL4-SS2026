@@ -372,24 +372,18 @@ nav a:focus-visible {
     padding: 1rem;
 }
 
-.mockup-card__frame {
-    display: grid;
-    place-items: center;
+.mockup-card__image {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9;
     min-height: 210px;
     border: 1px dashed rgba(138, 223, 200, 0.5);
     border-radius: 4px;
     background:
         linear-gradient(135deg, rgba(138, 223, 200, 0.12), transparent),
         rgba(7, 22, 42, 0.64);
-}
-
-.mockup-card__frame span {
-    max-width: 180px;
-    color: var(--foam);
-    font-family: var(--serif);
-    font-size: 1.3rem;
-    line-height: 1.2;
-    text-align: center;
+    object-fit: cover;
 }
 
 .mockup-card h3,
@@ -446,6 +440,10 @@ nav a:focus-visible {
     background:
         linear-gradient(135deg, rgba(138, 223, 200, 0.08), transparent 58%),
         rgba(246, 240, 230, 0.045);
+}
+
+#creators {
+    text-align: center;
 }
 
 .technical-focus ul {
