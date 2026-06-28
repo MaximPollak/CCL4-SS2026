@@ -427,9 +427,11 @@ kbd {
     padding: 1rem;
 }
 
-.mockup-card__frame {
-    display: grid;
-    place-items: center;
+.mockup-card__frame,
+.mockup-card__image {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 9;
     min-height: 210px;
     border: 1px dashed rgba(138, 223, 200, 0.5);
     border-radius: 4px;
@@ -446,6 +448,11 @@ kbd {
     font-size: 1.3rem;
     line-height: 1.2;
     text-align: center;
+}
+
+.mockup-card__image {
+    height: auto;
+    object-fit: cover;
 }
 
 .mockup-card__frame img {
@@ -510,6 +517,10 @@ kbd {
     background:
         linear-gradient(135deg, rgba(138, 223, 200, 0.08), transparent 58%),
         rgba(246, 240, 230, 0.045);
+}
+
+#creators {
+    text-align: center;
 }
 
 .technical-focus ul {
