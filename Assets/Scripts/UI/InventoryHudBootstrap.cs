@@ -7,6 +7,7 @@ public class InventoryHudBootstrap : MonoBehaviour
     private const string HudCanvasName = "HUDCanvas";
     private const string InventoryTextName = "InventoryText";
     private const string CrosshairName = "Crosshair";
+    private const string ItemObjectiveListName = "ItemObjectiveList";
 
     [Header("References")]
     [SerializeField] private InventorySlot inventorySlot;
@@ -44,6 +45,11 @@ public class InventoryHudBootstrap : MonoBehaviour
         if (createCrosshair && GameObject.Find(CrosshairName) == null)
         {
             CreateCrosshair(canvas.transform);
+        }
+
+        if (FindFirstObjectByType<ItemObjectiveListUI>() == null)
+        {
+            CreateItemObjectiveList(canvas.transform);
         }
     }
 
@@ -115,5 +121,20 @@ public class InventoryHudBootstrap : MonoBehaviour
         crosshairTransform.pivot = new Vector2(0.5f, 0.5f);
         crosshairTransform.anchoredPosition = Vector2.zero;
         crosshairTransform.sizeDelta = crosshairSize;
+    }
+
+    private void CreateItemObjectiveList(Transform canvasTransform)
+    {
+        GameObject objectiveListObject = new GameObject(ItemObjectiveListName);
+        objectiveListObject.transform.SetParent(canvasTransform, false);
+
+        RectTransform objectiveListTransform = objectiveListObject.AddComponent<RectTransform>();
+        objectiveListTransform.anchorMin = Vector2.zero;
+        objectiveListTransform.anchorMax = Vector2.one;
+        objectiveListTransform.offsetMin = Vector2.zero;
+        objectiveListTransform.offsetMax = Vector2.zero;
+
+        // The component builds the panel and handles T-key toggling at runtime.
+        objectiveListObject.AddComponent<ItemObjectiveListUI>();
     }
 }

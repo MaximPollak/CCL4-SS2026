@@ -96,8 +96,15 @@ public class CrabGuard : MonoBehaviour, IInteractable
         isLiftInProgress = true;
 
         GameState.Instance.MarkItemConsumed(requiredCoinItemId);
-        player.Inventory.ClearItem();
-        Log("Coin was consumed: " + requiredCoinItemId);
+        if (player.Inventory.ConsumeHeldItem(requiredCoinItemId))
+        {
+            Log("Coin was consumed and deactivated: " + requiredCoinItemId);
+        }
+        else
+        {
+            Log("Coin consume requested, but the player was no longer holding: " + requiredCoinItemId);
+        }
+
         DisableBribedCoinObjects();
 
         if (animator != null)

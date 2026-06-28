@@ -21,6 +21,13 @@ public class SubmarineRepairManager : MonoBehaviour
         SubmarineRepairTask.VentCoverLeft,
     };
 
+    [SerializeField]
+    private SubmarineRepairTask[] removedOptionalTasks =
+    {
+        SubmarineRepairTask.VentilatorRight,
+        SubmarineRepairTask.VentScrews,
+    };
+
     [Header("Escape Result")]
     [SerializeField] private string surviveSceneName = "SurviveScene";
     [SerializeField] private bool useLoadingScreenOnEscape = false;
@@ -51,7 +58,7 @@ public class SubmarineRepairManager : MonoBehaviour
 
             foreach (SubmarineRepairTask requiredTask in requiredTasks)
             {
-                if (!completedTasks.Contains(requiredTask))
+                if (!IsRequiredTaskSatisfied(requiredTask))
                 {
                     return false;
                 }
@@ -143,6 +150,11 @@ public class SubmarineRepairManager : MonoBehaviour
 
         foreach (SubmarineRepairTask requiredTask in requiredTasks)
         {
+            if (IsRemovedOptionalTask(requiredTask))
+            {
+                continue;
+            }
+
             if (GameState.Instance.IsSubmarineTaskComplete(requiredTask))
             {
                 completedTasks.Add(requiredTask);
@@ -184,12 +196,36 @@ public class SubmarineRepairManager : MonoBehaviour
 
         foreach (SubmarineRepairTask requiredTask in requiredTasks)
         {
-            if (!completedTasks.Contains(requiredTask))
+            if (!IsRequiredTaskSatisfied(requiredTask))
             {
                 missingTasks.Add(requiredTask.ToString());
             }
         }
 
         return missingTasks.Count == 0 ? "none" : string.Join(", ", missingTasks);
+    }
+
+    private bool IsRequiredTaskSatisfied(SubmarineRepairTask task)
+    {
+        // These tasks were removed from the game, but older scene overrides can still serialize them.
+        return IsRemovedOptionalTask(task) || completedTasks.Contains(task);
+    }
+
+    private bool IsRemovedOptionalTask(SubmarineRepairTask task)
+    {
+        if (removedOptionalTasks == null)
+        {
+            return false;
+        }
+
+        foreach (SubmarineRepairTask removedTask in removedOptionalTasks)
+        {
+            if (removedTask == task)
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

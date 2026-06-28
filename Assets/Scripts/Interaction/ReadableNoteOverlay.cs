@@ -33,6 +33,7 @@ public class ReadableNoteOverlay : MonoBehaviour
     private GameObject overlayRoot;
     private float previousTimeScale = 1f;
     private bool isShowing;
+    private int openedFrame = -1;
 
     public static bool IsOpen => activeOverlay != null && activeOverlay.isShowing;
 
@@ -50,6 +51,7 @@ public class ReadableNoteOverlay : MonoBehaviour
 
         activeOverlay = this;
         isShowing = true;
+        openedFrame = Time.frameCount;
         CreateOverlay();
 
         if (pauseGameWhileReading)
@@ -67,6 +69,12 @@ public class ReadableNoteOverlay : MonoBehaviour
     private void Update()
     {
         if (!isShowing || Keyboard.current == null)
+        {
+            return;
+        }
+
+        // Ignore the pickup/interact key press that opened the note so it cannot close instantly.
+        if (Time.frameCount == openedFrame)
         {
             return;
         }

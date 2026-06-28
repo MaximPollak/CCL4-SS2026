@@ -1,9 +1,18 @@
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class GameState : MonoBehaviour
 {
+    public class ItemObjectiveDefinition
+    {
+        public string itemId;
+        public string displayName;
+        public SubmarineRepairTask repairTask;
+        public int requiredProgressCount = 1;
+    }
+
     public class WorldItemState
     {
         public string itemId;
@@ -50,6 +59,21 @@ public class GameState : MonoBehaviour
         new Dictionary<string, List<RandomSpawnState>>();
     private EnemyState enemyState = new EnemyState();
 
+    private static readonly ItemObjectiveDefinition[] requiredItemObjectives =
+    {
+        new ItemObjectiveDefinition { itemId = "OxygenTank", displayName = "Install left oxygen tank", repairTask = SubmarineRepairTask.OxygenTankLeft },
+        new ItemObjectiveDefinition { itemId = "OxygenTank", displayName = "Install right oxygen tank", repairTask = SubmarineRepairTask.OxygenTankRight },
+        new ItemObjectiveDefinition { itemId = "PreasureVaule", displayName = "Install pressure valve", repairTask = SubmarineRepairTask.PressureValve },
+        new ItemObjectiveDefinition { itemId = "OilCanister", displayName = "Fill oil tank", repairTask = SubmarineRepairTask.OilTank, requiredProgressCount = 3 },
+        new ItemObjectiveDefinition { itemId = "CodeBox", displayName = "Solve submarine code box", repairTask = SubmarineRepairTask.CodeBox },
+        new ItemObjectiveDefinition { itemId = "Fan", displayName = "Install ventilator", repairTask = SubmarineRepairTask.VentilatorLeft },
+        new ItemObjectiveDefinition { itemId = "SteeringWheel", displayName = "Install steering wheel", repairTask = SubmarineRepairTask.SteeringWheel },
+        new ItemObjectiveDefinition { itemId = "AccessCard", displayName = "Use access card", repairTask = SubmarineRepairTask.AccessCard },
+        new ItemObjectiveDefinition { itemId = "Battery", displayName = "Install battery", repairTask = SubmarineRepairTask.Battery },
+        new ItemObjectiveDefinition { itemId = "PreasureVaule", displayName = "Turn pressure valve", repairTask = SubmarineRepairTask.PressureValveTurned },
+        new ItemObjectiveDefinition { itemId = "Gitter", displayName = "Open vent cover", repairTask = SubmarineRepairTask.VentCoverLeft },
+    };
+
     public static GameState Instance
     {
         get
@@ -61,6 +85,8 @@ public class GameState : MonoBehaviour
 
     public string HeldItemId { get; private set; } = "";
     public int PlayerCatchCount { get; private set; }
+    public IReadOnlyList<ItemObjectiveDefinition> RequiredItemObjectives => requiredItemObjectives;
+    public event Action OnItemObjectivesChanged;
 
     public static bool HasInstance => instance != null;
 
@@ -130,6 +156,7 @@ public class GameState : MonoBehaviour
         // Catch count and enemy persistence belong to one playthrough only.
         PlayerCatchCount = 0;
         enemyState = new EnemyState();
+        OnItemObjectivesChanged?.Invoke();
     }
 
     public void RegisterItemPrefab(GameObject itemPrefab)
@@ -184,12 +211,20 @@ public class GameState : MonoBehaviour
 
     public void CompleteSubmarineTask(SubmarineRepairTask task)
     {
-        completedSubmarineTasks.Add(task);
+        if (completedSubmarineTasks.Add(task))
+        {
+            // Objective UI listens here so completed repair/item steps refresh immediately.
+            OnItemObjectivesChanged?.Invoke();
+        }
     }
 
     public void ClearSubmarineTask(SubmarineRepairTask task)
     {
-        completedSubmarineTasks.Remove(task);
+        if (completedSubmarineTasks.Remove(task))
+        {
+            OnItemObjectivesChanged?.Invoke();
+        }
+
         submarineTaskProgress.Remove(task);
     }
 
@@ -203,10 +238,12 @@ public class GameState : MonoBehaviour
         if (progress <= 0)
         {
             submarineTaskProgress.Remove(task);
+            OnItemObjectivesChanged?.Invoke();
             return;
         }
 
         submarineTaskProgress[task] = progress;
+        OnItemObjectivesChanged?.Invoke();
     }
 
     public bool IsCrabBribed(string crabId)

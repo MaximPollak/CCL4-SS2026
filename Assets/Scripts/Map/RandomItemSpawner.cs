@@ -302,11 +302,9 @@ public class RandomItemSpawner : MonoBehaviour
                 continue;
             }
 
-            if (GameState.Instance.GetUnavailableItemCount(spawnState.itemId) > 0)
-            {
-                continue;
-            }
-
+            // Saved spawn slots already track exact picked-up/used items through isAvailable.
+            // Do not also filter by item ID here, or duplicate items like OilCanister/OxygenTank
+            // disappear together when only one copy was used.
             if (spawnState.hasSavedTransform)
             {
                 SpawnItemPrefabAtState(itemPrefab, spawnState, sceneName);

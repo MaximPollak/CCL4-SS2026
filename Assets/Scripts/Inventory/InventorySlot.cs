@@ -149,6 +149,32 @@ public class InventorySlot : MonoBehaviour
         ClearItem(true);
     }
 
+    public bool ConsumeHeldItem(string requiredItemId, bool saveToGameState = true)
+    {
+        if (currentItem == null || currentItem.ItemId != requiredItemId)
+        {
+            return false;
+        }
+
+        PickupItem itemToConsume = currentItem;
+
+        Debug.Log("Consumed held item: " + itemToConsume.ItemId);
+
+        currentItem = null;
+
+        // Hide the consumed object immediately so bribes/repairs visibly remove it this frame.
+        itemToConsume.gameObject.SetActive(false);
+        Destroy(itemToConsume.gameObject);
+
+        if (saveToGameState)
+        {
+            GameState.Instance.ClearHeldItem();
+        }
+
+        OnInventoryChanged?.Invoke(CurrentItemId);
+        return true;
+    }
+
     public void ClearItem(bool saveToGameState)
     {
         if (currentItem == null)

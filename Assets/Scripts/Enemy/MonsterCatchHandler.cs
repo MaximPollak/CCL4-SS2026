@@ -1,5 +1,8 @@
+using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 [DisallowMultipleComponent]
 public class MonsterCatchHandler : MonoBehaviour
@@ -15,7 +18,26 @@ public class MonsterCatchHandler : MonoBehaviour
     [SerializeField] private string playerCrewCabinetFallbackRespawnName = "CrewBedroom_SpawnPoint1";
     [SerializeField] private string enemyLabRespawnName = "Laboratory_SpawnPoint1";
 
+    [Header("Catch Overlay")]
+    [SerializeField] private float catchOverlayDuration = 2f;
+    [SerializeField] private string catchOverlayTextFormat = "Day {0}/{1}";
+    [SerializeField] private Color catchOverlayBackgroundColor = Color.black;
+    [SerializeField] private Color catchOverlayTextColor = Color.white;
+    [SerializeField] private int catchOverlayFontSize = 42;
+
+    private bool isHandlingCatch;
+
     public void HandlePlayerCaught(MonsterAI monsterAI)
+    {
+        if (isHandlingCatch)
+        {
+            return;
+        }
+
+        StartCoroutine(HandlePlayerCaughtRoutine(monsterAI));
+    }
+
+    private IEnumerator HandlePlayerCaughtRoutine(MonsterAI monsterAI)
     {
         Transform player = FindPlayer();
         Vector3 catchPosition = player != null ? player.position : transform.position;
@@ -32,10 +54,16 @@ public class MonsterCatchHandler : MonoBehaviour
             monsterAI.PlayCatchSound(isFinalCatch);
         }
 
+        isHandlingCatch = true;
+
+        // Catch feedback briefly hides the scene and shows remaining chances before respawn/death.
+        yield return ShowCatchOverlay(catchCount);
+
         if (isFinalCatch)
         {
+            isHandlingCatch = false;
             TriggerDeath();
-            return;
+            yield break;
         }
 
         Transform playerRespawn = ResolveRespawnPoint(
@@ -64,6 +92,8 @@ public class MonsterCatchHandler : MonoBehaviour
                 monsterAI.currentState
             );
         }
+
+        isHandlingCatch = false;
     }
 
     private void TriggerDeath()
@@ -179,5 +209,49 @@ public class MonsterCatchHandler : MonoBehaviour
         {
             characterController.enabled = true;
         }
+    }
+
+    private IEnumerator ShowCatchOverlay(int catchCount)
+    {
+        GameObject overlayRoot = new GameObject("CatchOverlay", typeof(RectTransform));
+
+        Canvas canvas = overlayRoot.AddComponent<Canvas>();
+        canvas.renderMode = RenderMode.ScreenSpaceOverlay;
+        canvas.sortingOrder = short.MaxValue - 2;
+
+        overlayRoot.AddComponent<CanvasScaler>();
+        overlayRoot.AddComponent<GraphicRaycaster>();
+
+        Image background = overlayRoot.AddComponent<Image>();
+        background.color = catchOverlayBackgroundColor;
+
+        RectTransform rootRect = overlayRoot.GetComponent<RectTransform>();
+        rootRect.anchorMin = Vector2.zero;
+        rootRect.anchorMax = Vector2.one;
+        rootRect.offsetMin = Vector2.zero;
+        rootRect.offsetMax = Vector2.zero;
+
+        GameObject textObject = new GameObject("CatchOverlayText", typeof(RectTransform));
+        textObject.transform.SetParent(overlayRoot.transform, false);
+
+        TextMeshProUGUI text = textObject.AddComponent<TextMeshProUGUI>();
+        text.text = string.Format(
+            catchOverlayTextFormat,
+            Mathf.Clamp(catchCount, 1, catchesBeforeDeath),
+            catchesBeforeDeath
+        );
+        text.color = catchOverlayTextColor;
+        text.fontSize = catchOverlayFontSize;
+        text.alignment = TextAlignmentOptions.Center;
+
+        RectTransform textRect = textObject.GetComponent<RectTransform>();
+        textRect.anchorMin = Vector2.zero;
+        textRect.anchorMax = Vector2.one;
+        textRect.offsetMin = Vector2.zero;
+        textRect.offsetMax = Vector2.zero;
+
+        yield return new WaitForSecondsRealtime(Mathf.Max(0f, catchOverlayDuration));
+
+        Destroy(overlayRoot);
     }
 }
